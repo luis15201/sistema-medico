@@ -12,7 +12,7 @@
     <div class="card">
       <div class="card-title">Pacientes</div>
 
-      <img src="IMAGENES/Mantenimientos.png" class="card-icon" alt="Mantenimientos">
+      <img src="IMAGENES\pacientes.png" class="card-icon" alt="Mantenimientos">
 
       <div class="card-description">En este apartado vamos a encontrar todo lo referente a los Pacientes, como registrar el paciente, vicular el registro de padres/madres o tutores de cada niño paciente, historia clínica, antecedentes médicos, vacunas, nutrición</div>
     </div>
