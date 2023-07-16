@@ -14,7 +14,7 @@
 
       <img src="IMAGENES\pacientes.png" class="card-icon" alt="Mantenimientos">
 
-      <div class="card-description">En este apartado vamos a encontrar todo lo referente a los Pacientes, como registrar el paciente, vicular el registro de padres/madres o tutores de cada niño paciente, historia clínica, antecedentes médicos, vacunas, nutrición</div>
+      <div class="card-description">En este apartado podemos encontrar todo lo referente a los Pacientes, como registrar el paciente, vincular el registro de padres/madres o tutores de cada niño paciente, historia clínica, antecedentes médicos, vacunas, nutrición</div>
     </div>
   </a>
 
