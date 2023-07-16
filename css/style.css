@@ -148,21 +148,31 @@ input[type="submit"] {
 	display: block;
 }
 
-.claseboton{
+
+.claseboton {
 	border: none;
 	outline: none;
+	background: linear-gradient(to right, #4a90e2, #63b8ff);
+	border-radius: 7px;
+	width: auto;
+	text-decoration: none;
 	height: 40px;
 	color: #fff;
 	font-size: 16px;
-	background: linear-gradient(to right, #4a90e2, #63b8ff);
-	cursor: pointer;
-	border-radius: 20px;
-	width: 100%;
-	margin: 0 auto;
-	display: block;
+	padding: 7px;
+
 }
 
 .claseboton:hover {
 	background: linear-gradient(to right, #63b8ff, #4a90e2);
 }
 
+.botones-container {
+	margin: 2px;
+	padding: 2px;
+	box-sizing:unset;
+	width: 100%;
+	float: left;
+	text-align: center;
+	/*justify-content: center;*/
+}
