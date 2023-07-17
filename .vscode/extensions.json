@@ -2,6 +2,8 @@
     "recommendations": [
         "christian-kohler.path-intellisense",
         "anseki.vscode-color",
-        "royaction.color-manager"
+        "royaction.color-manager",
+        "pranaygp.vscode-css-peek",
+        "zignd.html-css-class-completion"
     ]
 }

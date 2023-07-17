@@ -2,148 +2,220 @@
 <html>
 
 <head>
-	<title>Formulario Emergente</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-
+	<meta charset="UTF-8">
+	<title>Formulario</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<style>
-		#formContainer {
-			display: none;
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 9999;
+		.fieldset-container {
+			float: left;
+
 		}
 
-		.form {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			background-color: #fff;
-			padding: 20px;
-			border-radius: 5%;
-			width: 30%;
+		@media (min-width: 810px) {
+			div.fieldset-container {
+				width:100%;
+			}
+
+			
 		}
 
-		#openFormButton {
-			margin-top: 20px;
-		}
-
-		#closeFormButton {
-			margin-top: 10px;
-		}
-
-		h2 {
-			margin-top: 0;
-		}
-
-		label {
-			font-size: 14px;
-			color: #444;
-		}
-
-		input[type="text"],
-		input[type="date"] {
-			width: 100%;
-			padding: 10px;
-			font-size: 16px;
-			color: #444;
-			margin-bottom: 20px;
-			border: none;
-			border-bottom: 1px solid #444;
-			outline: none;
-			background: transparent;
-		}
-
-		input[type="submit"] {
-			border: none;
-			outline: none;
-			height: 40px;
-			color: #fff;
-			font-size: 16px;
-			background: linear-gradient(to right, #4a90e2, #63b8ff);
-			cursor: pointer;
-			border-radius: 20px;
-			width: 100%;
-			margin-top: 10px;
-		}
-
-		input[type="submit"]:hover {
-			background: linear-gradient(to right, #63b8ff, #4a90e2);
-		}
-
-
-		button {
-			border: none;
-			outline: none;
-			height: 40px;
-			color: #fff;
-			font-size: 16px;
-			background: linear-gradient(to right, #4a90e2, #63b8ff);
-			cursor: pointer;
-			border-radius: 20px;
-			width: 100%;
-			margin-top: 10px;
+		@media (max-width: 800px) {
+			div.fieldset-container {
+				width: 100%;
+			}
 		}
 	</style>
+
+
 </head>
 
 <body>
-<div class="botones-container">
-	<button id="openFormButton" class="claseboton">Registrar Paciente</button>
-	<button id="openFormButton" class="claseboton">Registrar Vacunas del Paciente</button>
-	<button id="openFormButton" class="claseboton">Seguro del Paciente</button>
-</div>
-	<div id="formContainer">
-		<form id="myForm" class="form">
-			<h2>Registro de los Pacientes</h2>
-			<label for="nombre">Nombre</label>
-			<input type="text" name="nombre" required>
-			<label for="apellido">Apellido</label>
-			<input type="text" name="apellido" required>
-			<fieldset style="border-radius: 6px; border: 2px solid gray; padding: 10px; display: flex; flex-direction: column; align-items: center; margin:15px;">
-				<legend>Sexo</legend>
-				<div style="  width: 100%;">
-					<label for="Masculino" style="padding:5px;">
-						Masculino
-						<input type="radio"  style="padding:5px;" name="sexo" value="masculino" required>
-					</label>
-					<label for="Femenino" style="padding:5px;">
-						Femenino
-						<input type="radio" style="padding:5px;" name="sexo" value="femenino" required>
-					</label>
+	<div class="form">
+		<div class="fieldset-container">
+			<fieldset>
+				<legend>Datos del Paciente</legend>
+				<div>
+					<label for="nombre">Nombre:</label>
+					<input type="text" id="nombre" style="border-radius: 5px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;">
+				</div>
+				<div>
+					<label for="apellido">Apellido:</label>
+					<input type="text" id="apellido" style="border-radius: 5px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;">
+				</div>
+				<fieldset style="width:90%;">
+					<legend>Sexo:</legend>
+					<div style="width:35%;float:left; margin-left: 10%; padding: 1%; ">
+						<label for="masculino">Masculino</label>
+						<input type="radio" id="masculino" name="sexo" value="masculino">
+					</div>
+					<div style="width:35%;float:left;padding: 1%;">
+						<label for="femenino">Femenino</label>
+						<input type="radio" id="femenino" name="sexo" value="femenino">
+					</div>
+				</fieldset>
+				<div>
+					<label for="fecha_nacimiento">Fecha de nacimiento:</label>
+					<input type="date" id="fecha_nacimiento" style="border-radius: 5px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;">
 				</div>
 			</fieldset>
+		</div>
 
+		<div class="fieldset-container">
+			<fieldset>
+				<legend>Datos de Seguro del paciente</legend>
+				<div>
+					<label for="NSS">Número de Seguro de Salud:</label>
+					<input type="text" id="NSS" style="border-radius: 5px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;">
+					<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
+				</div>
+				<div>
+					<label for="Id_seguro_salud">ID Seguro de Salud:</label>
+					<input type="text" id="Id_seguro_salud" style="border-radius: 5px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;">
+				</div>
+			</fieldset>
+		</div>
 
-			<label for="fecha_nacimiento">Fecha de Nacimiento</label>
-			<input type="date" name="fecha_nacimiento" required>
-			<input type="submit" name="submit_paciente" value="Guardar Datos del Paciente">
-
-			<button id="closeFormButton">Cerrar</button>
-		</form>
+		<div class="fieldset-container">
+			<fieldset>
+				<legend>Paciente-vacunas</legend>
+				<table>
+					<tr>
+						<td><label for="id_vacuna">ID Vacuna:</label></td>
+						<td>
+							<input type="text" id="id_vacuna">
+							<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
+						</td>
+					</tr>
+					<tr>
+						<td><label for="dosis">Dosis:</label></td>
+						<td><input type="text" id="dosis"></td>
+					</tr>
+					<tr>
+						<td><label for="refuerzo">Refuerzo:</label></td>
+						<td><input type="text" id="refuerzo"></td>
+					</tr>
+				</table>
+				<button id="agregarVacuna" class="boton"><i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar</button>
+				<table id="vacunasTabla" style="display: none;">
+					<thead>
+						<tr>
+							<th>ID Vacuna</th>
+							<th>Dosis</th>
+							<th>Refuerzo</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="fieldset-container">
+			<fieldset>
+				<legend>Historia clínica</legend>
+				<table>
+					<tr>
+						<td><label for="id_padecimiento">ID Padecimiento:</label></td>
+						<td>
+							<input type="text" id="id_padecimiento">
+							<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
+						</td>
+					</tr>
+					<tr>
+						<td><label for="notas">Notas:</label></td>
+						<td><input type="text" id="notas"></td>
+					</tr>
+					<tr>
+						<td><label for="desde_cuando">Desde cuándo:</label></td>
+						<td>
+							<input type="date" id="desde_cuando" onchange="calculateYears()"><br>
+							<span id="yearsSince"></span>
+						</td>
+					</tr>
+				</table>
+				<button id="agregarPadecimiento" class="boton"><i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar</button>
+				<table id="padecimientosTabla" style="display: none;">
+					<thead>
+						<tr>
+							<th>ID Padecimiento</th>
+							<th>Notas</th>
+							<th>Desde cuándo</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</fieldset>
+		</div>
 	</div>
 
-
-	
-
-
 	<script>
-		document.getElementById("openFormButton").addEventListener("click", function() {
-			document.getElementById("formContainer").style.display = "block";
+		// Función para calcular los años desde la fecha seleccionada
+		function calculateYears() {
+			const fechaSeleccionada = document.getElementById("desde_cuando").value;
+			const fechaActual = new Date();
+			const diferencia = fechaActual.getFullYear() - new Date(fechaSeleccionada).getFullYear();
+			document.getElementById("yearsSince").textContent = "Lleva padeciendo esta enfermedad durante " + diferencia + " años.";
+		}
+
+		// Función para agregar una vacuna a la tabla
+		document.getElementById("agregarVacuna").addEventListener("click", function() {
+			const idVacuna = document.getElementById("id_vacuna").value;
+			const dosis = document.getElementById("dosis").value;
+			const refuerzo = document.getElementById("refuerzo").value;
+
+			if (idVacuna && dosis && refuerzo) {
+				const table = document.getElementById("vacunasTabla");
+				const tbody = table.getElementsByTagName("tbody")[0];
+
+				const row = document.createElement("tr");
+				row.innerHTML = `
+					<td>${idVacuna}</td>
+					<td>${dosis}</td>
+					<td>${refuerzo}</td>
+					<td><button>Modificar</button></td>
+					<td><button onclick="confirm('¿Realmente desea eliminar esta vacuna?')">Eliminar</button></td>
+				`;
+
+				tbody.appendChild(row);
+				table.style.display = "table";
+			}
+
+			// Limpiar los campos de vacuna
+			document.getElementById("id_vacuna").value = "";
+			document.getElementById("dosis").value = "";
+			document.getElementById("refuerzo").value = "";
 		});
 
-		document.getElementById("closeFormButton").addEventListener("click", function() {
-			document.getElementById("formContainer").style.display = "none";
-		});
+		// Función para agregar un padecimiento a la tabla
+		document.getElementById("agregarPadecimiento").addEventListener("click", function() {
+			const idPadecimiento = document.getElementById("id_padecimiento").value;
+			const notas = document.getElementById("notas").value;
+			const desdeCuando = document.getElementById("desde_cuando").value;
 
-		document.getElementById("myForm").addEventListener("submit", function(event) {
-			event.preventDefault(); // Evita el envío del formulario
-			// Aquí puedes realizar el procesamiento del formulario, como enviar los datos a través de una solicitud AJAX
-			alert("Formulario enviado correctamente");
+			if (idPadecimiento && notas && desdeCuando) {
+				const table = document.getElementById("padecimientosTabla");
+				const tbody = table.getElementsByTagName("tbody")[0];
+
+				const row = document.createElement("tr");
+				row.innerHTML = `
+					<td>${idPadecimiento}</td>
+					<td>${notas}</td>
+					<td>${desdeCuando}</td>
+					<td><button>Modificar</button></td>
+					<td><button onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>
+				`;
+
+				tbody.appendChild(row);
+				table.style.display = "table";
+			}
+
+			// Limpiar los campos de padecimiento
+			document.getElementById("id_padecimiento").value = "";
+			document.getElementById("notas").value = "";
+			document.getElementById("desde_cuando").value = "";
+			document.getElementById("yearsSince").textContent = "";
 		});
 	</script>
 </body>
