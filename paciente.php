@@ -99,7 +99,7 @@
 </div>
 	<div id="formContainer">
 		<form id="myForm" class="form">
-			<h2>Registro del Paciente</h2>
+			<h2>Registro de los Pacientes</h2>
 			<label for="nombre">Nombre</label>
 			<input type="text" name="nombre" required>
 			<label for="apellido">Apellido</label>
