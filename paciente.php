@@ -3,7 +3,7 @@
 
 <head>
 	<title>Formulario Emergente</title>
-
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<style>
 		#formContainer {
@@ -92,8 +92,11 @@
 </head>
 
 <body>
-	<button id="openFormButton">Nuevo</button>
-
+<div class="botones-container">
+	<button id="openFormButton" class="claseboton">Registrar Paciente</button>
+	<button id="openFormButton" class="claseboton">Registrar Vacunas del Paciente</button>
+	<button id="openFormButton" class="claseboton">Seguro del Paciente</button>
+</div>
 	<div id="formContainer">
 		<form id="myForm" class="form">
 			<h2>Registro del Paciente</h2>
@@ -123,6 +126,10 @@
 			<button id="closeFormButton">Cerrar</button>
 		</form>
 	</div>
+
+
+	
+
 
 	<script>
 		document.getElementById("openFormButton").addEventListener("click", function() {
