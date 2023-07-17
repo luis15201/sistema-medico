@@ -11,7 +11,7 @@
     <h2 style="padding: 1%;text-align: center;text-transform: uppercase;font-family: bitter; color:black; padding: 15px; width: 100%; display: flex; flex-direction: column; align-items: center;">Menú de Mantenimientos</h2>
     <img src="IMAGENES\app90.png" class="" alt="crud">
   </div>
-  <a href="menu-Mant.html">
+  <a href="menu-pacientes.php">
     <div class="card" style="background: linear-gradient(to right, #E8A9F7,#e4e5dc ); ">
       <div class="card-title" style="font-family: Anton; color:black;">Pacientes</div>
       <img src="IMAGENES\pacientes.png" class="card-icon" alt="Mantenimientos">
