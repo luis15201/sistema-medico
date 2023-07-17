@@ -8,22 +8,23 @@
 	<style>
 		.fieldset-container {
 			float: left;
+			width: 45%;
 
 		}
 
 		@media (min-width: 810px) {
-			div.fieldset-container {
-				width:100%;
-			}
+	div.fieldset-container {
+		float: left;
+		width: 45%;
+	}
+}
 
-			
-		}
-
-		@media (max-width: 800px) {
-			div.fieldset-container {
-				width: 100%;
-			}
-		}
+@media (max-width: 800px) {
+	div.fieldset-container {
+		float: left;
+		width: 100%;
+	}
+}
 	</style>
 
 
