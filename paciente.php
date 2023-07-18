@@ -6,32 +6,175 @@
 	<title>Formulario</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<style>
-		.fieldset-container {
-			float: left;
-			width: 60%;
-
+		.container {
+			display: grid;
+			grid-template-columns: repeat(2, 50%);
+			grid-gap: 6px 10px;
 		}
 
-		@media (min-width: 810px) {
-			div.fieldset-container {
-				float: left;
-				width: 45%;
-			}
+		fieldset {
+
+			border: 1px solid #ddd;
+			border-radius: 2vw;
+			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			padding: 1vw;
+			box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+			margin-bottom: 2vw;
 		}
+
+		fieldset fieldset {
+
+			background-color: transparent;
+		}
+
+		fieldset fieldset legend {
+			font-size: 20px;
+			text-transform: uppercase;
+			padding-left: 10%;
+			padding-right: 10%;
+			background-color: transparent;
+		}
+
+		legend {
+			font-weight: bold;
+			font-size: 30px;
+			font-weight: bold;
+			margin-bottom: 1vw;
+			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			border: solid 1px #45bac9db;
+			border-radius: 10px;
+		}
+
+		label {
+			font-size: 1.4vw;
+			color: #444;
+			margin: 10px;
+		}
+
+		input[type="text"],
+		input[type="date"] {
+			width: 45%;
+			padding: 1vw;
+			font-size: 1.6vw;
+			color: #444;
+			margin-bottom: 2vw;
+			border: none;
+			border-bottom: 0.1vw solid #444;
+			outline: none;
+			border-radius: 15px;
+			margin: 10px;
+			/*background: transparent;*/
+		}
+
+		button {
+			border: none;
+			outline: none;
+			/*height: 4vw;*/
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			padding: 10px;
+			border-radius: 2vw;
+			width: 10%;
+
+			margin: 10px;
+
+
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			/* Ajusta la altura según tus necesidades */
+			min-height: 40px;
+			/* Establece un tamaño mínimo para el botón */
+		}
+
+		.boton {
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 2vw;
+			width: 25%;
+			margin-top: 2vw;
+
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			/* Ajusta la altura según tus necesidades */
+			min-height: 40px;
+			/* Establece un tamaño mínimo para el botón */
+		}
+
+		input[type="submit"] {
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 2vw;
+			width: 25%;
+			margin-top: 2vw;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			/* Ajusta la altura según tus necesidades */
+			min-height: 40px;
+			/* Establece un tamaño mínimo para el botón */
+		}
+
+		input[type="submit"]:hover,
+		button:hover {
+			background: linear-gradient(to right, #63b8ff, #4a90e2);
+		}
+
+		/* Estilos para la tabla de vacunas y padecimientos */
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		th,
+		td {
+			padding: 1vw;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+
+		td button {
+			margin-right: 0.5vw;
+			width: 65px;
+			font-size: 12px;
+		}
+
+
 
 		@media (max-width: 800px) {
-			div.fieldset-container {
-				float: left;
-				width: 100%;
+			.container {
+				grid-template-columns: 100%;
+				grid-gap: 20px;
 			}
-		}
 	</style>
 
 
 </head>
 
 <body>
-	<div class="form">
+	<div class="container">
+		<!--div class="form"-->
+
 		<div class="fieldset-container">
 			<fieldset>
 				<legend>Datos del Paciente</legend>
@@ -63,9 +206,38 @@
 
 		<div class="fieldset-container">
 			<fieldset>
+				<legend>Historia Clínica</legend>
+				<label for="id_padecimiento">ID Padecimiento:</label>
+				<input type="text" id="id_padecimiento">
+				<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
+				<label for="notas">Notas:</label>
+				<input type="text" id="notas">
+				<br>
+				<label for="desde_cuando">Desde cuándo:</label>
+				<input type="date" id="desde_cuando" onchange="calculateYears()"><br>
+				<span id="yearsSince"></span>
+				<button id="agregarPadecimiento" class="boton">
+					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000; vertical-align: middle;">add</i> Agregar
+				</button>
+			</fieldset>
+			<table id="padecimientosTabla" style="display: none;">
+				<thead>
+					<tr>
+						<th>ID Padecimiento</th>
+						<th>Notas</th>
+						<th>Desde cuándo</th>
+						<th>Modificar</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="fieldset-container">
+			<fieldset>
 				<legend>Datos de Seguro del paciente</legend>
 				<div>
-					<label for="NSS">Número de Seguro de Salud:</label>
+					<label for="NSS">Número de Seguro:</label>
 					<input type="text" id="NSS" style="border-radius: 5px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;">
 					<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
 				</div>
@@ -76,6 +248,12 @@
 			</fieldset>
 		</div>
 
+
+
+
+
+
+
 		<div class="fieldset-container">
 			<fieldset>
 				<legend>Paciente-vacunas</legend>
@@ -84,7 +262,7 @@
 						<td><label for="id_vacuna">ID Vacuna:</label></td>
 						<td>
 							<input type="text" id="id_vacuna">
-							<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
+							<button class="boton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
 						</td>
 					</tr>
 					<tr>
@@ -111,32 +289,7 @@
 				</table>
 			</fieldset>
 		</div>
-		<div class="fieldset-container">
-			<fieldset>
-				<legend>Historia Clínica</legend>
-				<label for="id_padecimiento">ID Padecimiento:</label>
-				<input type="text" id="id_padecimiento">
-				<button class="busquedaboton" title="Buscar en los Seguros registrados"><i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i></button>
-				<label for="notas">Notas:</label>
-				<input type="text" id="notas">
-				<label for="desde_cuando">Desde cuándo:</label>
-				<input type="date" id="desde_cuando" onchange="calculateYears()"><br>
-				<span id="yearsSince"></span>
-				<button id="agregarPadecimiento" class="boton"><i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar</button>
-			</fieldset>
-			<table id="padecimientosTabla" style="display: none;">
-				<thead>
-					<tr>
-						<th>ID Padecimiento</th>
-						<th>Notas</th>
-						<th>Desde cuándo</th>
-						<th>Modificar</th>
-						<th>Eliminar</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</div>
+
 
 		<script>
 			// Función para calcular los años desde la fecha seleccionada
