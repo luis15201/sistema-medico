@@ -86,27 +86,7 @@ $result = $conn->query($query);
   </table>
 
   <script>
-    /*  function seleccionarSeguro(idSeguro, nombreSeguro) {
-        var openerWindow = window.opener;
-        openerWindow.document.getElementById("Id_seguro_salud").value = idSeguro;
-        openerWindow.document.getElementById("Nombre_seguro").textContent = nombreSeguro;
-        window.close();
-    }*/
-
-    /*$(document).ready(function() {
-      // Asignar un evento de clic a las filas de la tabla
-      $("#tabla_seguros tbody").on("click", "tr", function() {
-        // Obtener las celdas de la fila clicada
-        var celdas = $(this).find("td");
-
-        // Obtener los datos de las celdas
-        var idSeguro = celdas.eq(0).text();
-        var nombreSeguro = celdas.eq(1).text();
-
-        // Mostrar los datos en un alert
-        alert("ID Seguro: " + idSeguro + "\nNombre Seguro: " + nombreSeguro);
-      });
-    });*/
+    //evento click para el mantenimiento del paciente
 
     $(document).ready(function() {
       // Asignar un evento de clic a las filas de la tabla
