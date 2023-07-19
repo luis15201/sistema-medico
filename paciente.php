@@ -333,7 +333,11 @@
 					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
 				</button>
 
-				<button id="cancelar" class="boton" style="display: none;">
+				<button id="modificarVacuna" class="boton" style="display: none;">
+					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i> Modificar
+				</button>
+
+				<button id="cancelarEdicion" class="boton" style="display: none;">
 					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i> Cancelar
 				</button>
 				<table id="vacunasTabla">
