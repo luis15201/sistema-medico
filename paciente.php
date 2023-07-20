@@ -267,6 +267,32 @@
 					</thead>
 					<tbody></tbody>
 				</table>
+
+				<script>
+function buscarNombrePadecimiento() {
+  var idPadecimiento = $("#id_padecimiento").val();
+  $.ajax({
+    type: "POST",
+    url: "buscar_padecimiento.php",
+    data: {
+      id_padecimiento: idPadecimiento
+    },
+    dataType: "json",
+    success: function(data) {
+      $("#nombre_padecimiento").text(data ? data.nombre_padecimiento : "Valor no encontrado");
+    },
+    error: function(error) {
+      console.log("Error:", error);
+    }
+  });
+}
+
+		// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
+		$("#id_padecimiento").on("input", buscarNombrePadecimiento);
+
+
+
+				</script>
 			</fieldset>
 
 			<fieldset>
@@ -444,54 +470,90 @@
 	<script>
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
+		// Función para búsqueda dinámica del nombre de la vacuna por ID
+
+
+
+
+
+
+
+
+
+
+		// Función para buscar automáticamente el nombre del padecimiento
+		/*function buscarNombrePadecimiento() {
+			const idPadecimiento = $("#id_padecimiento").val();
+
+			// Realizar la búsqueda en el archivo PHP externo usando AJAX
+			$.ajax({
+				type: "POST",
+				url: "buscar_padecimiento.php",
+				data: {
+					id_padecimiento: idPadecimiento
+				},
+				success: function(response) {
+					// Actualizar el valor del label con el nombre del padecimiento encontrado
+					$("#nombre_padecimiento").text(response);
+				},
+				error: function(xhr, status, error) {
+					console.error(error);
+				}
+			});
+		}*/
+
+
+
+
+
 
 		// Función para cambiar el estilo del fieldset de Historia Clínica
 		function changeFieldsetStyle() {
-      var fieldset = $("fieldset");
-      var inputs = fieldset.find('input[type="text"], input[type="date"], select');
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].style.backgroundColor = 'blue';
-        inputs[i].style.color = 'white';
-      }
-    }
+			var fieldset = $("fieldset");
+			var inputs = fieldset.find('input[type="text"], input[type="date"], select');
+			for (var i = 0; i < inputs.length; i++) {
+				inputs[i].style.backgroundColor = 'blue';
+				inputs[i].style.color = 'white';
+			}
+		}
 
-    // Función para restaurar el estilo original del fieldset de Historia Clínica
-    function restoreFieldsetStyle() {
-      var fieldset = $("fieldset");
-      var inputs = fieldset.find('input[type="text"], input[type="date"], select');
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].style.backgroundColor = '';
-        inputs[i].style.color = '';
-      }
-      $("#btnModificarPadecimiento, #btnCancelarEdicion").hide();
-    }
+		// Función para restaurar el estilo original del fieldset de Historia Clínica
+		function restoreFieldsetStyle() {
+			var fieldset = $("fieldset");
+			var inputs = fieldset.find('input[type="text"], input[type="date"], select');
+			for (var i = 0; i < inputs.length; i++) {
+				inputs[i].style.backgroundColor = '';
+				inputs[i].style.color = '';
+			}
+			$("#btnModificarPadecimiento, #btnCancelarEdicion").hide();
+		}
 
-    // Función para ocultar el botón "Agregar"
-    function hideAgregarButton() {
-      $("#btnAgregarPadecimiento").hide();
-    }
+		// Función para ocultar el botón "Agregar"
+		function hideAgregarButton() {
+			$("#btnAgregarPadecimiento").hide();
+		}
 
-    // Función para mostrar el botón "Agregar"
-    function showAgregarButton() {
-      $("#btnAgregarPadecimiento").show();
-    }
+		// Función para mostrar el botón "Agregar"
+		function showAgregarButton() {
+			$("#btnAgregarPadecimiento").show();
+		}
 
-    $(document).ready(function() {
-      // Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
-      restoreFieldsetStyle();
+		$(document).ready(function() {
+			// Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
+			restoreFieldsetStyle();
 
-      // Función para agregar un nuevo padecimiento a la tabla
-      function agregarPadecimiento() {
-        const idPadecimiento = $("#id_padecimiento").val();
-        const notas = $("#notas").val();
-        const desdeCuando = $("#desde_cuando").val();
+			// Función para agregar un nuevo padecimiento a la tabla
+			function agregarPadecimiento() {
+				const idPadecimiento = $("#id_padecimiento").val();
+				const notas = $("#notas").val();
+				const desdeCuando = $("#desde_cuando").val();
 
-        if (idPadecimiento && notas && desdeCuando) {
-          const table = $("#padecimientosTabla");
-          const tbody = table.find("tbody");
-          const row = $("<tr>");
+				if (idPadecimiento && notas && desdeCuando) {
+					const table = $("#padecimientosTabla");
+					const tbody = table.find("tbody");
+					const row = $("<tr>");
 
-          row.html(`
+					row.html(`
             <td>${idPadecimiento}</td>
             <td>${notas}</td>
             <td>${desdeCuando}</td>
@@ -499,100 +561,100 @@
             <td><button class="eliminarPadecimiento" onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>
           `);
 
-          tbody.append(row);
-          table.css("display", "table");
-        }
+					tbody.append(row);
+					table.css("display", "table");
+				}
 
-        $("#id_padecimiento").val("");
-        $("#notas").val("");
-        $("#desde_cuando").val("");
-        $("#yearsSince").text("");
-      }
+				$("#id_padecimiento").val("");
+				$("#notas").val("");
+				$("#desde_cuando").val("");
+				$("#yearsSince").text("");
+			}
 
-      // Asignar el evento click al botón de agregar padecimiento
-      $("#btnAgregarPadecimiento").click(function() {
-        agregarPadecimiento();
-        return false; // Evita el envío del formulario
-      });
+			// Asignar el evento click al botón de agregar padecimiento
+			$("#btnAgregarPadecimiento").click(function() {
+				agregarPadecimiento();
+				return false; // Evita el envío del formulario
+			});
 
-      // Evento delegado para los botones "Eliminar" dentro de la tabla
-      // Código de evento delegado para los botones "Eliminar", sin cambios
+			// Evento delegado para los botones "Eliminar" dentro de la tabla
+			// Código de evento delegado para los botones "Eliminar", sin cambios
 
-      // Evento delegado para los botones "Modificar" dentro de la tabla
-      $("#padecimientosTabla").on("click", ".modificarPadecimiento", function(event) {
-        event.preventDefault();
-        // Lógica para modificar el padecimiento
-        // Aquí puedes implementar la lógica para editar los datos del padecimiento
-        // Por ejemplo, mostrar un modal con un formulario de edición
+			// Evento delegado para los botones "Modificar" dentro de la tabla
+			$("#padecimientosTabla").on("click", ".modificarPadecimiento", function(event) {
+				event.preventDefault();
+				// Lógica para modificar el padecimiento
+				// Aquí puedes implementar la lógica para editar los datos del padecimiento
+				// Por ejemplo, mostrar un modal con un formulario de edición
 
-        // Aplicar estilos al fieldset y mostrar botones "Modificar" y "Cancelar"
-        changeFieldsetStyle();
-        $("#btnModificarPadecimiento, #btnCancelarEdicion").show();
+				// Aplicar estilos al fieldset y mostrar botones "Modificar" y "Cancelar"
+				changeFieldsetStyle();
+				$("#btnModificarPadecimiento, #btnCancelarEdicion").show();
 
-        // Ocultar el botón "Agregar" mientras se realiza la modificación
-        hideAgregarButton();
+				// Ocultar el botón "Agregar" mientras se realiza la modificación
+				hideAgregarButton();
 
-        // Obtener la fila actual y guardarla en una variable global para su posterior modificación
-        filaActual = $(this).closest("tr");
-        const idPadecimiento = filaActual.find("td:eq(0)").text();
-        const notas = filaActual.find("td:eq(1)").text();
-        const desdeCuando = filaActual.find("td:eq(2)").text();
+				// Obtener la fila actual y guardarla en una variable global para su posterior modificación
+				filaActual = $(this).closest("tr");
+				const idPadecimiento = filaActual.find("td:eq(0)").text();
+				const notas = filaActual.find("td:eq(1)").text();
+				const desdeCuando = filaActual.find("td:eq(2)").text();
 
-        // Colocar los valores en los campos del fieldset
-        $("#id_padecimiento").val(idPadecimiento);
-        $("#notas").val(notas);
-        $("#desde_cuando").val(desdeCuando);
-      });
+				// Colocar los valores en los campos del fieldset
+				$("#id_padecimiento").val(idPadecimiento);
+				$("#notas").val(notas);
+				$("#desde_cuando").val(desdeCuando);
+			});
 
-      // Evento click del botón "Modificar"
-      $("#btnModificarPadecimiento").click(function() {
-        // Lógica para aplicar la modificación a la fila de la tabla
-        const idPadecimiento = $("#id_padecimiento").val();
-        const notas = $("#notas").val();
-        const desdeCuando = $("#desde_cuando").val();
+			// Evento click del botón "Modificar"
+			$("#btnModificarPadecimiento").click(function() {
+				// Lógica para aplicar la modificación a la fila de la tabla
+				const idPadecimiento = $("#id_padecimiento").val();
+				const notas = $("#notas").val();
+				const desdeCuando = $("#desde_cuando").val();
 
-        // Actualizar los valores de la fila actual con los datos modificados
-        filaActual.find("td:eq(0)").text(idPadecimiento);
-        filaActual.find("td:eq(1)").text(notas);
-        filaActual.find("td:eq(2)").text(desdeCuando);
+				// Actualizar los valores de la fila actual con los datos modificados
+				filaActual.find("td:eq(0)").text(idPadecimiento);
+				filaActual.find("td:eq(1)").text(notas);
+				filaActual.find("td:eq(2)").text(desdeCuando);
 
-        // Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
-        restoreFieldsetStyle();
+				// Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
+				restoreFieldsetStyle();
 
-        // Mostrar nuevamente el botón "Agregar"
-        showAgregarButton();
+				// Mostrar nuevamente el botón "Agregar"
+				showAgregarButton();
 
-        // Restaurar los valores originales en los campos del fieldset
-        $("#id_padecimiento").val("");
-        $("#notas").val("");
-        $("#desde_cuando").val("");
-        return false; // Evitar el envío del formulario
-      });
+				// Restaurar los valores originales en los campos del fieldset
+				$("#id_padecimiento").val("");
+				$("#notas").val("");
+				$("#desde_cuando").val("");
+				return false; // Evitar el envío del formulario
+			});
 
-      // Evento click del botón "Cancelar"
-      $("#btnCancelarEdicion").click(function() {
-        // Lógica para cancelar la edición y restaurar los valores originales
-        // Puedes hacer aquí lo que necesites para cancelar la modificación
-        event.preventDefault();
-        // Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
-        restoreFieldsetStyle();
+			// Evento click del botón "Cancelar"
+			$("#btnCancelarEdicion").click(function() {
+				// Lógica para cancelar la edición y restaurar los valores originales
+				// Puedes hacer aquí lo que necesites para cancelar la modificación
+				event.preventDefault();
+				// Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
+				restoreFieldsetStyle();
 
-        // Mostrar nuevamente el botón "Agregar"
-        showAgregarButton();
+				// Mostrar nuevamente el botón "Agregar"
+				showAgregarButton();
 
-        // Restaurar los valores originales en los campos del fieldset
-        $("#id_padecimiento").val("");
-        $("#notas").val("");
-        $("#desde_cuando").val("");
-        return false; // Evitar el envío del formulario
-      });
-    });
+				// Restaurar los valores originales en los campos del fieldset
+				$("#id_padecimiento").val("");
+				$("#notas").val("");
+				$("#desde_cuando").val("");
+				return false; // Evitar el envío del formulario
+			});
+		});
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒ FIN DE FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 
 
-//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
-//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
+		//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
+		//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
 		//╬╬FUNCIONES DEL BOTON MOFICAR DE LA TABLA AGREGAR --VACUNA A PACIENTE*///
 
 		// Función para verificar y mostrar el input de fecha al cargar la página
