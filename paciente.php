@@ -181,7 +181,7 @@
 	</style>
 </head>
 
-<body>
+<body onload="checkFechaProvista()">
 	<form id="myForm">
 		<div class="container">
 			<fieldset>
@@ -291,7 +291,7 @@
 				</div>
 				<div>
 					<label for="dosis">Dosis:</label>
-					<select id="dosis" style=" width: 90px; ">
+					<select id="dosis" style=" width: 110px; ">
 						<option value="1era">1era</option>
 						<option value="2da">2da</option>
 						<option value="3ra">3ra</option>
@@ -307,7 +307,7 @@
 				</div>
 				<div>
 					<label for="refuerzo">Refuerzo:</label>
-					<select id="refuerzo" style=" width: 90px; ">
+					<select id="refuerzo" style=" width: 110px; ">
 						<option value="1era">1era</option>
 						<option value="2da">2da</option>
 						<option value="3ra">3ra</option>
@@ -384,227 +384,246 @@
 
 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	<script>
-		//funcion para el boton editar o modificar en la tabla de vacunas
+		//FUNCIONES DEL BOTON MOFICAR DE LA TABLA AGREGAR VACUNA A PACIENTE*///
 
-		// Funciones para el apartado de las vacunas
+// Función para verificar y mostrar el input de fecha al cargar la página
+function checkFechaProvista() {
+    var fechaAplicacionSelect = document.getElementById('fecha_aplicacion_select');
+    var fechaAplicacionInput = document.getElementById('fecha_aplicacion_input');
 
-		// Agregar evento para cambiar el input de fecha según la opción seleccionada
-		document.addEventListener('DOMContentLoaded', function() {
-			// Obtener referencias a los elementos del DOM
-			var fechaAplicacionSelect = document.getElementById('fecha_aplicacion_select');
-			var fechaAplicacionInput = document.getElementById('fecha_aplicacion_input');
+    if (fechaAplicacionSelect.value === 'fecha_provista') {
+        fechaAplicacionInput.style.display = 'inline-block';
+    } else {
+        fechaAplicacionInput.style.display = 'none';
+    }
+}
 
-			// Llamar a la función para manejar el cambio del select al cargar la página
-			handleFechaAplicacionChange();
+  // Variables para mantener los registros
+  var registros = [];
 
-			// Agregar evento para cambiar el input de fecha según la opción seleccionada
-			fechaAplicacionSelect.addEventListener('change', handleFechaAplicacionChange);
+// Obtener referencias a los elementos del DOM
+var idVacunaInput = document.getElementById('id_vacuna');
+var nombreVacunaLabel = document.getElementById('nombre_vacuna');
+var dosisSelect = document.getElementById('dosis');
+var refuerzoSelect = document.getElementById('refuerzo');
+var fechaAplicacionSelect = document.getElementById('fecha_aplicacion_select');
+var fechaAplicacionInput = document.getElementById('fecha_aplicacion_input');
+var vacunasTabla = document.getElementById('vacunasTabla').getElementsByTagName('tbody')[0];
+var agregarVacunaBtn = document.getElementById('agregarVacuna');
+var modificarVacunaBtn = document.getElementById('modificarVacuna');
+var cancelarEdicionBtn = document.getElementById('cancelarEdicion');
 
-			function handleFechaAplicacionChange() {
-				if (fechaAplicacionSelect.value === 'fecha_provista') {
-					fechaAplicacionInput.style.display = 'inline-block';
-				} else {
-					fechaAplicacionInput.style.display = 'none';
-				}
-			}
-		});
-		//═¨fin de Agregar evento para cambiar el input de *FECHA* según la opción seleccionada 
-		//********** */
-		// Funciones para el apartado de las vacunas
+// Agregar evento al botón Agregar
+agregarVacunaBtn.addEventListener('click', function (event) {
+	event.preventDefault(); // Evitar la recarga de la página al hacer clic en Agregar
+	agregarVacuna();
+});
 
-		function mostrarModal() {
-			var modal = window.parent.document.getElementById("myModal");
-			modal.style.display = "block";
-		}
+// Agregar evento al botón Modificar (en el fieldset)
+modificarVacunaBtn.addEventListener('click', function (event) {
+	event.preventDefault(); // Evitar la recarga de la página al hacer clic en Modificar
+	guardarEdicion();
+});
 
-		function resetForm() {
-			document.getElementById("id_vacuna").value = "";
-			document.getElementById("dosis").value = "";
-			document.getElementById("refuerzo").value = "";
-			document.getElementById("fecha_aplicacion_select").value = "fecha_provista";
-			document.getElementById("fecha_aplicacion_input").style.display = "none";
-			document.getElementById("fecha_aplicacion_input").value = "";
-		}
+// Agregar evento al botón Cancelar (en el fieldset)
+cancelarEdicionBtn.addEventListener('click', function (event) {
+	event.preventDefault(); // Evitar la recarga de la página al hacer clic en Cancelar
+	cancelarEdicion();
+});
 
-		var vacunasTemporales = [];
+// Agregar evento para eliminar registros
+vacunasTabla.addEventListener('click', function (event) {
+	if (event.target.classList.contains('eliminar')) {
+		var fila = event.target.closest('tr');
+		var index = fila.rowIndex - 1;
+		registros.splice(index, 1);
+		fila.remove();
+	} else if (event.target.classList.contains('modificar')) {
+		var fila = event.target.closest('tr');
+		var index = fila.rowIndex - 1;
+		var registro = registros[index];
+		cargarFormularioEdicion(registro, index);
+	}
+});
 
-		// Variables para mantener los registros
-		var registros = [];
+// Agregar evento para cambiar el input de fecha según la opción seleccionada
+fechaAplicacionSelect.addEventListener('change', function () {
+	if (fechaAplicacionSelect.value === 'fecha_provista') {
+		fechaAplicacionInput.style.display = 'inline-block';
+	} else {
+		fechaAplicacionInput.style.display = 'none';
+	}
+});
 
-		// Obtener referencias a los elementos del DOM
-		var idVacunaInput = document.getElementById('id_vacuna');
-		var nombreVacunaLabel = document.getElementById('nombre_vacuna');
-		var dosisSelect = document.getElementById('dosis');
-		var refuerzoSelect = document.getElementById('refuerzo');
-		var fechaAplicacionSelect = document.getElementById('fecha_aplicacion_select');
-		var fechaAplicacionInput = document.getElementById('fecha_aplicacion_input');
-		var vacunasTabla = document.getElementById('vacunasTabla').getElementsByTagName('tbody')[0];
-		var agregarVacunaBtn = document.getElementById('agregarVacuna');
+// Función para agregar una vacuna
+function agregarVacuna() {
+	// Restaurar estilo de los campos de entrada
+	resetFieldsetStyle();
 
-		// Agregar evento al botón Agregar
-		agregarVacunaBtn.addEventListener('click', agregarVacuna);
+	// Obtener valores de los campos
+	var idVacuna = idVacunaInput.value;
+	var nombreVacuna = nombreVacunaLabel.innerText;
+	var dosis = dosisSelect.value;
+	var refuerzo = refuerzoSelect.value;
+	var fechaAplicacion = fechaAplicacionSelect.value;
+	if (fechaAplicacion === 'fecha_provista') {
+		fechaAplicacion = fechaAplicacionInput.value;
+	}
 
-		// Agregar evento para eliminar registros
-		vacunasTabla.addEventListener('click', function(event) {
-			if (event.target.classList.contains('eliminar')) {
-				var fila = event.target.closest('tr');
-				var index = fila.rowIndex - 1;
-				registros.splice(index, 1);
-				fila.remove();
-			}
-		});
+	// Verificar que los campos requeridos no estén vacíos antes de agregar la vacuna
+	if (idVacuna.trim() === '' || fechaAplicacion.trim() === '') {
+		alert('Debe completar los campos de ID de Vacuna y Fecha de Aplicación.');
+		return;
+	}
 
-		// Agregar evento para cambiar el input de fecha según la opción seleccionada
-		fechaAplicacionSelect.addEventListener('change', function() {
-			if (fechaAplicacionSelect.value === 'fecha_provista') {
-				fechaAplicacionInput.style.display = 'inline-block';
-			} else {
-				fechaAplicacionInput.style.display = 'none';
-			}
-		});
+	// Crear objeto de vacuna
+	var vacuna = {
+		id: idVacuna,
+		nombre: nombreVacuna,
+		dosis: dosis,
+		refuerzo: refuerzo,
+		fechaAplicacion: fechaAplicacion
+	};
 
-		// Función para agregar una vacuna
-		function agregarVacuna() {
-			// Obtener valores de los campos
-			var idVacuna = idVacunaInput.value;
-			var nombreVacuna = nombreVacunaLabel.innerText;
-			var dosis = dosisSelect.value;
-			var refuerzo = refuerzoSelect.value;
-			var fechaAplicacion = fechaAplicacionSelect.value;
-			if (fechaAplicacion === 'fecha_provista') {
-				fechaAplicacion = fechaAplicacionInput.value;
-			}
+	// Agregar vacuna al arreglo de registros
+	registros.push(vacuna);
 
-			// Crear objeto de vacuna
-			var vacuna = {
-				id: idVacuna,
-				nombre: nombreVacuna,
-				dosis: dosis,
-				refuerzo: refuerzo,
-				fechaAplicacion: fechaAplicacion
-			};
+	// Agregar fila a la tabla
+	var fila = vacunasTabla.insertRow();
+	var idVacunaCell = fila.insertCell();
+	var nombreVacunaCell = fila.insertCell();
+	var dosisCell = fila.insertCell();
+	var refuerzoCell = fila.insertCell();
+	var fechaAplicacionCell = fila.insertCell();
+	var modificarCell = fila.insertCell();
+	var eliminarCell = fila.insertCell();
 
-			// Agregar vacuna al arreglo de registros
-			registros.push(vacuna);
+	idVacunaCell.innerHTML = idVacuna;
+	nombreVacunaCell.innerHTML = nombreVacuna;
+	dosisCell.innerHTML = dosis;
+	refuerzoCell.innerHTML = refuerzo;
+	fechaAplicacionCell.innerHTML = fechaAplicacion;
+	modificarCell.innerHTML = '<button type="button" class="modificar">Modificar</button>';
+	eliminarCell.innerHTML = '<button type="button" class="eliminar">Eliminar</button>';
 
-			// Agregar fila a la tabla
-			var fila = vacunasTabla.insertRow();
-			var idVacunaCell = fila.insertCell();
-			var nombreVacunaCell = fila.insertCell();
-			var dosisCell = fila.insertCell();
-			var refuerzoCell = fila.insertCell();
-			var fechaAplicacionCell = fila.insertCell();
-			var modificarCell = fila.insertCell();
-			var eliminarCell = fila.insertCell();
+	// Limpiar campos de entrada
+	idVacunaInput.value = '';
+	nombreVacunaLabel.innerText = '';
+	dosisSelect.value = '1era';
+	refuerzoSelect.value = '1era';
+	fechaAplicacionSelect.value = 'fecha_provista';
+	fechaAplicacionInput.style.display = 'none';
+	fechaAplicacionInput.value = '';
+}
 
-			idVacunaCell.innerHTML = idVacuna;
-			nombreVacunaCell.innerHTML = nombreVacuna;
-			dosisCell.innerHTML = dosis;
-			refuerzoCell.innerHTML = refuerzo;
-			fechaAplicacionCell.innerHTML = fechaAplicacion;
-			modificarCell.innerHTML = '<button type="button" class="modificar">Modificar</button>';
-			eliminarCell.innerHTML = '<button type="button" class="eliminar">Eliminar</button>';
+// Función para cargar el formulario de edición
+function cargarFormularioEdicion(registro, index) {
+	// Restaurar estilo de los campos de entrada
+	resetFieldsetStyle();
 
-			// Limpiar campos de entrada
-			idVacunaInput.value = '';
-			nombreVacunaLabel.innerText = '';
-			dosisSelect.value = '1era';
-			refuerzoSelect.value = '1era';
-			fechaAplicacionSelect.value = 'fecha_provista';
-			fechaAplicacionInput.style.display = 'none';
-			fechaAplicacionInput.value = '';
-			// Evitar el envío del formulario
-			event.preventDefault();
-		}
+	idVacunaInput.value = registro.id;
+	nombreVacunaLabel.innerText = registro.nombre;
+	dosisSelect.value = registro.dosis;
+	refuerzoSelect.value = registro.refuerzo;
+	fechaAplicacionSelect.value = registro.fechaAplicacion;
+	if (registro.fechaAplicacion === 'fecha_provista') {
+		fechaAplicacionInput.style.display = 'inline-block';
+		fechaAplicacionInput.value = registro.fechaAplicacion;
+	} else {
+		fechaAplicacionInput.style.display = 'none';
+	}
 
+	agregarVacunaBtn.style.display = 'none';
+	modificarVacunaBtn.style.display = 'block';
+	cancelarEdicionBtn.style.display = 'block';
 
-		///▓▓▓fin de las funciones del apartado de las vacunas--▓▓▓▓▓▓///
-		///FUNCINES DEL BOTON MOFICAR DE LA TABLA AGREGAR VACUNA A PACIENTE*///
-		document.addEventListener('DOMContentLoaded', function() {
-			// ... (código anterior) ...
+	// Cambiar el estilo de los campos al modo de edición
+	changeFieldsetStyle();
 
-			// Agregar evento para editar registros
-			vacunasTabla.addEventListener('click', function(event) {
-				if (event.target.classList.contains('modificar')) {
-					var fila = event.target.closest('tr');
-					var index = fila.rowIndex - 1;
-					var registro = registros[index];
-					cargarFormularioEdicion(registro);
-				}
-			});
+	// Guardar el índice del registro en un atributo personalizado en el botón Modificar (en el fieldset)
+	modificarVacunaBtn.setAttribute('data-index', index);
+}
 
-			// Agregar evento para cancelar la edición
-			document.getElementById('cancelar').addEventListener('click', function() {
-				resetForm();
-				agregarVacunaBtn.innerText = 'Agregar';
-				agregarVacunaBtn.removeEventListener('click', guardarEdicion);
-				agregarVacunaBtn.addEventListener('click', agregarVacuna);
-				document.getElementById('cancelar').style.display = 'none';
-			});
-		});
+// Función para guardar la edición
+function guardarEdicion() {
+	var index = parseInt(modificarVacunaBtn.getAttribute('data-index'));
 
-		// Función para cargar el formulario de edición
-		function cargarFormularioEdicion(registro) {
-			idVacunaInput.value = registro.id;
-			nombreVacunaLabel.innerText = registro.nombre;
-			dosisSelect.value = registro.dosis;
-			refuerzoSelect.value = registro.refuerzo;
-			fechaAplicacionSelect.value = registro.fechaAplicacion;
-			if (registro.fechaAplicacion === 'fecha_provista') {
-				fechaAplicacionInput.style.display = 'inline-block';
-				fechaAplicacionInput.value = registro.fechaAplicacion;
-			} else {
-				fechaAplicacionInput.style.display = 'none';
-			}
+	var idVacuna = idVacunaInput.value;
+	var nombreVacuna = nombreVacunaLabel.innerText;
+	var dosis = dosisSelect.value;
+	var refuerzo = refuerzoSelect.value;
+	var fechaAplicacion = fechaAplicacionSelect.value;
+	if (fechaAplicacion === 'fecha_provista') {
+		fechaAplicacion = fechaAplicacionInput.value;
+	}
 
-			agregarVacunaBtn.innerText = 'Modificar';
-			agregarVacunaBtn.removeEventListener('click', agregarVacuna);
-			agregarVacunaBtn.addEventListener('click', guardarEdicion);
-			document.getElementById('cancelar').style.display = 'block';
-		}
+	// Actualizar el registro en el arreglo
+	registros[index] = {
+		id: idVacuna,
+		nombre: nombreVacuna,
+		dosis: dosis,
+		refuerzo: refuerzo,
+		fechaAplicacion: fechaAplicacion
+	};
 
-		// Función para guardar la edición
-		function guardarEdicion() {
-			var idVacuna = idVacunaInput.value;
-			var nombreVacuna = nombreVacunaLabel.innerText;
-			var dosis = dosisSelect.value;
-			var refuerzo = refuerzoSelect.value;
-			var fechaAplicacion = fechaAplicacionSelect.value;
-			if (fechaAplicacion === 'fecha_provista') {
-				fechaAplicacion = fechaAplicacionInput.value;
-			}
+	// Actualizar los valores en la tabla
+	var fila = vacunasTabla.rows[index];
+	fila.cells[0].innerText = idVacuna;
+	fila.cells[1].innerText = nombreVacuna;
+	fila.cells[2].innerText = dosis;
+	fila.cells[3].innerText = refuerzo;
+	fila.cells[4].innerText = fechaAplicacion;
 
-			// Obtener el índice del registro que se está editando
-			var index = registros.findIndex(function(registro) {
-				return registro.id === idVacuna;
-			});
+	// Restaurar formulario de edición
+	resetForm();
+	agregarVacunaBtn.style.display = 'block';
+	modificarVacunaBtn.style.display = 'none';
+	cancelarEdicionBtn.style.display = 'none';
 
-			// Actualizar el registro en el arreglo
-			registros[index] = {
-				id: idVacuna,
-				nombre: nombreVacuna,
-				dosis: dosis,
-				refuerzo: refuerzo,
-				fechaAplicacion: fechaAplicacion
-			};
+	// Restaurar el estilo de los campos
+	resetFieldsetStyle();
+}
 
-			// Actualizar los valores en la tabla
-			var fila = vacunasTabla.rows[index];
-			fila.cells[0].innerText = idVacuna;
-			fila.cells[1].innerText = nombreVacuna;
-			fila.cells[2].innerText = dosis;
-			fila.cells[3].innerText = refuerzo;
-			fila.cells[4].innerText = fechaAplicacion;
+// Función para cancelar la edición
+function cancelarEdicion() {
+	// Restaurar formulario de edición
+	resetForm();
+	agregarVacunaBtn.style.display = 'block';
+	modificarVacunaBtn.style.display = 'none';
+	cancelarEdicionBtn.style.display = 'none';
 
-			// Restaurar el formulario y cambiar botón a "Agregar"
-			resetForm();
-			agregarVacunaBtn.innerText = 'Agregar';
-			agregarVacunaBtn.removeEventListener('click', guardarEdicion);
-			agregarVacunaBtn.addEventListener('click', agregarVacuna);
-			document.getElementById('cancelar').style.display = 'none';
-		}
+	// Restaurar el estilo de los campos
+	resetFieldsetStyle();
+}
 
+// Función para resetear el formulario de edición
+function resetForm() {
+	idVacunaInput.value = '';
+	nombreVacunaLabel.innerText = '';
+	dosisSelect.value = '1era';
+	refuerzoSelect.value = '1era';
+	fechaAplicacionSelect.value = 'fecha_provista';
+	fechaAplicacionInput.style.display = 'none';
+	fechaAplicacionInput.value = '';
+}
 
+// Función para cambiar el estilo de los campos de entrada al modo de edición
+function changeFieldsetStyle() {
+	var inputs = document.querySelectorAll('input[type="text"], input[type="date"], select');
+	for (var i = 0; i < inputs.length; i++) {
+		inputs[i].style.backgroundColor = 'blue';
+		inputs[i].style.color = 'white';
+	}
+}
+
+// Función para restaurar el estilo de los campos de entrada al modo original
+function resetFieldsetStyle() {
+	var inputs = document.querySelectorAll('input[type="text"], input[type="date"], select');
+	for (var i = 0; i < inputs.length; i++) {
+		inputs[i].style.backgroundColor = '';
+		inputs[i].style.color = '';
+	}
+}
 		//FIN DE FUNCIONES DEL BOTON MOFICAR DE LA TABLA AGREGAR VACUNA A PACIENTE*///
 
 
