@@ -40,14 +40,25 @@ $result = $conn->query($query);
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
   <script>
-    $(document).ready(function() {
+   /* $(document).ready(function() {
       $('#tabla_seguros').DataTable({
         dom: 'Bfrtip',
         buttons: [
           'copy', 'csv', 'excel', 'pdf', 'print'
         ]
       });
+    });*/
+    $(document).ready(function() {
+      $('#tabla_seguros').DataTable({
+        dom: 'frtip', // Mostrar solo búsqueda y paginación
+        language: {
+          url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' // Ruta al archivo de traducción
+        }
+      });
     });
+
+
+
 
     function seleccionarSeguro(idSeguro, nombreSeguro) {
       var openerWindow = window.opener;
@@ -59,7 +70,7 @@ $result = $conn->query($query);
 </head>
 
 <body>
-  <h1>Consulta de Seguros de Salud</h1>
+<h3 style="padding:0; margin:0;">Consulta de Seguros de Salud</h3>
 
   <table id="tabla_seguros" class="display" style="width:100%">
     <thead>
