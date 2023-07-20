@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
+		.campo-modificado {
+			/*ESTILO PARA LA EDICION DE PADECIMIENTOS*/
+			background-color: green;
+			color: white;
+		}
+
 		.container {
 			display: grid;
 			grid-template-columns: repeat(2, 50%);
@@ -184,6 +190,9 @@
 
 <body onload="checkFechaProvista()">
 	<form id="myForm">
+
+
+
 		<div class="container">
 			<fieldset>
 				<legend>Datos del Paciente</legend>
@@ -212,22 +221,40 @@
 				</div>
 			</fieldset>
 
+
 			<fieldset>
 				<legend>Historia Clínica</legend>
 				<label for="id_padecimiento">ID Padecimiento:</label>
-				<input type="text" id="id_padecimiento">
+				<input type="text" id="id_padecimiento" style="width:110px">
 				<button class="busquedaboton" title="Buscar en los Seguros registrados">
 					<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 				</button>
+				<div>
+					<label for="Nombre_padecimiento">Nombre del padecimiento:</label>
+					<label id="nombre_padecimiento"></label>
+				</div>
+				<div id="myModal" class="modal" style="width: 100%; height: 90%;">
+					<div class="modal-content" style="width: 100%; height: 80%;">
+						<span class="close">&times;</span>
+						<iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+					</div>
+				</div>
+
+
+
+
 				<label for="notas">Notas:</label>
 				<input type="text" id="notas">
 				<br>
 				<label for="desde_cuando">Desde cuándo:</label>
 				<input type="date" id="desde_cuando" onchange="calculateYears()"><br>
 				<span id="yearsSince"></span>
-				<button id="agregarPadecimiento" class="boton">
+				<button id="btnAgregarPadecimiento" class="boton">
 					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
 				</button>
+				<!-- Botones adicionales para Modificar y Cancelar -->
+				<button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
+				<button id="btnCancelarEdicion" style="display: none;">Cancelar</button>
 				<table id="padecimientosTabla" style="display: none;">
 					<thead>
 						<tr>
@@ -272,120 +299,119 @@
 			</fieldset>
 
 			<fieldset>
-        <legend>Paciente-vacunas</legend>
-        <div>
-            <label for="id_vacuna">ID Vacuna:</label>
-            <input type="text" id="id_vacuna" style="width: 45px;">
-            <button class="boton" title="Buscar en los Seguros registrados">
-                <i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-            </button>
-        </div>
-        <div>
-            <label for="Nombre_vacuna">Nombre de la Vacuna:</label>
-            <label id="nombre_vacuna"></label>
-        </div>
-        <div id="myModal" class="modal" style="width: 100%; height: 250%;">
-            <div class="modal-content" style="width: 100%; height: 100%;">
-                <span class="close">&times;</span>
-                <iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0"
-                    style="width: 100%; height: 100%;"></iframe>
-            </div>
-        </div>
+				<legend>Paciente-vacunas</legend>
+				<div>
+					<label for="id_vacuna">ID Vacuna:</label>
+					<input type="text" id="id_vacuna" style="width: 45px;">
+					<button class="boton" title="Buscar en los Seguros registrados">
+						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+					</button>
+				</div>
+				<div>
+					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
+					<label id="nombre_vacuna"></label>
+				</div>
+				<div id="myModal" class="modal" style="width: 100%; height: 250%;">
+					<div class="modal-content" style="width: 100%; height: 100%;">
+						<span class="close">&times;</span>
+						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+					</div>
+				</div>
 
 
-        <div style="border-top:20px;">
-            <label for="dosis">Dosis:</label>
-            <select id="dosis" style=" width: 110px; ">
-                <option value="1era">1era</option>
-                <option value="2da">2da</option>
-                <option value="3ra">3ra</option>
-                <option value="4ta">4ta</option>
-                <option value="5ta">5ta</option>
-                <option value="6ta">6ta</option>
-                <option value="7ma">7ma</option>
-                <option value="8va">8va</option>
-                <option value="9na">9na</option>
-                <option value="10ma">10ma</option>
-                <option value="NA">NA</option>
-            </select>
-        </div>
-        <div>
-            <label for="refuerzo">Refuerzo:</label>
-            <select id="refuerzo" style=" width: 110px; ">
-                <option value="1era">1era</option>
-                <option value="2da">2da</option>
-                <option value="3ra">3ra</option>
-                <option value="4ta">4ta</option>
-                <option value="5ta">5ta</option>
-                <option value="6ta">6ta</option>
-                <option value="7ma">7ma</option>
-                <option value="8va">8va</option>
-                <option value="9na">9na</option>
-                <option value="10ma">10ma</option>
-                <option value="NA">NA</option>
-            </select>
-        </div>
-        <div>
-            <label for="fecha_aplicacion">Fecha de Aplicación:</label>
-            <select id="fecha_aplicacion_select" style="width: 180px;">
-                <option value="fecha_provista">Fecha Provista</option>
-                <option value="fecha_no_provista">Fecha No Provista</option>
-            </select>
-            <input type="date" id="fecha_aplicacion_input" style="display: none;">
-        </div>
-        <button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
-            <i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
-            Agregar
-        </button>
+				<div style="border-top:20px;">
+					<label for="dosis">Dosis:</label>
+					<select id="dosis" style=" width: 110px; ">
+						<option value="1era">1era</option>
+						<option value="2da">2da</option>
+						<option value="3ra">3ra</option>
+						<option value="4ta">4ta</option>
+						<option value="5ta">5ta</option>
+						<option value="6ta">6ta</option>
+						<option value="7ma">7ma</option>
+						<option value="8va">8va</option>
+						<option value="9na">9na</option>
+						<option value="10ma">10ma</option>
+						<option value="NA">NA</option>
+					</select>
+				</div>
+				<div>
+					<label for="refuerzo">Refuerzo:</label>
+					<select id="refuerzo" style=" width: 110px; ">
+						<option value="1er">1era</option>
+						<option value="2do">2da</option>
+						<option value="3ro">3ra</option>
+						<option value="4to">4ta</option>
+						<option value="5to">5ta</option>
+						<option value="6to">6ta</option>
+						<option value="7mo">7ma</option>
+						<option value="8vo">8va</option>
+						<option value="9no">9na</option>
+						<option value="10mo">10ma</option>
+						<option value="NA">NA</option>
+					</select>
+				</div>
+				<div>
+					<label for="fecha_aplicacion">Fecha de Aplicación:</label>
+					<select id="fecha_aplicacion_select" style="width: 180px;">
+						<option value="fecha_provista">Fecha Provista</option>
+						<option value="fecha_no_provista">Fecha No Provista</option>
+					</select>
+					<input type="date" id="fecha_aplicacion_input" style="display: none;">
+				</div>
+				<button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
+					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+					Agregar
+				</button>
 
-        <button id="modificarVacuna" class="boton" style="display: none;">
-            <i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i>
-            Modificar
-        </button>
+				<button id="modificarVacuna" class="boton" style="display: none;">
+					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i>
+					Modificar
+				</button>
 
-        <button id="cancelarEdicion" class="boton" style="display: none;">
-            <i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
-            Cancelar
-        </button>
-        <table id="vacunasTabla">
-            <thead>
-                <tr>
-                    <th>ID Vacuna</th>
-                    <th>Nombre de Vacuna</th>
-                    <th>Dosis</th>
-                    <th>Refuerzo</th>
-                    <th>Fecha de Aplicación</th>
-                    <th>Modificar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+				<button id="cancelarEdicion" class="boton" style="display: none;">
+					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
+					Cancelar
+				</button>
+				<table id="vacunasTabla">
+					<thead>
+						<tr>
+							<th>ID Vacuna</th>
+							<th>Nombre de Vacuna</th>
+							<th>Dosis</th>
+							<th>Refuerzo</th>
+							<th>Fecha de Aplicación</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
 
-        <script>
-        // Función para búsqueda dinámica del nombre de la vacuna por ID
-        function buscarNombreVacuna() {
-            var idVacuna = $("#id_vacuna").val();
-            $.ajax({
-                url: "buscar_nombre_vacuna.php", // Archivo PHP para buscar el nombre de la vacuna por ID
-                type: "POST",
-                data: {
-                    id_vacuna: idVacuna
-                },
-                dataType: "json",
-                success: function (data) {
-                    $("#nombre_vacuna").text(data ? data.Nombre : "Valor no encontrado");
-                },
-                error: function (error) {
-                    console.log("Error:", error);
-                }
-            });
-        }
+				<script>
+					// Función para búsqueda dinámica del nombre de la vacuna por ID
+					function buscarNombreVacuna() {
+						var idVacuna = $("#id_vacuna").val();
+						$.ajax({
+							url: "buscar_nombre_vacuna.php", // Archivo PHP para buscar el nombre de la vacuna por ID
+							type: "POST",
+							data: {
+								id_vacuna: idVacuna
+							},
+							dataType: "json",
+							success: function(data) {
+								$("#nombre_vacuna").text(data ? data.Nombre : "Valor no encontrado");
+							},
+							error: function(error) {
+								console.log("Error:", error);
+							}
+						});
+					}
 
-        // Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
-        $("#id_vacuna").on("input", buscarNombreVacuna);
-    </script>
-    </fieldset>
+					// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
+					$("#id_vacuna").on("input", buscarNombreVacuna);
+				</script>
+			</fieldset>
 
 
 
@@ -416,8 +442,159 @@
 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		//FUNCIONES DEL BOTON MOFICAR DE LA TABLA AGREGAR VACUNA A PACIENTE*///
-		
+		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
+		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
+
+		// Función para cambiar el estilo del fieldset de Historia Clínica
+		function changeFieldsetStyle() {
+      var fieldset = $("fieldset");
+      var inputs = fieldset.find('input[type="text"], input[type="date"], select');
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].style.backgroundColor = 'blue';
+        inputs[i].style.color = 'white';
+      }
+    }
+
+    // Función para restaurar el estilo original del fieldset de Historia Clínica
+    function restoreFieldsetStyle() {
+      var fieldset = $("fieldset");
+      var inputs = fieldset.find('input[type="text"], input[type="date"], select');
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].style.backgroundColor = '';
+        inputs[i].style.color = '';
+      }
+      $("#btnModificarPadecimiento, #btnCancelarEdicion").hide();
+    }
+
+    // Función para ocultar el botón "Agregar"
+    function hideAgregarButton() {
+      $("#btnAgregarPadecimiento").hide();
+    }
+
+    // Función para mostrar el botón "Agregar"
+    function showAgregarButton() {
+      $("#btnAgregarPadecimiento").show();
+    }
+
+    $(document).ready(function() {
+      // Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
+      restoreFieldsetStyle();
+
+      // Función para agregar un nuevo padecimiento a la tabla
+      function agregarPadecimiento() {
+        const idPadecimiento = $("#id_padecimiento").val();
+        const notas = $("#notas").val();
+        const desdeCuando = $("#desde_cuando").val();
+
+        if (idPadecimiento && notas && desdeCuando) {
+          const table = $("#padecimientosTabla");
+          const tbody = table.find("tbody");
+          const row = $("<tr>");
+
+          row.html(`
+            <td>${idPadecimiento}</td>
+            <td>${notas}</td>
+            <td>${desdeCuando}</td>
+            <td><button class="modificarPadecimiento">Modificar</button></td>
+            <td><button class="eliminarPadecimiento" onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>
+          `);
+
+          tbody.append(row);
+          table.css("display", "table");
+        }
+
+        $("#id_padecimiento").val("");
+        $("#notas").val("");
+        $("#desde_cuando").val("");
+        $("#yearsSince").text("");
+      }
+
+      // Asignar el evento click al botón de agregar padecimiento
+      $("#btnAgregarPadecimiento").click(function() {
+        agregarPadecimiento();
+        return false; // Evita el envío del formulario
+      });
+
+      // Evento delegado para los botones "Eliminar" dentro de la tabla
+      // Código de evento delegado para los botones "Eliminar", sin cambios
+
+      // Evento delegado para los botones "Modificar" dentro de la tabla
+      $("#padecimientosTabla").on("click", ".modificarPadecimiento", function(event) {
+        event.preventDefault();
+        // Lógica para modificar el padecimiento
+        // Aquí puedes implementar la lógica para editar los datos del padecimiento
+        // Por ejemplo, mostrar un modal con un formulario de edición
+
+        // Aplicar estilos al fieldset y mostrar botones "Modificar" y "Cancelar"
+        changeFieldsetStyle();
+        $("#btnModificarPadecimiento, #btnCancelarEdicion").show();
+
+        // Ocultar el botón "Agregar" mientras se realiza la modificación
+        hideAgregarButton();
+
+        // Obtener la fila actual y guardarla en una variable global para su posterior modificación
+        filaActual = $(this).closest("tr");
+        const idPadecimiento = filaActual.find("td:eq(0)").text();
+        const notas = filaActual.find("td:eq(1)").text();
+        const desdeCuando = filaActual.find("td:eq(2)").text();
+
+        // Colocar los valores en los campos del fieldset
+        $("#id_padecimiento").val(idPadecimiento);
+        $("#notas").val(notas);
+        $("#desde_cuando").val(desdeCuando);
+      });
+
+      // Evento click del botón "Modificar"
+      $("#btnModificarPadecimiento").click(function() {
+        // Lógica para aplicar la modificación a la fila de la tabla
+        const idPadecimiento = $("#id_padecimiento").val();
+        const notas = $("#notas").val();
+        const desdeCuando = $("#desde_cuando").val();
+
+        // Actualizar los valores de la fila actual con los datos modificados
+        filaActual.find("td:eq(0)").text(idPadecimiento);
+        filaActual.find("td:eq(1)").text(notas);
+        filaActual.find("td:eq(2)").text(desdeCuando);
+
+        // Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
+        restoreFieldsetStyle();
+
+        // Mostrar nuevamente el botón "Agregar"
+        showAgregarButton();
+
+        // Restaurar los valores originales en los campos del fieldset
+        $("#id_padecimiento").val("");
+        $("#notas").val("");
+        $("#desde_cuando").val("");
+        return false; // Evitar el envío del formulario
+      });
+
+      // Evento click del botón "Cancelar"
+      $("#btnCancelarEdicion").click(function() {
+        // Lógica para cancelar la edición y restaurar los valores originales
+        // Puedes hacer aquí lo que necesites para cancelar la modificación
+        event.preventDefault();
+        // Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
+        restoreFieldsetStyle();
+
+        // Mostrar nuevamente el botón "Agregar"
+        showAgregarButton();
+
+        // Restaurar los valores originales en los campos del fieldset
+        $("#id_padecimiento").val("");
+        $("#notas").val("");
+        $("#desde_cuando").val("");
+        return false; // Evitar el envío del formulario
+      });
+    });
+		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
+		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒ FIN DE FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
+
+
+//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
+//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
+		//╬╬FUNCIONES DEL BOTON MOFICAR DE LA TABLA AGREGAR --VACUNA A PACIENTE*///
+
 		// Función para verificar y mostrar el input de fecha al cargar la página
 		function checkFechaProvista() {
 			var fechaAplicacionSelect = document.getElementById('fecha_aplicacion_select');
@@ -659,8 +836,8 @@
 
 
 
-		
-		
+
+
 
 
 
@@ -750,32 +927,6 @@
 			const diferencia = fechaActual.getFullYear() - new Date(fechaSeleccionada).getFullYear();
 			document.getElementById("yearsSince").textContent = "Lleva padeciendo esta enfermedad durante " + diferencia + " años.";
 		}
-
-
-
-		document.getElementById("agregarPadecimiento").addEventListener("click", function() {
-			const idPadecimiento = document.getElementById("id_padecimiento").value;
-			const notas = document.getElementById("notas").value;
-			const desdeCuando = document.getElementById("desde_cuando").value;
-			if (idPadecimiento && notas && desdeCuando) {
-				const table = document.getElementById("padecimientosTabla");
-				const tbody = table.getElementsByTagName("tbody")[0];
-				const row = document.createElement("tr");
-				row.innerHTML = `
-	<td>${idPadecimiento}</td>
-	<td>${notas}</td>
-	<td>${desdeCuando}</td>
-	<td><button>Modificar</button></td>
-	<td><button onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>
-	`;
-				tbody.appendChild(row);
-				table.style.display = "table";
-			}
-			document.getElementById("id_padecimiento").value = "";
-			document.getElementById("notas").value = "";
-			document.getElementById("desde_cuando").value = "";
-			document.getElementById("yearsSince").textContent = "";
-		});
 	</script>
 </body>
 
