@@ -259,6 +259,7 @@
 					<thead>
 						<tr>
 							<th>ID Padecimiento</th>
+							<th>Nombre del Padecimiento</th>
 							<th>Notas</th>
 							<th>Desde cuándo</th>
 							<th>Modificar</th>
@@ -269,29 +270,26 @@
 				</table>
 
 				<script>
-function buscarNombrePadecimiento() {
-  var idPadecimiento = $("#id_padecimiento").val();
-  $.ajax({
-    type: "POST",
-    url: "buscar_padecimiento.php",
-    data: {
-      id_padecimiento: idPadecimiento
-    },
-    dataType: "json",
-    success: function(data) {
-      $("#nombre_padecimiento").text(data ? data.nombre_padecimiento : "Valor no encontrado");
-    },
-    error: function(error) {
-      console.log("Error:", error);
-    }
-  });
-}
+					function buscarNombrePadecimiento() {
+						var idPadecimiento = $("#id_padecimiento").val();
+						$.ajax({
+							type: "POST",
+							url: "buscar_padecimiento.php",
+							data: {
+								id_padecimiento: idPadecimiento
+							},
+							dataType: "json",
+							success: function(data) {
+								$("#nombre_padecimiento").text(data ? data.nombre_padecimiento : "Valor no encontrado");
+							},
+							error: function(error) {
+								console.log("Error:", error);
+							}
+						});
+					}
 
-		// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
-		$("#id_padecimiento").on("input", buscarNombrePadecimiento);
-
-
-
+					// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
+					$("#id_padecimiento").on("input", buscarNombrePadecimiento);
 				</script>
 			</fieldset>
 
@@ -470,41 +468,6 @@ function buscarNombrePadecimiento() {
 	<script>
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
-		// Función para búsqueda dinámica del nombre de la vacuna por ID
-
-
-
-
-
-
-
-
-
-
-		// Función para buscar automáticamente el nombre del padecimiento
-		/*function buscarNombrePadecimiento() {
-			const idPadecimiento = $("#id_padecimiento").val();
-
-			// Realizar la búsqueda en el archivo PHP externo usando AJAX
-			$.ajax({
-				type: "POST",
-				url: "buscar_padecimiento.php",
-				data: {
-					id_padecimiento: idPadecimiento
-				},
-				success: function(response) {
-					// Actualizar el valor del label con el nombre del padecimiento encontrado
-					$("#nombre_padecimiento").text(response);
-				},
-				error: function(xhr, status, error) {
-					console.error(error);
-				}
-			});
-		}*/
-
-
-
-
 
 
 		// Función para cambiar el estilo del fieldset de Historia Clínica
@@ -545,6 +508,7 @@ function buscarNombrePadecimiento() {
 			// Función para agregar un nuevo padecimiento a la tabla
 			function agregarPadecimiento() {
 				const idPadecimiento = $("#id_padecimiento").val();
+				const nombrePadecimiento = $("#nombre_padecimiento").text();/**/ 
 				const notas = $("#notas").val();
 				const desdeCuando = $("#desde_cuando").val();
 
@@ -555,6 +519,7 @@ function buscarNombrePadecimiento() {
 
 					row.html(`
             <td>${idPadecimiento}</td>
+			<td>${nombrePadecimiento}</td>
             <td>${notas}</td>
             <td>${desdeCuando}</td>
             <td><button class="modificarPadecimiento">Modificar</button></td>
@@ -566,6 +531,7 @@ function buscarNombrePadecimiento() {
 				}
 
 				$("#id_padecimiento").val("");
+				$("#nombre_padecimiento").text("");
 				$("#notas").val("");
 				$("#desde_cuando").val("");
 				$("#yearsSince").text("");
@@ -597,11 +563,13 @@ function buscarNombrePadecimiento() {
 				// Obtener la fila actual y guardarla en una variable global para su posterior modificación
 				filaActual = $(this).closest("tr");
 				const idPadecimiento = filaActual.find("td:eq(0)").text();
-				const notas = filaActual.find("td:eq(1)").text();
-				const desdeCuando = filaActual.find("td:eq(2)").text();
+				const nombrePadecimiento = filaActual.find("td:eq(1)").text();
+				const notas = filaActual.find("td:eq(2)").text();
+				const desdeCuando = filaActual.find("td:eq(3)").text();
 
 				// Colocar los valores en los campos del fieldset
 				$("#id_padecimiento").val(idPadecimiento);
+				$("#nombre_padecimiento").text(nombrePadecimiento);
 				$("#notas").val(notas);
 				$("#desde_cuando").val(desdeCuando);
 			});
@@ -610,13 +578,15 @@ function buscarNombrePadecimiento() {
 			$("#btnModificarPadecimiento").click(function() {
 				// Lógica para aplicar la modificación a la fila de la tabla
 				const idPadecimiento = $("#id_padecimiento").val();
+				const nombrePadecimiento = $("#nombre_padecimiento").text();
 				const notas = $("#notas").val();
 				const desdeCuando = $("#desde_cuando").val();
 
 				// Actualizar los valores de la fila actual con los datos modificados
 				filaActual.find("td:eq(0)").text(idPadecimiento);
-				filaActual.find("td:eq(1)").text(notas);
-				filaActual.find("td:eq(2)").text(desdeCuando);
+				filaActual.find("td:eq(1)").text(nombrePadecimiento);
+				filaActual.find("td:eq(2)").text(notas);
+				filaActual.find("td:eq(3)").text(desdeCuando);
 
 				// Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
 				restoreFieldsetStyle();
@@ -626,6 +596,7 @@ function buscarNombrePadecimiento() {
 
 				// Restaurar los valores originales en los campos del fieldset
 				$("#id_padecimiento").val("");
+				$("#nombre_padecimiento").text("");
 				$("#notas").val("");
 				$("#desde_cuando").val("");
 				return false; // Evitar el envío del formulario
@@ -644,6 +615,7 @@ function buscarNombrePadecimiento() {
 
 				// Restaurar los valores originales en los campos del fieldset
 				$("#id_padecimiento").val("");
+				$("#nombre_padecimiento").text("");
 				$("#notas").val("");
 				$("#desde_cuando").val("");
 				return false; // Evitar el envío del formulario
