@@ -14,10 +14,11 @@
 		}
 
 		.container {
-			display: grid;
-			grid-template-columns: repeat(2, 50%);
-			grid-gap: 6px 10px;
-		}
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(3, 1fr); /* "1fr" representa una fracción del espacio disponible */
+  grid-gap: 6px 10px;
+}
 
 		fieldset {
 			border: 1px solid #ddd;
@@ -219,6 +220,32 @@
 					<label for="fecha_nacimiento">Fecha de nacimiento:</label>
 					<input type="date" id="fecha_nacimiento">
 				</div>
+				<!-- Select para países -->
+				<div>
+					<label for="pais">País:</label>
+					<select id="pais">
+						<option value="republica_dominicana" selected>República Dominicana</option>
+						<option value="espana">España</option>
+						<!-- Agregar todas las opciones de países en español aquí -->
+						<option value="mexico">México</option>
+						<option value="argentina">Argentina</option>
+						<!-- Agregar más países si es necesario -->
+					</select>
+				</div>
+				<!-- Select para con quién vive -->
+				<div>
+					<label for="con_quien_vive">Con quién vive:</label>
+					<select id="con_quien_vive">
+						<option value="padre">Padre</option>
+						<option value="madre">Madre</option>
+						<option value="tutor_legal">Tutor Legal</option>
+						<!-- Agregar más opciones si es necesario -->
+					</select>
+				</div>
+				<div>
+					<label for="direccion">Dirección:</label>
+					<input type="text" id="direccion">
+				</div>
 			</fieldset>
 
 
@@ -233,10 +260,10 @@
 					<label for="Nombre_padecimiento">Nombre del padecimiento:</label>
 					<label id="nombre_padecimiento"></label>
 				</div>
-				<div id="myModal" class="modal" style="width: 100%; height: 90%;">
-					<div class="modal-content" style="width: 100%; height: 80%;">
+				<div id="myModal" class="modal" style="width: 100%; ">
+					<div class="modal-content" style="width: 100%; ">
 						<span class="close">&times;</span>
-						<iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+						<iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; "></iframe>
 					</div>
 				</div>
 
@@ -508,7 +535,7 @@
 			// Función para agregar un nuevo padecimiento a la tabla
 			function agregarPadecimiento() {
 				const idPadecimiento = $("#id_padecimiento").val();
-				const nombrePadecimiento = $("#nombre_padecimiento").text();/**/ 
+				const nombrePadecimiento = $("#nombre_padecimiento").text(); /**/
 				const notas = $("#notas").val();
 				const desdeCuando = $("#desde_cuando").val();
 
@@ -883,6 +910,7 @@
 		$(document).ready(function() {
 			// Obtener la tabla generada por DataTables
 			var tablaSeguros = $("#tabla_seguros").DataTable();
+
 
 			// Asignar un evento de clic a las celdas de la tabla
 			$("#tabla_seguros tbody").on("click", "td", function() {
