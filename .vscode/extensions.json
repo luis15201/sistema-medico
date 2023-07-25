@@ -4,6 +4,7 @@
         "anseki.vscode-color",
         "royaction.color-manager",
         "pranaygp.vscode-css-peek",
-        "zignd.html-css-class-completion"
+        "zignd.html-css-class-completion",
+        "oracle.mysql-shell-for-vs-code"
     ]
 }

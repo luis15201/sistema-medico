@@ -1,26 +1,15 @@
 <?php
 if (isset($_POST['hacerBackup'])) {
-    $servername = "localhost";
-    $username = "joel1";
-    $password = "Hola@123";
-    $database = "pediatra_sis";
+    // Ejecutar el script batch
+    $output = [];
+    $result = null;
+    exec('hacerbackup.bat', $output, $result);
 
-    $fecha = date("Ymd");
-    $ruta = __DIR__ . "/basededatos/";
-    $nombre = "pediatra_sis_" . $fecha . ".sql";
-    $archivo = $ruta . $nombre;
-
-    $mysqldumpPath = "C:/wamp64/bin/mysql/mysql8.0.31/bin/mysqldump.exe"; // Ruta absoluta al ejecutable de mysqldump
-
-    // Comando para realizar el backup usando mysqldump
-    $command = "$mysqldumpPath -u $username -p$password -h $servername $database > $archivo 2>&1";
-
-    exec($command, $output, $exitCode);
-
-    if ($exitCode === 0) {
-        $mensaje = "Backup completado correctamente. El archivo se ha guardado como: $nombre";
+    // Verificar el resultado del script batch
+    if ($result === 0) {
+        $mensaje = "Backup completado correctamente. El archivo se ha guardado como: " . end($output);
     } else {
-        $mensaje = "Ha ocurrido un error durante el proceso de backup. Detalles del error:<br><pre>" . implode("\n", $output) . "</pre>";
+        $mensaje = "Ha ocurrido un error durante el proceso de backup.";
     }
 }
 ?>
@@ -47,7 +36,7 @@ if (isset($_POST['hacerBackup'])) {
 </head>
 <body>
     <?php if (isset($mensaje)) { ?>
-        <div class="banner <?php echo $exitCode === 0 ? 'success' : 'error'; ?>">
+        <div class="banner <?php echo $result === 0 ? 'success' : 'error'; ?>">
             <?php echo $mensaje; ?>
         </div>
     <?php } ?>
@@ -57,7 +46,4 @@ if (isset($_POST['hacerBackup'])) {
     </form>
 </body>
 </html>
-
-
-
 
