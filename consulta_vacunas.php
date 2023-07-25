@@ -40,7 +40,7 @@ $result = $conn->query($query);
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
   <script>
-   /* $(document).ready(function() {
+    /* $(document).ready(function() {
       $('#tabla_tipos_vacunas').DataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -49,7 +49,7 @@ $result = $conn->query($query);
       });
     });*/
 
-  
+
     $(document).ready(function() {
       $('#tabla_tipos_vacunas').DataTable({
         dom: 'frtip', // Mostrar solo búsqueda y paginación
@@ -114,13 +114,13 @@ $result = $conn->query($query);
       });
 
       // Asignar un evento de clic al botón de cierre del modal
-      window.parent.document.querySelector("#myModal .close").addEventListener("click", function() {
+      window.parent.document.querySelector("#Modalvacuna .close").addEventListener("click", function() {
         // Cerrar el modal
-        window.parent.document.getElementById("myModal").style.display = "none";
+        window.parent.document.getElementById("Modalvacuna").style.display = "none";
       });
 
       // Evitar que el evento de clic en el modal cierre el modal
-      window.parent.document.querySelector("#myModal .modal-content").addEventListener("click", function(event) {
+      window.parent.document.querySelector("#Modalvacuna .modal-content").addEventListener("click", function(event) {
         event.stopPropagation();
       });
     });

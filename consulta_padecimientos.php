@@ -104,13 +104,14 @@ $result = $conn->query($query);
       });
 
       // Asignar un evento de clic al botón de cierre del modal
-      window.parent.document.querySelector("#myModal .close").addEventListener("click", function() {
+
+      window.parent.document.querySelector("#ModalHistoriaClinica .close").addEventListener("click", function() {
         // Cerrar el modal
-        window.parent.document.getElementById("myModal").style.display = "none";
+        window.parent.document.getElementById("ModalHistoriaClinica").style.display = "none";
       });
 
       // Evitar que el evento de clic en el modal cierre el modal
-      window.parent.document.querySelector("#myModal .modal-content").addEventListener("click", function(event) {
+      window.parent.document.querySelector("#ModalHistoriaClinica .modal-content").addEventListener("click", function(event) {
         event.stopPropagation();
       });
     });
@@ -124,4 +125,3 @@ $result = $conn->query($query);
 // Cerrar la conexión
 $conn->close();
 ?>
-
