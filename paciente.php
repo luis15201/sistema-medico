@@ -1,3 +1,48 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "pediatra_sis";
+
+// Función para obtener el próximo ID de paciente
+function obtenerProximoIdPaciente($conn)
+{
+    // Realizar la consulta SQL para obtener el próximo ID de paciente
+    $query = "SELECT MAX(id_paciente) AS ultimoId FROM paciente";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $ultimoIdPaciente = $row['ultimoId'];
+    
+    // Si la tabla está vacía, asignamos el valor inicial de 1 al próximo ID de paciente
+    if (empty($ultimoIdPaciente)) {
+        $proximoIdPaciente = 1;
+    } else {
+        // Incrementar el último ID para obtener el próximo ID
+        $proximoIdPaciente = $ultimoIdPaciente + 1;
+    }
+
+    return $proximoIdPaciente;
+}
+
+// Establecer la conexión a la base de datos
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Verificar la conexión
+if (!$conn) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
+
+// Obtener el próximo ID de paciente
+$proximoIdPaciente = obtenerProximoIdPaciente($conn);
+
+// Cerrar la conexión
+mysqli_close($conn);
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -191,42 +236,45 @@
 </head>
 
 <body onload="checkFechaProvista()">
-	<form id="myForm">
+	<form id="myForm"  action="#" method="POST">
 
 
 
 		<div class="container">
-			<fieldset>
-				<legend>Datos del Paciente</legend>
-				<div>
-					<label for="nombre">Nombre:</label>
-					<input type="text" id="nombre">
-				</div>
-				<div>
-					<label for="apellido">Apellido:</label>
-					<input type="text" id="apellido">
-				</div>
-				<fieldset style="width:90%;">
-					<legend>Sexo:</legend>
-					<div style="width:35%;float:left; margin-left: 10%; padding: 1%;">
-						<label for="masculino">Masculino</label>
-						<input type="radio" id="masculino" name="sexo" value="masculino">
-					</div>
-					<div style="width:35%;float:left;padding: 1%;">
-						<label for="femenino">Femenino</label>
-						<input type="radio" id="femenino" name="sexo" value="femenino">
-					</div>
-				</fieldset>
-				<div>
-					<label for="fecha_nacimiento">Fecha de nacimiento:</label>
-					<input type="date" id="fecha_nacimiento">
-				</div>
-				<!-- Select para países -->
-				<div>
-					<label for="pais">País:</label>
-					<select id="pais">
-					
-						<option value="AF">Afganistán</option>
+		<fieldset>
+  <legend>Datos del Paciente</legend>
+  <DIV><label for="id_paciente">ID de Paciente:</label>
+        <input type="text" id="id_paciente" style="width:35px; background-color:#979998 " name="id_paciente" value="<?php echo $proximoIdPaciente; ?>" readonly></DIV>
+ 
+  <div>
+  
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" title="Ingrese su nombre" placeholder="Nombre del infante" required>
+  </div>
+  <div>
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" title="Ingrese su apellido" placeholder="Apellido/s del/la niño/a" required>
+  </div>
+  <fieldset style="width:90%;">
+    <legend>Sexo:</legend>
+    <div style="width:35%;float:left; margin-left: 10%; padding: 1%;">
+      <label for="masculino">Masculino</label>
+      <input type="radio" id="masculino" name="sexo" value="masculino" required>
+    </div>
+    <div style="width:35%;float:left;padding: 1%;">
+      <label for="femenino">Femenino</label>
+      <input type="radio" id="femenino" name="sexo" value="femenino" required>
+    </div>
+  </fieldset>
+  <div>
+    <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+    <input type="date" id="fecha_nacimiento" title="Seleccione su fecha de nacimiento" required>
+  </div>
+  <!-- Select para países -->
+  <div>
+    <label for="pais">País:</label>
+    <select id="pais" title="Seleccione su país de origen" required>
+	<option value="AF">Afganistán</option>
 <option value="AL">Albania</option>
 <option value="DE">Alemania</option>
 <option value="AD">Andorra</option>
@@ -460,24 +508,29 @@
 <option value="YU">Yugoslavia</option>
 <option value="ZM">Zambia</option>
 <option value="ZW">Zimbabue</option>
-					</select>
-				</div>
-				<!-- Select para con quién vive -->
-				<div>
-					<label for="con_quien_vive">Con quién vive:</label>
-					<select id="con_quien_vive">
-					<option value="padre_madre"selected >Ambos Padres</option>
-						<option value="padre">Padre</option>
-						<option value="madre">Madre</option>
-						<option value="tutor_legal">Tutor Legal</option>
-						<!-- Agregar más opciones si es necesario -->
-					</select>
-				</div>
-				<div>
-					<label for="direccion">Dirección:</label>
-					<input type="text" id="direccion" placeholder="Dirección actual donde vive el infante">
-				</div>
-			</fieldset>
+    </select>
+  </div>
+  <!-- Select para con quién vive -->
+  <div>
+    <label for="con_quien_vive">Con quién vive:</label>
+    <select id="con_quien_vive" title="Seleccione con quién vive actualmente" required>
+      <option value="padre_madre" selected>Ambos Padres</option>
+      <option value="padre">Padre</option>
+      <option value="madre">Madre</option>
+      <option value="tutor_legal">Tutor Legal</option>
+      <!-- Agregar más opciones si es necesario -->
+    </select>
+  </div>
+  <div>
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" title="Ingrese su dirección actual" placeholder="Dirección que reside el infante" required>
+  </div>
+  <script>
+        // Definimos una variable global en JavaScript para el ID de paciente
+        var globalIdPaciente = <?php echo $proximoIdPaciente; ?>;
+    </script>
+</fieldset>
+
 <!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
 <!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
 			<fieldset>
@@ -552,34 +605,33 @@
 			</fieldset>
 <!--▓▓▓▓╰(*°▽°*)╯╰(*°▽°*)╯(^///^)╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯▓▓▓▓▓▓▓▓ -->
 <!--▓▓▓▓╰(*°▽°*)╯╰(*°▽°*)╯(^///^)╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯▓▓▓▓▓▓▓▓ -->
-			<fieldset>
-				<legend>Datos de Seguro del paciente</legend>
-				<div>
-					<label for="NSS">Número de Seguro:</label>
-					<input type="text" id="NSS">
-				</div>
-				<div>
-					<label for="Id_seguro_salud">ID Seguro de Salud:</label>
-					<input type="text" id="Id_seguro_salud" oninput="buscarSeguro()">
-					<button id="busquedaseguro" class="busquedaboton" title="Buscar aseguradoras de salud registradas registrados/as">
-						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-					</button>
-				</div>
-				<div>
-					<label for="Nombre_seguro">Nombre del Seguro:</label>
-					<label id="Nombre_seguro"></label>
-				</div>
-				<br>
+<fieldset>
+  <legend>Datos de Seguro del paciente</legend>
+  <div>
+    <label for="NSS">Número de Seguro:</label>
+    <input type="text" id="NSS" title="Ingrese el número de seguro" placeholder="Número de Seguro" required>
+  </div>
+  <div>
+    <label for="Id_seguro_salud">ID Seguro de Salud:</label>
+    <input type="text" id="Id_seguro_salud" title="Ingrese el ID del seguro de salud" placeholder="ID Seguro de Salud" oninput="buscarSeguro()" required>
+    <button id="busquedaseguro" class="busquedaboton" title="Buscar aseguradoras de salud registradas registrados/as">
+      <i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+    </button>
+  </div>
+  <div>
+    <label for="Nombre_seguro">Nombre del Seguro:</label>
+    <label id="Nombre_seguro"></label>
+  </div>
+  <br>
 
-				<div id="myModal" class="modal" style="width: 100%; height: 90%;">
-					<div class="modal-content" style="width: 100%; height: 80%;">
-						<span class="close">&times;</span>
-						<iframe id="modal-iframe" src="consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-					</div>
-				</div>
+  <div id="myModal" class="modal" style="width: 100%; height: 90%;">
+    <div class="modal-content" style="width: 100%; height: 80%;">
+      <span class="close">&times;</span>
+      <iframe id="modal-iframe" src="consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+    </div>
+  </div>
+</fieldset>
 
-
-			</fieldset>
 <!--(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁) -->
 <!--(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁) -->
 			<fieldset>
@@ -707,13 +759,13 @@
 
 
 			<div style="width: 100%;">
-				<button class="boton">
+				<button class="boton" id="btnguardar">
 					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">save</i> Guardar
 				</button>
-				<button class="boton" onclick="resetForm()">
+				<button class="boton" onclick="resetForm()" id="btnreset">
 					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">autorenew</i> Reset
 				</button>
-				<a href="menu-pacientes.php" class="claseboton">
+				<a href="menu-pacientes.php" class="claseboton" id="btnatras">
 					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">arrow_back</i> Atrás
 				</a>
 			</div>
@@ -1333,6 +1385,39 @@ document.addEventListener("DOMContentLoaded", function() {
 			const diferencia = fechaActual.getFullYear() - new Date(fechaSeleccionada).getFullYear();
 			document.getElementById("yearsSince").textContent = "Lleva padeciendo esta enfermedad durante " + diferencia + " años.";
 		}
+
+///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+
+
+////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+function guardar() {
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const masculino = document.getElementById("masculino").checked;
+    const femenino = document.getElementById("femenino").checked;
+    const fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
+    const pais = document.getElementById("pais").value;
+    const con_quien_vive = document.getElementById("con_quien_vive").value;
+    const direccion = document.getElementById("direccion").value;
+    const NSS = document.getElementById("NSS").value;
+    const Id_seguro_salud = document.getElementById("Id_seguro_salud").value;
+
+    if (!nombre || !apellido || (!masculino && !femenino) || !fecha_nacimiento || pais === "" || con_quien_vive === "" || !direccion || !NSS || !Id_seguro_salud) {
+      alert("Por favor, complete todos los campos obligatorios antes de guardar.");
+      return;
+    }
+
+    // Aquí puedes colocar el código para guardar los datos o realizar cualquier acción adicional.
+
+    alert("Datos guardados exitosamente.");
+  }
+
+  // Asignar evento de clic al botón guardar
+  document.getElementById("btnguardar").addEventListener("click", guardar);
+
+////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
 	</script>
 </body>
 
