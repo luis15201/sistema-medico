@@ -3,7 +3,7 @@ setlocal
 
 REM Establecer las variables de conexión
 set "servername=localhost"
-set "username=root"
+set "username=joel1"
 set "password="
 set "database=pediatra_sis"
 
