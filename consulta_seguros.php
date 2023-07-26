@@ -40,7 +40,7 @@ $result = $conn->query($query);
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
   <script>
-   /* $(document).ready(function() {
+    /* $(document).ready(function() {
       $('#tabla_seguros').DataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -70,7 +70,7 @@ $result = $conn->query($query);
 </head>
 
 <body>
-<h3 style="padding:0; margin:0;">Consulta de Seguros de Salud</h3>
+  <h3 style="padding:0; margin:0;">Consulta de Seguros de Salud</h3>
 
   <table id="tabla_seguros" class="display" style="width:100%">
     <thead>
