@@ -48,10 +48,30 @@ mysqli_close($conn);
 
 <head>
 	<meta charset="UTF-8">
-	<title>Formulario</title>
+	<title>Formulario del Paciente</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
+		/* Agrega estilos para resaltar los campos incompletos */
+		.campo-incompleto {
+			border: 5px solid red;
+			background-color: #ffdddd;
+		}
+
+		/* Estilo para el mensaje de error */
+		#error-message {
+			color: red;
+			font-weight: bold;
+			margin-bottom: 10px;
+
+		}
+
+
+
+		/*form:invalid input:required {
+			background-color: #ffdddd;
+		}*/
+
 		.campo-modificado {
 			/*ESTILO PARA LA EDICION DE PADECIMIENTOS*/
 			background-color: green;
@@ -233,6 +253,13 @@ mysqli_close($conn);
 			}
 		}
 	</style>
+	<script>
+		document.getElementById('btnguardar').addEventListener('click', function() {
+			var form = document.getElementById('myForm');
+			form.classList.add('enviado');
+			form.reportValidity();
+		});
+	</script>
 </head>
 
 <body onload="checkFechaProvista()">
@@ -632,6 +659,8 @@ mysqli_close($conn);
 						<iframe id="modal-iframe" src="consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
 				</div>
+				<!-- Agrega un div para mostrar mensajes de error -->
+				<!--<div id="error-message"></div> -->
 			</fieldset>
 
 			<!--(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁)(❁´◡`❁) -->
@@ -771,7 +800,8 @@ mysqli_close($conn);
 					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">arrow_back</i> Atrás
 				</a>
 			</div>
-
+			<!-- Agrega un div para mostrar mensajes de error -->
+			<div id="error-message"></div>
 
 
 
@@ -1422,74 +1452,210 @@ mysqli_close($conn);
 		verificarTablaPadecimientos();
 
 		///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
-		///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
-		function guardar() {
-			const nombre = document.getElementById("nombre").value;
-			const apellido = document.getElementById("apellido").value;
-			const masculino = document.getElementById("masculino").checked;
-			const femenino = document.getElementById("femenino").checked;
-			const fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
-			const pais = document.getElementById("pais").value;
-			const con_quien_vive = document.getElementById("con_quien_vive").value;
-			const direccion = document.getElementById("direccion").value;
-			const NSS = document.getElementById("NSS").value;
-			const Id_seguro_salud = document.getElementById("Id_seguro_salud").value;
-
-			if (!nombre || !apellido || (!masculino && !femenino) || !fecha_nacimiento || pais === "" || con_quien_vive === "" || !direccion || !NSS || !Id_seguro_salud) {
-				alert("Por favor, complete todos los campos obligatorios antes de guardar.");
-				return;
+		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒
+		function datosCompletos(campo) {
+			if (campo.value.trim() === "") {
+				campo.classList.add("campo-incompleto");
+				campo.focus();
+				return false;
+			} else {
+				campo.classList.remove("campo-incompleto");
+				return true;
 			}
+		}
 
-			// Hacer una petición AJAX a PHP para guardar los datos en la base de datos
-			const xhr = new XMLHttpRequest();
-			xhr.open("POST", "guardar_datos_paciente.php", true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState === 4 && xhr.status === 200) {
-					alert(xhr.responseText); // Mostrar el mensaje de éxito o error retornado desde PHP
-				} else if (xhr.readyState === 4 && xhr.status !== 200) {
-					alert("Error al guardar los datos. Por favor, intente nuevamente.");
+		// Función para validar el formato de la fecha (dd/mm/yyyy)
+		function validarFecha(campo) {
+			const regexFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+			return regexFecha.test(campo.value.trim());
+		}
+
+		// Función para validar los campos antes de guardar
+		function validarCampos() {
+			const campos = [{
+					id: "nombre",
+					label: "Nombre"
+				},
+				{
+					id: "apellido",
+					label: "Apellido"
+				},
+				{
+					id: "fecha_nacimiento",
+					label: "Fecha de nacimiento"
+				},
+				{
+					id: "pais",
+					label: "País"
+				},
+				{
+					id: "con_quien_vive",
+					label: "Con quien vive"
+				},
+				{
+					id: "direccion",
+					label: "Dirección"
+				},
+				{
+					id: "NSS",
+					label: "NSS"
+				},
+				{
+					id: "Id_seguro_salud",
+					label: "Seguro de salud"
 				}
-			};
-			const data = `nombre=${nombre}&apellido=${apellido}&sexo=${masculino ? 'masculino' : 'femenino'}&fecha_nacimiento=${fecha_nacimiento}&pais=${pais}&con_quien_vive=${con_quien_vive}&direccion=${direccion}&NSS=${NSS}&Id_seguro_salud=${Id_seguro_salud}`;
-			xhr.send(data);
+			];
+
+			let formCompleto = true;
+			const mensajeErrorDiv = document.getElementById("error-message");
+			mensajeErrorDiv.innerHTML = ""; // Limpiar mensajes de error anteriores
+
+			campos.forEach(campo => {
+				const inputCampo = document.getElementById(campo.id);
+				const valor = inputCampo.value.trim();
+
+				if (!valor) {
+					formCompleto = false;
+					inputCampo.classList.add("campo-incompleto");
+
+					// Agregar mensaje de error al div
+					const mensajeError = document.createElement("p");
+					mensajeError.textContent = `El campo "${campo.label}" es obligatorio.`;
+					mensajeErrorDiv.appendChild(mensajeError);
+
+				} else if (campo.id === "fecha_nacimiento" && !validarFecha(inputCampo)) {
+					formCompleto = false;
+					inputCampo.classList.add("campo-incompleto");
+
+					// Agregar mensaje de error al div
+					const mensajeError = document.createElement("p");
+					mensajeError.textContent = `El formato de la fecha de nacimiento debe ser dd/mm/yyyy.`;
+					mensajeErrorDiv.appendChild(mensajeError);
+
+				} else {
+					inputCampo.classList.remove("campo-incompleto");
+				}
+			});
+
+			return formCompleto;
+		}
+		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒
+		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒
+		function guardar() {
+			// Restaurar estilo de los campos
+			const campos = document.querySelectorAll(".campo-incompleto");
+			campos.forEach((campo) => campo.classList.remove("campo-incompleto"));
+
+			// Validar campos antes de guardar
+			const formCompleto = validarCampos();
+
+			if (formCompleto) {
+				// Obtener valores de los campos de paciente y seguro-paciente
+				const nombre = document.getElementById("nombre").value;
+				const apellido = document.getElementById("apellido").value;
+				const masculino = document.getElementById("masculino").checked;
+				const femenino = document.getElementById("femenino").checked;
+				const fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
+				const pais = document.getElementById("pais").value;
+				const con_quien_vive = document.getElementById("con_quien_vive").value;
+				const direccion = document.getElementById("direccion").value;
+				const NSS = document.getElementById("NSS").value;
+				const Id_seguro_salud = document.getElementById("Id_seguro_salud").value;
+
+				// Recopilar datos de la tabla de padecimientos
+				const datosPadecimientos = [];
+				const tablaPadecimientos = document.getElementById("padecimientosTabla");
+				const filasPadecimientos = tablaPadecimientos.getElementsByTagName("tr");
+				for (let i = 1; i < filasPadecimientos.length; i++) {
+					const filaPadecimiento = filasPadecimientos[i];
+					const celdasPadecimiento = filaPadecimiento.getElementsByTagName("td");
+					const id_padecimiento = celdasPadecimiento[0].innerText;
+					const nombre_padecimiento = celdasPadecimiento[1].innerText;
+					const notas = celdasPadecimiento[2].innerText;
+					const desde_cuando = celdasPadecimiento[3].innerText;
+					datosPadecimientos.push({
+						id_padecimiento,
+						nombre: nombre_padecimiento,
+						notas,
+						desde_cuando,
+					});
+				}
+
+				// Recopilar datos de la tabla de pacientes_vacunas
+				const datosVacunas = [];
+				const tablaVacunas = document.getElementById("vacunasTabla");
+				const filasVacunas = tablaVacunas.getElementsByTagName("tr");
+				for (let i = 1; i < filasVacunas.length; i++) {
+					const filaVacuna = filasVacunas[i];
+					const celdasVacuna = filaVacuna.getElementsByTagName("td");
+					const id_vacuna = celdasVacuna[0].innerText;
+					const nombre_vacuna = celdasVacuna[1].innerText;
+					const dosis = celdasVacuna[2].innerText;
+					const refuerzo = celdasVacuna[3].innerText;
+					const fecha_aplicacion = celdasVacuna[4].innerText;
+					datosVacunas.push({
+						id_vacuna,
+						nombre_vacuna,
+						dosis,
+						refuerzo,
+						fecha_aplicacion,
+					});
+				}
+
+				// Hacer una petición AJAX a PHP para guardar los datos en la base de datos
+				const xhr = new XMLHttpRequest();
+				xhr.open("POST", "guardar_datos_paciente.php", true);
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						alert(xhr.responseText); // Mostrar el mensaje de éxito o error retornado desde PHP
+					} else if (xhr.readyState === 4 && xhr.status !== 200) {
+						alert("Error al guardar los datos. Por favor, intente nuevamente.");
+					}
+				};
+
+				// Convertir el array de datos a formato JSON
+				const datosJSON = JSON.stringify({
+					nombre,
+					apellido,
+					sexo: masculino ? "masculino" : "femenino",
+					fecha_nacimiento,
+					pais,
+					con_quien_vive,
+					direccion,
+					NSS,
+					Id_seguro_salud,
+					tieneDatosPadecimientos: datosPadecimientos.length > 0,
+					historiaClinica: datosPadecimientos,
+					tieneDatosVacunas: datosVacunas.length > 0,
+					pacientesVacunas: datosVacunas,
+				});
+
+				// Enviar la petición AJAX para guardar los datos
+				xhr.send(datosJSON);
+			} else {
+				// Si hay campos vacíos, mostramos un mensaje de error
+				const mensajeErrorDiv = document.getElementById("error-message");
+				mensajeErrorDiv.style.color = "red";
+				mensajeErrorDiv.textContent = "Por favor, complete todos los campos obligatorios antes de guardar.";
+			}
 		}
 
 		// Asignar evento de clic al botón guardar
 		document.getElementById("btnguardar").addEventListener("click", function(event) {
 			event.preventDefault(); // Evitar que el formulario se envíe directamente
-			guardar(); // Llamar a la función guardar()
+
+			// Llamar a la función guardar()
+			guardar();
+			//location.reload();
 		});
 
 
-		if (tieneDatosPadecimientos) {
-			alert("tieneDatosPadecimientos es true, se procederá a guardar la historia clínica.");
-			// Obtener el ID de paciente desde PHP (asumiendo que $proximoIdPaciente contiene el valor)
-			const idPaciente = <?php echo $proximoIdPaciente; ?>;
-
-			// Hacer una petición AJAX a PHP para guardar los datos de la historia clínica
-			const xhrHistoriaClinica = new XMLHttpRequest();
-			xhrHistoriaClinica.open("POST", "guardar_datos_paciente.php", true);
-			xhrHistoriaClinica.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhrHistoriaClinica.onreadystatechange = function() {
-				if (xhrHistoriaClinica.readyState === 4 && xhrHistoriaClinica.status === 200) {
-					// Éxito en la petición AJAX, datos de historia clínica guardados correctamente
-					alert(xhrHistoriaClinica.responseText);
-				} else if (xhrHistoriaClinica.readyState === 4 && xhrHistoriaClinica.status !== 200) {
-					// Error en la petición AJAX, mostrar mensaje de error
-					alert("Error al guardar los datos de historia clínica. Por favor, intente nuevamente.");
-				}
-			};
-
-			// Crear objeto de datos de historia clínica a enviar a PHP
-			const dataHistoriaClinica = `ID_Paciente=${idPaciente}`; // Asegúrate de agregar los demás campos necesarios para historia clínica aquí
-
-			// Enviar la petición AJAX para guardar la historia clínica
-			xhrHistoriaClinica.send(dataHistoriaClinica);
-		}
-
-
 		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+
+		// Enviar la petición AJAX para guardar los datos
+		//console.log(datosJSON); // Agregar esta línea para verificar los datos enviados al servidor
+		//xhr.send(datosJSON);
 	</script>
 </body>
 
