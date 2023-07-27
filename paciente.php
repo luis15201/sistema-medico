@@ -250,11 +250,11 @@ mysqli_close($conn);
 				<div>
 
 					<label for="nombre">Nombre:</label>
-					<input type="text" id="nombre" title="Ingrese su nombre" placeholder="Nombre del infante" required>
+					<input type="text" id="nombre" name="nombre" title="Ingrese su nombre" placeholder="Nombre del infante" required>
 				</div>
 				<div>
 					<label for="apellido">Apellido:</label>
-					<input type="text" id="apellido" title="Ingrese su apellido" placeholder="Apellido/s del/la niño/a" required>
+					<input type="text" id="apellido" name="apellido" title="Ingrese su apellido" placeholder="Apellido/s del/la niño/a" required>
 				</div>
 				<fieldset style="width:90%;">
 					<legend>Sexo:</legend>
@@ -269,12 +269,12 @@ mysqli_close($conn);
 				</fieldset>
 				<div>
 					<label for="fecha_nacimiento">Fecha de nacimiento:</label>
-					<input type="date" id="fecha_nacimiento" title="Seleccione su fecha de nacimiento" required>
+					<input type="date" id="fecha_nacimiento" name="fecha_nacimiento" title="Seleccione su fecha de nacimiento" required>
 				</div>
 				<!-- Select para países -->
 				<div>
 					<label for="pais">País:</label>
-					<select id="pais" title="Seleccione su país de origen" required>
+					<select id="pais" name="pais" title="Seleccione su país de origen" required>
 						<option value="AF">Afganistán</option>
 						<option value="AL">Albania</option>
 						<option value="DE">Alemania</option>
@@ -514,7 +514,7 @@ mysqli_close($conn);
 				<!-- Select para con quién vive -->
 				<div>
 					<label for="con_quien_vive">Con quién vive:</label>
-					<select id="con_quien_vive" title="Seleccione con quién vive actualmente" required>
+					<select id="con_quien_vive" name="con_quien_vive" title="Seleccione con quién vive actualmente" required>
 						<option value="padre_madre" selected>Ambos Padres</option>
 						<option value="padre">Padre</option>
 						<option value="madre">Madre</option>
@@ -524,7 +524,7 @@ mysqli_close($conn);
 				</div>
 				<div>
 					<label for="direccion">Dirección:</label>
-					<input type="text" id="direccion" title="Ingrese su dirección actual" placeholder="Dirección que reside el infante" required>
+					<input type="text" id="direccion" name="direccion" title="Ingrese su dirección actual" placeholder="Dirección que reside el infante" required>
 				</div>
 				<script>
 					// Definimos una variable global en JavaScript para el ID de paciente
@@ -603,6 +603,7 @@ mysqli_close($conn);
 					// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
 					$("#id_padecimiento").on("input", buscarNombrePadecimiento);
 				</script>
+				<input type="hidden" id="tieneDatosPadecimientos" name="tieneDatosPadecimientos" value="">
 			</fieldset>
 			<!--▓▓▓▓╰(*°▽°*)╯╰(*°▽°*)╯(^///^)╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯▓▓▓▓▓▓▓▓ -->
 			<!--▓▓▓▓╰(*°▽°*)╯╰(*°▽°*)╯(^///^)╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯▓▓▓▓▓▓▓▓ -->
@@ -610,11 +611,11 @@ mysqli_close($conn);
 				<legend>Datos de Seguro del paciente</legend>
 				<div>
 					<label for="NSS">Número de Seguro:</label>
-					<input type="text" id="NSS" title="Ingrese el número de seguro" placeholder="Número de Seguro" required>
+					<input type="text" id="NSS" name="NSS" title="Ingrese el número de seguro" placeholder="Número de Seguro" required>
 				</div>
 				<div>
 					<label for="Id_seguro_salud">ID Seguro de Salud:</label>
-					<input type="text" id="Id_seguro_salud" title="Ingrese el ID del seguro de salud" placeholder="ID Seguro de Salud" oninput="buscarSeguro()" required>
+					<input type="text" id="Id_seguro_salud" name="Id_seguro_salud" title="Ingrese el ID del seguro de salud" placeholder="ID Seguro de Salud" oninput="buscarSeguro()" required>
 					<button id="busquedaseguro" class="busquedaboton" title="Buscar aseguradoras de salud registradas registrados/as">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
@@ -883,6 +884,10 @@ mysqli_close($conn);
 				$("#notas").val("");
 				$("#desde_cuando").val("");
 				$("#yearsSince").text("");
+
+				// Actualizar el valor del campo oculto tieneDatosPadecimientos
+				const tieneDatosPadecimientos = document.getElementById("padecimientosTabla").getElementsByTagName("tbody")[0].hasChildNodes();
+				document.getElementById("tieneDatosPadecimientos").value = tieneDatosPadecimientos;
 			}
 
 			// Asignar el evento click al botón de agregar padecimiento
@@ -1393,68 +1398,95 @@ mysqli_close($conn);
 
 		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
 		///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
-// Variable global para almacenar el resultado de la verificación datos vacunas
-var tieneDatosVacuna = false;
+		// Variable global para almacenar el resultado de la verificación datos vacunas
+		var tieneDatosVacuna = false;
 
-// Función para verificar si la tabla tiene filas (datos agregados)
-function verificarTabla() {
-  var tabla = document.getElementById("vacunasTabla");
-  var tbody = tabla.getElementsByTagName("tbody")[0];
-  tieneDatosVacuna = tbody.hasChildNodes();
-}
+		// Función para verificar si la tabla tiene filas (datos agregados)
+		function verificarTabla() {
+			var tabla = document.getElementById("vacunasTabla");
+			var tbody = tabla.getElementsByTagName("tbody")[0];
+			tieneDatosVacuna = tbody.hasChildNodes();
+		}
 
- // Variable global para almacenar el resultado de la verificación datos padecimientos
- var tieneDatosPadecimientos = false;
+		// Variable global para almacenar el resultado de la verificación datos padecimientos
+		var tieneDatosPadecimientos = false;
 
-// Función para verificar si la tabla tiene filas (datos agregados)
-function verificarTablaPadecimientos() {
-  var tabla = document.getElementById("padecimientosTabla");
-  var tbody = tabla.getElementsByTagName("tbody")[0];
-  tieneDatosPadecimientos = tbody.hasChildNodes();
-}
+		// Función para verificar si la tabla tiene filas (datos agregados)
+		function verificarTablaPadecimientos() {
+			var tabla = document.getElementById("padecimientosTabla");
+			var tbody = tabla.getElementsByTagName("tbody")[0];
+			tieneDatosPadecimientos = tbody.hasChildNodes();
+		}
 
-// Llamar a la función para verificar inicialmente al cargar la página
-verificarTablaPadecimientos();
+		// Llamar a la función para verificar inicialmente al cargar la página
+		verificarTablaPadecimientos();
 
-///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
-///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
-function guardar() {
-  const nombre = document.getElementById("nombre").value;
-  const apellido = document.getElementById("apellido").value;
-  const masculino = document.getElementById("masculino").checked;
-  const femenino = document.getElementById("femenino").checked;
-  const fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
-  const pais = document.getElementById("pais").value;
-  const con_quien_vive = document.getElementById("con_quien_vive").value;
-  const direccion = document.getElementById("direccion").value;
-  const NSS = document.getElementById("NSS").value;
-  const Id_seguro_salud = document.getElementById("Id_seguro_salud").value;
+		///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+		///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
+		function guardar() {
+			const nombre = document.getElementById("nombre").value;
+			const apellido = document.getElementById("apellido").value;
+			const masculino = document.getElementById("masculino").checked;
+			const femenino = document.getElementById("femenino").checked;
+			const fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
+			const pais = document.getElementById("pais").value;
+			const con_quien_vive = document.getElementById("con_quien_vive").value;
+			const direccion = document.getElementById("direccion").value;
+			const NSS = document.getElementById("NSS").value;
+			const Id_seguro_salud = document.getElementById("Id_seguro_salud").value;
 
-  if (!nombre || !apellido || (!masculino && !femenino) || !fecha_nacimiento || pais === "" || con_quien_vive === "" || !direccion || !NSS || !Id_seguro_salud) {
-    alert("Por favor, complete todos los campos obligatorios antes de guardar.");
-    return;
-  }
+			if (!nombre || !apellido || (!masculino && !femenino) || !fecha_nacimiento || pais === "" || con_quien_vive === "" || !direccion || !NSS || !Id_seguro_salud) {
+				alert("Por favor, complete todos los campos obligatorios antes de guardar.");
+				return;
+			}
 
-  // Hacer una petición AJAX a PHP para guardar los datos en la base de datos
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "guardar_datos_paciente.php", true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      alert(xhr.responseText); // Mostrar el mensaje de éxito o error retornado desde PHP
-    } else if (xhr.readyState === 4 && xhr.status !== 200) {
-      alert("Error al guardar los datos. Por favor, intente nuevamente.");
-    }
-  };
-  const data = `nombre=${nombre}&apellido=${apellido}&sexo=${masculino ? 'masculino' : 'femenino'}&fecha_nacimiento=${fecha_nacimiento}&pais=${pais}&con_quien_vive=${con_quien_vive}&direccion=${direccion}&NSS=${NSS}&Id_seguro_salud=${Id_seguro_salud}`;
-  xhr.send(data);
-}
+			// Hacer una petición AJAX a PHP para guardar los datos en la base de datos
+			const xhr = new XMLHttpRequest();
+			xhr.open("POST", "guardar_datos_paciente.php", true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					alert(xhr.responseText); // Mostrar el mensaje de éxito o error retornado desde PHP
+				} else if (xhr.readyState === 4 && xhr.status !== 200) {
+					alert("Error al guardar los datos. Por favor, intente nuevamente.");
+				}
+			};
+			const data = `nombre=${nombre}&apellido=${apellido}&sexo=${masculino ? 'masculino' : 'femenino'}&fecha_nacimiento=${fecha_nacimiento}&pais=${pais}&con_quien_vive=${con_quien_vive}&direccion=${direccion}&NSS=${NSS}&Id_seguro_salud=${Id_seguro_salud}`;
+			xhr.send(data);
+		}
 
-// Asignar evento de clic al botón guardar
-document.getElementById("btnguardar").addEventListener("click", function (event) {
-  event.preventDefault(); // Evitar que el formulario se envíe directamente
-  guardar(); // Llamar a la función guardar()
-});
+		// Asignar evento de clic al botón guardar
+		document.getElementById("btnguardar").addEventListener("click", function(event) {
+			event.preventDefault(); // Evitar que el formulario se envíe directamente
+			guardar(); // Llamar a la función guardar()
+		});
+
+
+		if (tieneDatosPadecimientos) {
+			alert("tieneDatosPadecimientos es true, se procederá a guardar la historia clínica.");
+			// Obtener el ID de paciente desde PHP (asumiendo que $proximoIdPaciente contiene el valor)
+			const idPaciente = <?php echo $proximoIdPaciente; ?>;
+
+			// Hacer una petición AJAX a PHP para guardar los datos de la historia clínica
+			const xhrHistoriaClinica = new XMLHttpRequest();
+			xhrHistoriaClinica.open("POST", "guardar_datos_paciente.php", true);
+			xhrHistoriaClinica.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhrHistoriaClinica.onreadystatechange = function() {
+				if (xhrHistoriaClinica.readyState === 4 && xhrHistoriaClinica.status === 200) {
+					// Éxito en la petición AJAX, datos de historia clínica guardados correctamente
+					alert(xhrHistoriaClinica.responseText);
+				} else if (xhrHistoriaClinica.readyState === 4 && xhrHistoriaClinica.status !== 200) {
+					// Error en la petición AJAX, mostrar mensaje de error
+					alert("Error al guardar los datos de historia clínica. Por favor, intente nuevamente.");
+				}
+			};
+
+			// Crear objeto de datos de historia clínica a enviar a PHP
+			const dataHistoriaClinica = `ID_Paciente=${idPaciente}`; // Asegúrate de agregar los demás campos necesarios para historia clínica aquí
+
+			// Enviar la petición AJAX para guardar la historia clínica
+			xhrHistoriaClinica.send(dataHistoriaClinica);
+		}
 
 
 		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
