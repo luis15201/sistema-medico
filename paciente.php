@@ -252,6 +252,30 @@ mysqli_close($conn);
 				grid-gap: 20px;
 			}
 		}
+
+		.error-banner {
+			display: none;
+			position: fixed;
+			/* Hacer el banner de error fijo en la pantalla */
+			top: 0;
+			left: 0;
+			width: 100%;
+			background-color: #ff0000;
+			color: #fff;
+			padding: 10px;
+			font-size: 16px;
+			text-align: center;
+			white-space: nowrap;
+		}
+
+		.error-banner p {
+			display: inline;
+			/* Hace que los mensajes de error aparezcan en línea */
+			margin: 0;
+			/* Elimina el margen entre los mensajes */
+			padding-right: 10px;
+			/* Agrega un espacio entre los mensajes (opcional) */
+		}
 	</style>
 	<script>
 		document.getElementById('btnguardar').addEventListener('click', function() {
@@ -263,6 +287,9 @@ mysqli_close($conn);
 </head>
 
 <body onload="checkFechaProvista()">
+	<div id="error-banner" class="error-banner">
+		Por favor, complete todos los campos obligatorios antes de guardar.
+	</div>
 	<form id="myForm" action="guardar_datos_paciente.php" method="post">
 
 
@@ -801,7 +828,7 @@ mysqli_close($conn);
 				</a>
 			</div>
 			<!-- Agrega un div para mostrar mensajes de error -->
-			<div id="error-message"></div>
+			<!-- <div id="error-message"></div>-->
 
 
 
@@ -1474,43 +1501,44 @@ mysqli_close($conn);
 		function validarCampos() {
 			const campos = [{
 					id: "nombre",
-					label: "Nombre"
+					label: "Nombre",
 				},
 				{
 					id: "apellido",
-					label: "Apellido"
+					label: "Apellido",
 				},
 				{
 					id: "fecha_nacimiento",
-					label: "Fecha de nacimiento"
+					label: "Fecha de nacimiento",
 				},
 				{
 					id: "pais",
-					label: "País"
+					label: "País",
 				},
 				{
 					id: "con_quien_vive",
-					label: "Con quien vive"
+					label: "Con quien vive",
 				},
 				{
 					id: "direccion",
-					label: "Dirección"
+					label: "Dirección",
 				},
 				{
 					id: "NSS",
-					label: "NSS"
+					label: "NSS",
 				},
 				{
 					id: "Id_seguro_salud",
-					label: "Seguro de salud"
-				}
+					label: "Seguro de salud",
+				},
 			];
 
 			let formCompleto = true;
-			const mensajeErrorDiv = document.getElementById("error-message");
+			const mensajeErrorDiv = document.getElementById("error-banner");
 			mensajeErrorDiv.innerHTML = ""; // Limpiar mensajes de error anteriores
+			mensajeErrorDiv.style.display = "none"; // Ocultar el banner de error por defecto
 
-			campos.forEach(campo => {
+			campos.forEach((campo) => {
 				const inputCampo = document.getElementById(campo.id);
 				const valor = inputCampo.value.trim();
 
@@ -1522,7 +1550,6 @@ mysqli_close($conn);
 					const mensajeError = document.createElement("p");
 					mensajeError.textContent = `El campo "${campo.label}" es obligatorio.`;
 					mensajeErrorDiv.appendChild(mensajeError);
-
 				} else if (campo.id === "fecha_nacimiento" && !validarFecha(inputCampo)) {
 					formCompleto = false;
 					inputCampo.classList.add("campo-incompleto");
@@ -1531,11 +1558,15 @@ mysqli_close($conn);
 					const mensajeError = document.createElement("p");
 					mensajeError.textContent = `El formato de la fecha de nacimiento debe ser dd/mm/yyyy.`;
 					mensajeErrorDiv.appendChild(mensajeError);
-
 				} else {
 					inputCampo.classList.remove("campo-incompleto");
 				}
 			});
+
+			if (!formCompleto) {
+				// Mostrar el banner de error en la parte superior
+				mensajeErrorDiv.style.display = "block";
+			}
 
 			return formCompleto;
 		}
