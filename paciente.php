@@ -1499,77 +1499,100 @@ mysqli_close($conn);
 
 		// Función para validar los campos antes de guardar
 		function validarCampos() {
-			const campos = [{
-					id: "nombre",
-					label: "Nombre",
-				},
-				{
-					id: "apellido",
-					label: "Apellido",
-				},
-				{
-					id: "fecha_nacimiento",
-					label: "Fecha de nacimiento",
-				},
-				{
-					id: "pais",
-					label: "País",
-				},
-				{
-					id: "con_quien_vive",
-					label: "Con quien vive",
-				},
-				{
-					id: "direccion",
-					label: "Dirección",
-				},
-				{
-					id: "NSS",
-					label: "NSS",
-				},
-				{
-					id: "Id_seguro_salud",
-					label: "Seguro de salud",
-				},
-			];
+    const campos = [
+        { id: "nombre", label: "Nombre" },
+        { id: "apellido", label: "Apellido" },
+        { id: "fecha_nacimiento", label: "Fecha de nacimiento" },
+        { id: "pais", label: "País" },
+        { id: "con_quien_vive", label: "Con quien vive" },
+        { id: "direccion", label: "Dirección" },
+        { id: "NSS", label: "NSS" },
+        { id: "Id_seguro_salud", label: "Seguro de salud" }
+    ];
 
-			let formCompleto = true;
-			const mensajeErrorDiv = document.getElementById("error-banner");
-			mensajeErrorDiv.innerHTML = ""; // Limpiar mensajes de error anteriores
-			mensajeErrorDiv.style.display = "none"; // Ocultar el banner de error por defecto
+    let formCompleto = true;
+    const mensajeErrorDiv = document.getElementById("error-banner");
+    mensajeErrorDiv.innerHTML = ""; // Limpiar mensajes de error anteriores
+    mensajeErrorDiv.style.display = "none"; // Ocultar el banner de error por defecto
 
-			campos.forEach((campo) => {
-				const inputCampo = document.getElementById(campo.id);
-				const valor = inputCampo.value.trim();
+    campos.forEach(campo => {
+        const inputCampo = document.getElementById(campo.id);
+        const valor = inputCampo.value.trim();
 
-				if (!valor) {
-					formCompleto = false;
-					inputCampo.classList.add("campo-incompleto");
+        if (!valor) {
+            formCompleto = false;
+            inputCampo.classList.add("campo-incompleto");
 
-					// Agregar mensaje de error al div
-					const mensajeError = document.createElement("p");
-					mensajeError.textContent = `El campo "${campo.label}" es obligatorio.`;
-					mensajeErrorDiv.appendChild(mensajeError);
-				} else if (campo.id === "fecha_nacimiento" && !validarFecha(inputCampo)) {
-					formCompleto = false;
-					inputCampo.classList.add("campo-incompleto");
+            // Agregar mensaje de error al div
+            const mensajeError = document.createElement("p");
+            mensajeError.textContent = `El campo "${campo.label}" es obligatorio.`;
+            mensajeErrorDiv.appendChild(mensajeError);
+        } else if (campo.id === "fecha_nacimiento" && !esFechaValida(valor)) {
+            formCompleto = false;
+            inputCampo.classList.add("campo-incompleto");
 
-					// Agregar mensaje de error al div
-					const mensajeError = document.createElement("p");
-					mensajeError.textContent = `El formato de la fecha de nacimiento debe ser dd/mm/yyyy.`;
-					mensajeErrorDiv.appendChild(mensajeError);
-				} else {
-					inputCampo.classList.remove("campo-incompleto");
-				}
-			});
+            // Agregar mensaje de error al div
+            const mensajeError = document.createElement("p");
+            mensajeError.textContent = `El campo "Fecha de nacimiento" debe contener una fecha válida en formato dd/mm/yyyy.`;
+            mensajeErrorDiv.appendChild(mensajeError);
+        } else {
+            inputCampo.classList.remove("campo-incompleto");
+        }
+    });
 
-			if (!formCompleto) {
-				// Mostrar el banner de error en la parte superior
-				mensajeErrorDiv.style.display = "block";
-			}
+    // Verificar si el campo de seguro de salud tiene un valor válido en el label
+    const labelNombreSeguro = document.getElementById("Nombre_seguro").textContent.trim();
+    const idSeguroSalud = document.getElementById("Id_seguro_salud").value.trim();
+    if (labelNombreSeguro === "" || labelNombreSeguro === "Dato no encontrado") {
+        formCompleto = false;
+        const inputSeguroSalud = document.getElementById("Id_seguro_salud");
+        inputSeguroSalud.classList.add("campo-incompleto");
 
-			return formCompleto;
-		}
+        // Agregar mensaje de error al div
+        const mensajeError = document.createElement("p");
+        mensajeError.textContent = `El campo "Seguro de salud" debe contener un ID de seguro válido.`;
+        mensajeErrorDiv.appendChild(mensajeError);
+    }
+
+    if (!formCompleto) {
+        // Mostrar el banner de error en la parte superior
+        mensajeErrorDiv.style.display = "block";
+    }
+
+    return formCompleto;
+}
+
+function esFechaValida(fecha) {
+    // Verificar si el valor ingresado es un número
+    if (!isNaN(Date.parse(fecha))) {
+        return true;
+    }
+
+    // Validar si el valor ingresado es una fecha válida en formato dd/mm/yyyy
+    const regexFecha = /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/;
+    if (!regexFecha.test(fecha)) {
+        return false;
+    }
+
+    // Verificar si es una fecha válida
+    const partesFecha = fecha.split("/");
+    const dia = parseInt(partesFecha[0]);
+    const mes = parseInt(partesFecha[1]);
+    let anio = parseInt(partesFecha[2]);
+
+    // Determinar el siglo actual para años de dos dígitos
+    const sigloActual = new Date().getFullYear().toString().slice(0, 2);
+    anio = anio < 100 ? parseInt(sigloActual + anio) : anio;
+
+    if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1900 || anio > 2100) {
+        return false;
+    }
+
+    return true;
+}
+
+
+
 		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒
 		////▓▒░▓▒░▓▒░▓▒░▓▒░▓▒
 		function guardar() {
