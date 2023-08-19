@@ -19,11 +19,13 @@
     </div>
   </a>
 
-  <div class="card">
-    <div class="card-title">Subproceso #1</div>
-    <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
-    <div class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ullamcorper sapien. Integer a nisi dapibus, dignissim leo sed, porta justo. Fusce ut volutpat est, ac lacinia est. In hac habitasse platea dictumst. Nunc non ligula non mi placerat tristique. Sed id elit non elit aliquet fringilla. Vivamus in dui vitae metus semper eleifend. Quisque ullamcorper ligula vel neque vulputate eleifend.</div>
-  </div>
+  <a href="MANT-pacientevacuna.php">
+    <div class="card" style="background: linear-gradient(to right,#e4e5dc ,#62c4f9 ); ">
+      <div class="card-title" style="font-family: Anton; color:black;">Vacunas</div>
+      <img src="IMAGENES\vacunacion.png" class="card-icon" alt="Mantenimientos">
+      <div class="card-description">Registrar datos de las vacunas para un paciente ya existente del niño/a</div>
+    </div>
+  </a>
 
   <div class="card">
     <div class="card-title">Subproceso #2</div>
@@ -45,7 +47,9 @@
     <a href="menu.php" class="claseboton">Menú Principal</a>
     
   </div>
+<script>
 
+</script>
 </body>
 
 </html>
