@@ -11,12 +11,36 @@
 
 <body>
 	<form>
+	<div class="container">
 		<fieldset>
 			<legend>Paciente-vacunas</legend>
 			<div>
+				<label for="id_paciente">ID PACIENTE:</label>
+				<input type="text" id="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()">
+				<button id="buscarpaciente" class="boton" title="Buscar pacientes registrados">
+					<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+				</button>
+			</div>
+			<div>
+				<label for="Nombre_paciente">Nombre del paciente:</label>
+				<label id="nombre_paciente"></label>
+			</div>
+			<div>
+				<label for="Apellido_paciente">Apellido del paciente:</label>
+				<label id="apellido_paciente"></label>
+			</div>
+			<div id="Modalpaciente" class="modal" style="width: 100%; height: 250%;">
+				<div class="modal-content" style="width: 100%; height: 100%;">
+					<span class="close">&times;</span>
+					<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+				</div>
+			</div>
+
+
+			<div>
 				<label for="id_vacuna">ID Vacuna:</label>
 				<input type="text" id="id_vacuna" style="width: 45px;">
-				<button id="buscarvacuna" class="boton" title="Buscar en los Seguros registrados">
+				<button id="buscarvacuna" class="boton" title="Buscar vacunas registras en el sistema">
 					<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 				</button>
 			</div>
@@ -125,6 +149,15 @@
 				$("#id_vacuna").on("input", buscarNombreVacuna);
 			</script>
 		</fieldset>
+
+		<fieldset>
+			<legend>historico-vacunas</legend>
+			<div id="historial_vacunas"></div>
+			<!--iframe id="vacuna_paciente" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe-->
+
+
+			</fieldset>
+	</div>
 		<div style="width: 100%;">
 			<button class="boton" id="btnguardar">
 				<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">save</i> Guardar
@@ -140,6 +173,76 @@
 		<script>
 			//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓MODAL VACUNA▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒
 			////////////////FIN FUNCIONES PARA EL MODAL DE VACUNA////////////////////
+//═════════════════════════════════════════════════════════
+// Obtener referencia al botón y al modal de vacuna
+const btnbusquedavacuna = document.getElementById("buscarvacuna");
+			const modalvacuna = document.getElementById("Modalvacuna");
+			// Función para mostrar el modal de vacuna
+			function mostrarModalv() {
+				modalvacuna.style.display = "block";
+			}
+			// Función para ocultar el modal vacuna
+			function ocultarModalv() {
+				modalvacuna.style.display = "none";
+			}
+// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+btnbusquedavacuna.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalvacuna.style.display === "none") {
+					mostrarModalv();
+				} else {
+					ocultarModalv();
+				}
+			});
+//═════════════════════════════════════════════════════════
+
+function cargarHistorialVacunas() {
+        var idPaciente = document.getElementById('id_paciente').value;
+        var historialVacunasDiv = document.getElementById('historial_vacunas');
+
+        if (idPaciente === '') {
+            historialVacunasDiv.innerHTML = '<p>Historial de Vacunas no encontrado.</p>';
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: 'consulta_paciente_vacuna.php',
+                data: { id_paciente: idPaciente },
+                success: function(data) {
+                    historialVacunasDiv.innerHTML = data;
+                }
+            });
+        }
+    }
+
+
+
+
+//═════════════════════════════════════════════════════════
+// Obtener referencia al botón y al modal del paciente
+const btnbusquedapaciente = document.getElementById("buscarpaciente");
+			const modalpaciente = document.getElementById("Modalpaciente");
+			// Función para mostrar el modal de vacuna
+			function mostrarModalp() {
+				modalpaciente.style.display = "block";
+			}
+			// Función para ocultar el modal vacuna
+			function ocultarModalp() {
+				modalpaciente.style.display = "none";
+			}
+// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+btnbusquedapaciente.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalpaciente.style.display === "none") {
+					mostrarModalp();
+				} else {
+					ocultarModalp();
+				}
+			});
+//═════════════════════════════════════════════════════════
+
+
+
+
 			// Variable global para almacenar el resultado de la verificación datos vacunas
 			var tieneDatosVacuna = false;
 			// Función para verificar si la tabla tiene filas (datos agregados)
@@ -148,10 +251,7 @@
 				var tbody = tabla.getElementsByTagName("tbody")[0];
 				tieneDatosVacuna = tbody.hasChildNodes();
 			}
-
-
-
-			// Función para verificar y mostrar el input de fecha al cargar la página
+			// Función para verificar y mostrar el input de **Fecha** al cargar la página
 			function checkFechaProvista() {
 				var fechaAplicacionSelect = document.getElementById('fecha_aplicacion_select');
 				var fechaAplicacionInput = document.getElementById('fecha_aplicacion_input');
@@ -163,7 +263,7 @@
 				}
 			}
 
-			// Función para establecer la fecha de hoy por defecto
+			// Función para establecer la **Fecha** de hoy por defecto
 			function setFechaHoy() {
 				var fechaAplicacionInput = document.getElementById('fecha_aplicacion_input');
 				var today = new Date();
@@ -175,7 +275,7 @@
 				fechaAplicacionInput.value = fechaHoy;
 			}
 
-			// Llamada a las funciones al cargar la página
+			// Llamada a las funciones REFERENTES A LAS FECHAS al cargar la página
 			window.addEventListener('DOMContentLoaded', function() {
 				checkFechaProvista();
 				setFechaHoy();
