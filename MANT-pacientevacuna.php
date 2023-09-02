@@ -11,153 +11,178 @@
 
 <body>
 	<form>
-	<div class="container">
-		<fieldset>
-			<legend>Paciente-vacunas</legend>
-			<div>
-				<label for="id_paciente">ID PACIENTE:</label>
-				<input type="text" id="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()">
-				<button id="buscarpaciente" class="boton" title="Buscar pacientes registrados">
-					<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-				</button>
-			</div>
-			<div>
-				<label for="Nombre_paciente">Nombre del paciente:</label>
-				<label id="nombre_paciente"></label>
-			</div>
-			<div>
-				<label for="Apellido_paciente">Apellido del paciente:</label>
-				<label id="apellido_paciente"></label>
-			</div>
-			<div id="Modalpaciente" class="modal" style="width: 100%; height: 250%;">
-				<div class="modal-content" style="width: 100%; height: 100%;">
-					<span class="close">&times;</span>
-					<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+		<div class="container">
+			<fieldset>
+				<legend>Paciente-vacunas</legend>
+				<div>
+					<label for="id_paciente">ID PACIENTE:</label>
+					<input type="text" id="id_paciente" name="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()">
+					<button id="buscarpaciente" class="boton" title="Buscar pacientes registrados">
+						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+					</button>
 				</div>
-			</div>
 
 
-			<div>
-				<label for="id_vacuna">ID Vacuna:</label>
-				<input type="text" id="id_vacuna" style="width: 45px;">
-				<button id="buscarvacuna" class="boton" title="Buscar vacunas registras en el sistema">
-					<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-				</button>
-			</div>
-			<div>
-				<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
-				<label id="nombre_vacuna"></label>
-			</div>
-			<div id="Modalvacuna" class="modal" style="width: 100%; height: 250%;">
-				<div class="modal-content" style="width: 100%; height: 100%;">
-					<span class="close">&times;</span>
-					<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-				</div>
-			</div>
-
-
-			<div style="border-top:20px;">
-				<label for="dosis">Dosis:</label>
-				<select id="dosis" style=" width: 110px; ">
-					<option selected value="1era">1era</option>
-					<option value="2da">2da</option>
-					<option value="3ra">3ra</option>
-					<option value="4ta">4ta</option>
-					<option value="5ta">5ta</option>
-					<option value="6ta">6ta</option>
-					<option value="7ma">7ma</option>
-					<option value="8va">8va</option>
-					<option value="9na">9na</option>
-					<option value="10ma">10ma</option>
-					<option value="NA">NA</option>
-				</select>
-			</div>
-			<div>
-				<label for="refuerzo">Refuerzo:</label>
-				<select id="refuerzo" style=" width: 110px; ">
-					<option value="1er">1era</option>
-					<option value="2do">2da</option>
-					<option value="3ro">3ra</option>
-					<option value="4to">4ta</option>
-					<option value="5to">5ta</option>
-					<option value="6to">6ta</option>
-					<option value="7mo">7ma</option>
-					<option value="8vo">8va</option>
-					<option value="9no">9na</option>
-					<option value="10mo">10ma</option>
-					<option selected value="NA">NA</option>
-				</select>
-			</div>
-			<div>
-				<label for="fecha_aplicacion">Fecha de Aplicación:</label>
-				<select id="fecha_aplicacion_select" style="width: 180px;">
-					<option value="fecha_provista">Fecha Provista</option>
-					<option value="fecha_no_provista">Fecha No Provista</option>
-				</select>
-				<input type="date" id="fecha_aplicacion_input" style="display: none;">
-			</div>
-			<button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
-				<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
-				Agregar
-			</button>
-
-			<button id="modificarVacuna" class="boton" style="display: none;">
-				<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i>
-				Modificar
-			</button>
-
-			<button id="cancelarEdicion" class="boton" style="display: none;">
-				<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
-				Cancelar
-			</button>
-			<table id="vacunasTabla">
-				<thead>
-					<tr>
-						<th>ID Vacuna</th>
-						<th>Nombre de Vacuna</th>
-						<th>Dosis</th>
-						<th>Refuerzo</th>
-						<th>Fecha de Aplicación</th>
-						<th>Modificar</th>
-						<th>Eliminar</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-
-			<script>
-				// Función para búsqueda dinámica del nombre de la vacuna por ID
-				function buscarNombreVacuna() {
-					var idVacuna = $("#id_vacuna").val();
-					$.ajax({
-						url: "buscar_nombre_vacuna.php", // Archivo PHP para buscar el nombre de la vacuna por ID
-						type: "POST",
-						data: {
-							id_vacuna: idVacuna
-						},
-						dataType: "json",
-						success: function(data) {
-							$("#nombre_vacuna").text(data ? data.Nombre : "Valor no encontrado");
-						},
-						error: function(error) {
-							console.log("Error:", error);
-						}
+				<!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
+				<script>
+					// Función para búsqueda dinámica del nombre y apellido del paciente por ID
+					$("#id_paciente").on("input", function() {
+						var idPaciente = $(this).val();
+						// Realizar la solicitud AJAX para obtener los datos del paciente
+						$.ajax({
+							url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
+							type: 'POST',
+							data: {
+								id_paciente: idPaciente
+							},
+							dataType: 'json',
+							success: function(data) {
+								$("#nombre_paciente").text(data.nombre || '');
+								$("#apellido_paciente").text(data.apellido || '');
+							},
+							error: function() {
+								alert('Hubo un error al obtener los datos del paciente.');
+							}
+						});
 					});
-				}
+				</script>
+				<div>
+					<label for="Nombre_paciente">Nombre del paciente:</label>
+					<label id="nombre_paciente"></label>
+				</div>
+				<div>
+					<label for="Apellido_paciente">Apellido del paciente:</label>
+					<label id="apellido_paciente"></label>
+				</div>
+				<div id="Modalpaciente" class="modal" style="width: 100%; height: 250%;">
+					<div class="modal-content" style="width: 100%; height: 100%;">
+						<span class="close">&times;</span>
+						<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+					</div>
+				</div>
 
-				// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
-				$("#id_vacuna").on("input", buscarNombreVacuna);
-			</script>
-		</fieldset>
 
-		<fieldset>
-			<legend>historico-vacunas</legend>
-			<div id="historial_vacunas"></div>
-			<!--iframe id="vacuna_paciente" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe-->
+				<div>
+					<label for="id_vacuna">ID Vacuna:</label>
+					<input type="text" id="id_vacuna" style="width: 45px;">
+					<button id="buscarvacuna" class="boton" title="Buscar vacunas registras en el sistema">
+						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+					</button>
+				</div>
+				<div>
+					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
+					<label id="nombre_vacuna"></label>
+				</div>
+				<div id="Modalvacuna" class="modal" style="width: 100%; height: 250%;">
+					<div class="modal-content" style="width: 100%; height: 100%;">
+						<span class="close">&times;</span>
+						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+					</div>
+				</div>
+
+
+				<div style="border-top:20px;">
+					<label for="dosis">Dosis:</label>
+					<select id="dosis" style=" width: 110px; ">
+						<option selected value="1era">1era</option>
+						<option value="2da">2da</option>
+						<option value="3ra">3ra</option>
+						<option value="4ta">4ta</option>
+						<option value="5ta">5ta</option>
+						<option value="6ta">6ta</option>
+						<option value="7ma">7ma</option>
+						<option value="8va">8va</option>
+						<option value="9na">9na</option>
+						<option value="10ma">10ma</option>
+						<option value="NA">NA</option>
+					</select>
+				</div>
+				<div>
+					<label for="refuerzo">Refuerzo:</label>
+					<select id="refuerzo" style=" width: 110px; ">
+						<option value="1er">1era</option>
+						<option value="2do">2da</option>
+						<option value="3ro">3ra</option>
+						<option value="4to">4ta</option>
+						<option value="5to">5ta</option>
+						<option value="6to">6ta</option>
+						<option value="7mo">7ma</option>
+						<option value="8vo">8va</option>
+						<option value="9no">9na</option>
+						<option value="10mo">10ma</option>
+						<option selected value="NA">NA</option>
+					</select>
+				</div>
+				<div>
+					<label for="fecha_aplicacion">Fecha de Aplicación:</label>
+					<select id="fecha_aplicacion_select" style="width: 180px;">
+						<option value="fecha_provista">Fecha Provista</option>
+						<option value="fecha_no_provista">Fecha No Provista</option>
+					</select>
+					<input type="date" id="fecha_aplicacion_input" style="display: none;">
+				</div>
+				<button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
+					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+					Agregar
+				</button>
+
+				<button id="modificarVacuna" class="boton" style="display: none;">
+					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i>
+					Modificar
+				</button>
+
+				<button id="cancelarEdicion" class="boton" style="display: none;">
+					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
+					Cancelar
+				</button>
+				<table id="vacunasTabla">
+					<thead>
+						<tr>
+							<th>ID Vacuna</th>
+							<th>Nombre de Vacuna</th>
+							<th>Dosis</th>
+							<th>Refuerzo</th>
+							<th>Fecha de Aplicación</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<script>
+					// Función para búsqueda dinámica del nombre de la vacuna por ID
+					function buscarNombreVacuna() {
+						var idVacuna = $("#id_vacuna").val();
+						$.ajax({
+							url: "buscar_nombre_vacuna.php", // Archivo PHP para buscar el nombre de la vacuna por ID
+							type: "POST",
+							data: {
+								id_vacuna: idVacuna
+							},
+							dataType: "json",
+							success: function(data) {
+								$("#nombre_vacuna").text(data ? data.Nombre : "Valor no encontrado");
+							},
+							error: function(error) {
+								console.log("Error:", error);
+							}
+						});
+					}
+
+					// Evento para ejecutar la búsqueda al cambiar el valor del campo ID de la vacuna
+					$("#id_vacuna").on("input", buscarNombreVacuna);
+				</script>
+			</fieldset>
+
+			<fieldset>
+				<legend>historico-vacunas</legend>
+				<div id="historial_vacunas"></div>
+				<!--iframe id="vacuna_paciente" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe-->
 
 
 			</fieldset>
-	</div>
+		</div>
 		<div style="width: 100%;">
 			<button class="boton" id="btnguardar">
 				<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">save</i> Guardar
@@ -173,9 +198,9 @@
 		<script>
 			//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓MODAL VACUNA▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒
 			////////////////FIN FUNCIONES PARA EL MODAL DE VACUNA////////////////////
-//═════════════════════════════════════════════════════════
-// Obtener referencia al botón y al modal de vacuna
-const btnbusquedavacuna = document.getElementById("buscarvacuna");
+			//═════════════════════════════════════════════════════════
+			// Obtener referencia al botón y al modal de vacuna
+			const btnbusquedavacuna = document.getElementById("buscarvacuna");
 			const modalvacuna = document.getElementById("Modalvacuna");
 			// Función para mostrar el modal de vacuna
 			function mostrarModalv() {
@@ -185,8 +210,8 @@ const btnbusquedavacuna = document.getElementById("buscarvacuna");
 			function ocultarModalv() {
 				modalvacuna.style.display = "none";
 			}
-// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
-btnbusquedavacuna.addEventListener("click", function(event) {
+			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+			btnbusquedavacuna.addEventListener("click", function(event) {
 				event.preventDefault(); // Evitar recargar la página
 				if (modalvacuna.style.display === "none") {
 					mostrarModalv();
@@ -194,32 +219,66 @@ btnbusquedavacuna.addEventListener("click", function(event) {
 					ocultarModalv();
 				}
 			});
-//═════════════════════════════════════════════════════════
+			//═════════════════════════════════════════════════════════
+			//═════════════════════════════════════════════════════════
+			function cargarHistorialVacunas() {
+				var idPaciente = document.getElementById('id_paciente').value;
+				var historialVacunasDiv = document.getElementById('historial_vacunas');
 
-function cargarHistorialVacunas() {
-        var idPaciente = document.getElementById('id_paciente').value;
-        var historialVacunasDiv = document.getElementById('historial_vacunas');
+				if (idPaciente === '') {
+					historialVacunasDiv.innerHTML = '<p>Historial de Vacunas no encontrado.</p>';
+				} else {
+					$.ajax({
+						type: 'POST',
+						url: 'consulta_paciente_vacuna.php',
+						data: {
+							id_paciente: idPaciente
+						},
+						success: function(data) {
+							historialVacunasDiv.innerHTML = data;
+						}
+					});
+				}
+			}
+			//═════════════════════════════════════════════════════════
+			//═════════════════════════════════════════════════════════
 
-        if (idPaciente === '') {
-            historialVacunasDiv.innerHTML = '<p>Historial de Vacunas no encontrado.</p>';
-        } else {
-            $.ajax({
-                type: 'POST',
-                url: 'consulta_paciente_vacuna.php',
-                data: { id_paciente: idPaciente },
-                success: function(data) {
-                    historialVacunasDiv.innerHTML = data;
-                }
-            });
-        }
-    }
+			// Agregar evento oninput al elemento input
+			document.getElementById('id_paciente').addEventListener('input', cargarHistorialVacunas);
+
+			function cargarHistorialVacunas() {
+				var idPaciente = document.getElementById('id_paciente').value;
+				var historialVacunasDiv = document.getElementById('historial_vacunas');
+
+				if (idPaciente === '') {
+					historialVacunasDiv.innerHTML = '<p>Historial de Vacunas no encontrado.</p>';
+				} else {
+					$.ajax({
+						type: 'POST',
+						url: 'consulta_paciente_vacuna.php',
+						data: {
+							id_paciente: idPaciente
+						},
+						success: function(data) {
+							historialVacunasDiv.innerHTML = data;
+						}
+					});
+				}
+			}
+
+			//═════════════════════════════════════════════════════════
+			///////////////////////////////////////////////////////////
+			//═════════════════════════════════════════════════════════
 
 
 
 
-//═════════════════════════════════════════════════════════
-// Obtener referencia al botón y al modal del paciente
-const btnbusquedapaciente = document.getElementById("buscarpaciente");
+
+			//═════════════════════════════════════════════════════════
+			//////////////////////////////////////////////////////////
+			//═════════════════════════════════════════════════════════
+			// Obtener referencia al botón y al modal del paciente
+			const btnbusquedapaciente = document.getElementById("buscarpaciente");
 			const modalpaciente = document.getElementById("Modalpaciente");
 			// Función para mostrar el modal de vacuna
 			function mostrarModalp() {
@@ -229,8 +288,8 @@ const btnbusquedapaciente = document.getElementById("buscarpaciente");
 			function ocultarModalp() {
 				modalpaciente.style.display = "none";
 			}
-// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
-btnbusquedapaciente.addEventListener("click", function(event) {
+			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+			btnbusquedapaciente.addEventListener("click", function(event) {
 				event.preventDefault(); // Evitar recargar la página
 				if (modalpaciente.style.display === "none") {
 					mostrarModalp();
@@ -238,7 +297,7 @@ btnbusquedapaciente.addEventListener("click", function(event) {
 					ocultarModalp();
 				}
 			});
-//═════════════════════════════════════════════════════════
+			//═════════════════════════════════════════════════════════
 
 
 

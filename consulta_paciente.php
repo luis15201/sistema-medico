@@ -1,3 +1,7 @@
+
+
+
+
 <?php
 error_reporting(E_ERROR | E_PARSE);
 $servername = "localhost";
@@ -16,6 +20,22 @@ if ($conn->connect_error) {
 // Consulta para obtener los datos de la tabla "paciente"
 $query = "SELECT id_paciente, nombre, apellido, sexo, fecha_nacimiento, Nacionalidad, Con_quien_vive, Direccion_reside FROM paciente";
 $result = $conn->query($query);
+
+// Función para obtener los datos del paciente por ID
+function obtenerDatosPaciente($idPaciente, $conn)
+{
+  $query = "SELECT nombre, apellido FROM paciente WHERE id_paciente = '$idPaciente'";
+  $result = $conn->query($query);
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $datosPaciente = array('nombre' => $row['nombre'], 'apellido' => $row['apellido']);
+    return $datosPaciente;
+  } else {
+    return false;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
