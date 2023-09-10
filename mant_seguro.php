@@ -73,6 +73,34 @@ $result = $conn->query($query);
     <!-- Incluir Botones de impresión -->
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <style>
+        .claseboton {
+            border: none;
+            outline: none;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            border-radius: 7px;
+            width: auto;
+            text-decoration: none;
+            height: 40px;
+            color: #fff;
+            font-size: 16px;
+            padding: 7px;
+
+        }
+
+        .claseboton:hover {
+            background: linear-gradient(to right, #63b8ff, #4a90e2);
+        }
+
+        .botones-container {
+            margin: 2px;
+            padding: 2px;
+            box-sizing: unset;
+            width: 100%;
+            float: left;
+            text-align: center;
+            /*justify-content: center;*/
+        }
+
         fieldset {
             border: 1px solid #ddd;
             border-radius: 2vw;
@@ -187,7 +215,7 @@ $result = $conn->query($query);
             cursor: pointer;
             color: #fff;
             border: 1px solid transparent;
-           
+
 
             background: linear-gradient(to right, #4a90e2, #63b8ff);
             border-radius: 7px;
@@ -197,18 +225,19 @@ $result = $conn->query($query);
             font-size: 16px;
             padding: 7px;
         }
+
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             box-sizing: border-box;
             display: inline-block;
             min-width: 1.5em;
-           
+
             margin-left: 2px;
             text-align: center;
-           
+
             cursor: pointer;
             color: #fff;
             border: 1px solid transparent;
-           
+
 
             background: linear-gradient(to right, #63b8ff, #4a90e2);
             border-radius: 7px;
