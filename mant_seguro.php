@@ -361,7 +361,7 @@ $result = $conn->query($query);
                     </div>
 
 
-                    <?php echo "<a  class='claseboton' href=\"modulo/seguro/agregar.php?pag=$pagina\">Crear seguro</a></br> </br>"; ?>
+                    <?php echo "<a  class='claseboton' href=\"modulo/seguro/agregar.php?pag=$pagina\"> <b style='color:green;font: size 15px;'> + </b> Registrar Seguro</a></br> </br>"; ?>
                     <input type="hidden" value="Buscar" name="btnbuscar">
 
             </form>

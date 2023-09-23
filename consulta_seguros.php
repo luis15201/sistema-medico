@@ -38,7 +38,16 @@ $result = $conn->query($query);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-
+<style>
+  .dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: white;
+    color: inherit;
+    margin-left: 3px;
+}
+</style>
   <script>
     /* $(document).ready(function() {
       $('#tabla_seguros').DataTable({

@@ -12,18 +12,18 @@
     <img src="IMAGENES\app90.png" class="" alt="crud">
   </div>
   <a href="menu-pacientes.php">
-    <div class="card" style="background: linear-gradient(to right, #E8A9F7,#e4e5dc ); ">
-      <div class="card-title" style="font-family: Anton; color:black;">Pacientes</div>
+    <div class="card" style="background: linear-gradient(to right, #7789,#e4e5dc ); ">
+      <div class="card-title" style="font-family: Arial Black; color:black;">Pacientes</div>
       <img src="IMAGENES\pacientes.png" class="card-icon" alt="Mantenimientos">
-      <div class="card-description">En este apartado podemos encontrar todo lo referente a los Pacientes, como registrar el paciente, vincular el registro de padres/madres o tutores de cada niño paciente, historia clínica, antecedentes médicos, vacunas, nutrición</div>
+      <div class="card-description">En este apartado podemos encontrar todo lo referente a los Pacientes. y sub-mantenimientos referentes</div>
     </div>
   </a>
 
   <a href="mant_seguro.php">
-  <div class="card">
-    <div class="card-title">Seguro</div>
-    <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
-    <div class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ullamcorper sapien. Integer a nisi dapibus, dignissim leo sed, porta justo. Fusce ut volutpat est, ac lacinia est. In hac habitasse platea dictumst. Nunc non ligula non mi placerat tristique. Sed id elit non elit aliquet fringilla. Vivamus in dui vitae metus semper eleifend. Quisque ullamcorper ligula vel neque vulputate eleifend.</div>
+  <div class="card" style="background: linear-gradient(to right,#7789,#e4e5dc ); ">
+  <div class="card-title" style="font-family: Arial Black; color:black;">Seguros</b></div>
+    <img src="IMAGENES/seguros3.png" class="card-icon" alt="Procesos">
+    <div class="card-description">Aqui podemos registrar las aseguradoras de salud.</div>
   </div>
 </a>
 <a href="Agregaruser.php">
