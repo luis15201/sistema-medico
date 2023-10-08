@@ -26,18 +26,19 @@
     <div class="card-description">Aqui podemos registrar las aseguradoras de salud.</div>
   </div>
 </a>
-<a href="Agregaruser.php">
-  <div class="card">
-    <div class="card-title">Usuarios</div>
-    <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
-    <div class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ullamcorper sapien. Integer a nisi dapibus, dignissim leo sed, porta justo. Fusce ut volutpat est, ac lacinia est. In hac habitasse platea dictumst. Nunc non ligula non mi placerat tristique. Sed id elit non elit aliquet fringilla. Vivamus in dui vitae metus semper eleifend. Quisque ullamcorper ligula vel neque vulputate eleifend.</div>
+<a href="mant-Agregaruser.php">
+<div class="card" style="background: linear-gradient(to right,#7789,#e4e5dc ); ">
+    
+<div class="card-title" style="font-family: Arial Black; color:black;">Usuarios</div>
+    <img src="IMAGENES/usuario-100.png" class="card-icon" alt="Procesos">
+    <div class="card-description">Este el es el mantenimiento de usuarios del sistema.</div>
   </div>
 </a>
 
   <div class="card">
     <div class="card-title">Subproceso #3</div>
     <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
-    <div class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ullamcorper sapien. Integer a nisi dapibus, dignissim leo sed, porta justo. Fusce ut volutpat est, ac lacinia est. In hac habitasse platea dictumst. Nunc non ligula non mi placerat tristique. Sed id elit non elit aliquet fringilla. Vivamus in dui vitae metus semper eleifend. Quisque ullamcorper ligula vel neque vulputate eleifend.</div>
+    <div class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ullamcorper sapien. </div>
   </div>
 
 
