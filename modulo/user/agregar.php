@@ -3,7 +3,7 @@ session_start();
 
 
 require_once "../../include/conec.php";
-require_once("../../Agregaruser.php");
+require_once("../../mant-Agregaruser.php");
 
 $pagina = $_GET['pag'];
 ?>
@@ -44,7 +44,7 @@ $pagina = $_GET['pag'];
             </tr>
             <tr> 	
                <td colspan="2" >
-				  <?php echo "<a href=\"../../agregaruser.php?pag=$pagina\">Cancelar</a>";?>
+				  <?php echo "<a href=\"../../mant-agregaruser.php?pag=$pagina\">Cancelar</a>";?>
 				   <input type="submit" name="btnregistrar" value="Registrar" onClick="javascript: return confirm('¿Deseas registrar a este usuario');">
 			</td>
             </tr>
@@ -73,7 +73,7 @@ $pagina = $_GET['pag'];
 		 
 	}else
 	{
-		echo "<script>window.location= '../../Agregaruser.php?pag=1' </script>";
+		echo "<script>window.location= '../../mant-Agregaruser.php?pag=1' </script>";
 	}
 }
 ?>

@@ -50,6 +50,18 @@ function obtenerDatosPaciente($idPaciente, $conn)
   <!-- Enlaces a los scripts de JavaScript de jQuery y DataTables -->
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+
+  <style>
+  .dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: white;
+    color: inherit;
+    margin-left: 3px;
+}
+</style>
 </head>
 
 <body>
