@@ -29,6 +29,44 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
 
 
     <style>
+
+.botones-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 2px;
+            padding: 2px;
+            box-sizing: border-box;
+            justify-content: center;
+        }
+
+        .botones-container>a,
+        .botones-container>input[type="button"],
+        .botones-container>input[type="submit"],
+        .botones-container>button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            flex: 1 1 auto;
+            /* Esto hace que los botones se expandan igualmente */
+            max-width: 200px;
+            /* Establece el ancho máximo para mantener la responsividad */
+            font-size: 1.2em; 
+        }
+
+        .botones-container>a:hover,
+        .botones-container>input[type="button"]:hover,
+        .botones-container>input[type="submit"]:hover,
+        .botones-container>button:hover {
+            background: linear-gradient(to right, #63b8ff, #4a90e2);
+        }
         .form-container {
             display: flex;
             flex-wrap: wrap;
@@ -264,9 +302,9 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
                     <label for="txtrol">Rol:</label>
                     <input type="text" name="txtrol" value="<?php echo $usurol; ?>" required><br>
                 </div>
-                <div>
-                    <?php echo "<a class='claseboton'  href=\"../../mant-Agregaruser.php?pag=$pagina\">Cancelar</a>"; ?>
-                    <input class='claseboton' type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
+                <div class="botones-container">
+                    <?php echo "<a  href=\"../../mant-Agregaruser.php?pag=$pagina\">Cancelar</a>"; ?>
+                    <input  type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
 
                 </div>
 
