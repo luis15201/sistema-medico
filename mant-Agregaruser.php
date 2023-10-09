@@ -6,7 +6,7 @@ include("include/conec.php");
 <html>
 
 <head>
-    <title>VaidrollTeam</title>
+    <title>Usuarios</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="icon" href="logo.png">
@@ -302,7 +302,7 @@ include("include/conec.php");
                 echo "<td>" . $mostrar['nombre_completo'] . "</td>";
                 echo "<td>" . $mostrar['rol'] . "</td>";
                 echo "<td style='width:24%'>
-			<a class='claseboton' href=\"modulo/user/ver.php?id_usuario=$mostrar[id_usuario]&pag=$pagina\">Ver</a> 
+			
 			<a  class='claseboton' href=\"modulo/user/editar.php?id_usuario=$mostrar[id_usuario]&pag=$pagina\">Modificar</a> 
 			</td>";
             }
