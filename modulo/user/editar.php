@@ -30,13 +30,22 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
 
     <style>
 
-.botones-container {
+.botones-container2 {
+            margin: 2px;
+            padding: 2px;
+            box-sizing: unset;
+            width: 100%;
+            float: left;
+            text-align: left;
+            /*justify-content: center;*/
+        }
+        .botones-container {
             display: flex;
             flex-wrap: wrap;
             margin: 2px;
             padding: 2px;
             box-sizing: border-box;
-            justify-content: center;
+            justify-content:left;
         }
 
         .botones-container>a,
@@ -44,9 +53,9 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
         .botones-container>input[type="submit"],
         .botones-container>button {
             margin: 5px;
-            padding: 10px 20px;
+            padding: 5px 5px;
             border: none;
-            border-radius: 20px;
+            border-radius: 10px;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
@@ -58,7 +67,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             /* Esto hace que los botones se expandan igualmente */
             max-width: 200px;
             /* Establece el ancho máximo para mantener la responsividad */
-            font-size: 1.2em; 
+            font-size: 1.2em;
         }
 
         .botones-container>a:hover,
@@ -67,30 +76,31 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
         .botones-container>button:hover {
             background: linear-gradient(to right, #63b8ff, #4a90e2);
         }
+
         .form-container {
             display: flex;
             flex-wrap: wrap;
             align-content: space-between;
             gap: 10px;
-            width: 30%;
-            margin-bottom: 10px ;
+            width: 55%;
+            margin-bottom: 10px;
 
         }
 
 
-         label {
+        label {
             width: 40%;
             text-align: right;
-           /*margin-right: 10%;*/
+            /*margin-right: 10%;*/
         }
 
 
-         input {
-            border:none;
+        input {
+            border: none;
             width: 40%;
             border-radius: 6px;
             padding: 5px;
-           /* text-align: left;
+            /* text-align: left;
             padding: 5px;
             margin-bottom: 10px;*/
         }
@@ -281,8 +291,8 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             <fieldset>
                 <legend>Modificar usuario</legend>
                 <div class="form-container">
-                    <label  for="txtid">ID del usuario:</label>
-                    <input  type="text" name="txtid" value="<?php echo $usuid; ?>" required readonly><br>
+                    <label for="txtid">ID del usuario:</label>
+                    <input type="text" name="txtid" value="<?php echo $usuid; ?>" required readonly><br>
 
                     <label for="txtnom">Nombre del usuario:</label>
                     <input type="text" name="txtnom" value="<?php echo $usunom; ?>" required><br>
@@ -302,12 +312,13 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
                     <label for="txtrol">Rol:</label>
                     <input type="text" name="txtrol" value="<?php echo $usurol; ?>" required><br>
                 </div>
+                <hr>
                 <div class="botones-container">
                     <?php echo "<a  href=\"../../mant-Agregaruser.php?pag=$pagina\">Cancelar</a>"; ?>
-                    <input  type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
+                    <input type="submit"  name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
 
                 </div>
-
+                <hr>
 
                 <div id="myModal" class="modal" style="width: 100%; height: 90%;">
                     <div class="modal-content" style="width: 100%; height: 80%;">
@@ -315,10 +326,17 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
                         <iframe id="modal-iframe" src="../../consulta_usuario.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
                     </div>
                 </div>
+                <div class="botones-container2">
+                    <a href="../../mant-Agregaruser.php" class="claseboton">← Atrás</a>
+                    <a href="../../index.php" class="claseboton">Login</a>
+                    <a href="../../menu.php" class="claseboton">Menú Principal</a>
 
+                </div>
             </fieldset>
         </form>
     </div>
+
+
 </body>
 
 </html>

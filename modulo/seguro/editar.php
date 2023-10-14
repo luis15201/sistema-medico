@@ -66,7 +66,6 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
     <!-- Incluir Botones de impresión -->
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <style>
-       
         .botones-container {
             display: flex;
             flex-wrap: wrap;
@@ -95,7 +94,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             /* Esto hace que los botones se expandan igualmente */
             max-width: 200px;
             /* Establece el ancho máximo para mantener la responsividad */
-            font-size: 1.2em; 
+            font-size: 1.2em;
         }
 
         .botones-container>a:hover,
@@ -121,8 +120,8 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
                 </br>
                 <div class="botones-container">
                     <?php echo "<a   href=\"../../mant_seguro.php?pag=$pagina\">  Cancelar  </a>"; ?>
-                   
-                    <input  type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este seguro?');">
+
+                    <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este seguro?');">
                 </div>
                 <div id="myModal" class="modal" style="width: 100%; height: 90%;">
                     <div class="modal-content" style="width: 100%; height: 80%;">
@@ -135,6 +134,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
 
         </form>
     </div>
+    
 </body>
 
 </html>

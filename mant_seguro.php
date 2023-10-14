@@ -357,7 +357,7 @@ $result = $conn->query($query);
                         <a href="menu-mant.php" class="claseboton">← Atrás</a>
                         <a href="index.php" class="claseboton">Login</a>
                         <a href="menu.php" class="claseboton">Menú Principal</a>
-                        <a href="mant_seguro.php" class="claseboton">Inicio</a>
+                       
                     </div>
 
 
@@ -385,7 +385,7 @@ $result = $conn->query($query);
                         echo "<td>" . $row['Id_seguro_salud'] . "</td>";
                         echo "<td>" . $row['Nombre'] . "</td>";
                         echo "<td style='width:24%'>
-			<a class='claseboton' href=\"modulo/seguro/ver.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\">Ver</a> 
+			
 			<a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\">Modificar</a> 
 			
 			</td>";
