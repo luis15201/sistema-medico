@@ -25,6 +25,28 @@
 
 				<!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
 				<script>
+					////////////////////////////////////
+					/*	function verificarDuplicadosEnHistorial(idVacuna, dosis, refuerzo) {
+							// Obtener el contenido HTML de historialVacunasDiv
+							var historialHtml = historialVacunasDiv.innerHTML;
+
+							// Realizar la verificación en función del contenido de historialVacunasDiv
+							return historialHtml.includes(idVacuna) && historialHtml.includes(dosis) && historialHtml.includes(refuerzo);
+						}*/
+
+
+
+
+					/*function verificarDuplicadosEnHistorial(idVacuna, dosis, refuerzo) {
+						// Obtener el contenido HTML de historialVacunasDiv
+						var historialHtml = historialVacunasDiv.innerHTML;
+
+						// Realizar la verificación en función del contenido de historialVacunasDiv
+						if (historialHtml.includes(idVacuna) && historialHtml.includes(dosis) && historialHtml.includes(refuerzo)) {
+							return true; // La vacuna ya existe en el historial
+						}
+						return false; // La vacuna no existe en el historial
+					}*/
 					// Función para búsqueda dinámica del nombre y apellido del paciente por ID
 					$("#id_paciente").on("input", function() {
 						var idPaciente = $(this).val();
@@ -400,6 +422,70 @@
 				}
 			});
 
+
+
+			/////▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+			// Crear una instancia del observador después de que se hayan definido los elementos relevantes
+			var tablaObserver = document.getElementById('vacunasTabla');
+			var config = {
+				childList: true,
+				subtree: true
+			};
+
+
+
+			// Modificar la función de callback del observador
+			var tablaCallback = function(mutationsList, observer) {
+				for (var mutation of mutationsList) {
+					if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+						var addedNodes = mutation.addedNodes;
+						for (var i = 0; i < addedNodes.length; i++) {
+							var addedNode = addedNodes[i];
+							if (addedNode.nodeName === 'TR') {
+								var nuevaFila = addedNode;
+								var idVacunaNuevaFila = nuevaFila.cells[0].innerText;
+								var dosisNuevaFila = nuevaFila.cells[2].innerText;
+								var refuerzoNuevaFila = nuevaFila.cells[3].innerText;
+
+								// Obtener los datos del historial de vacunas
+								var historialVacunasDiv = document.getElementById('historial_vacunas');
+								var historialFilas = historialVacunasDiv.getElementsByTagName('tr');
+
+								var existeEnHistorial = false;
+
+								// Verificar si la fila recién agregada coincide con algún registro en el historial
+								for (var j = 0; j < historialFilas.length; j++) {
+									var historialFila = historialFilas[j];
+									var idVacunaHistorial = historialFila.cells[0].innerText;
+									var dosisHistorial = historialFila.cells[2].innerText;
+									var refuerzoHistorial = historialFila.cells[3].innerText;
+
+									if (idVacunaNuevaFila === idVacunaHistorial && dosisNuevaFila === dosisHistorial && refuerzoNuevaFila === refuerzoHistorial) {
+										existeEnHistorial = true;
+										break;
+									}
+								}
+
+								if (existeEnHistorial) {
+									alert('Esta vacuna ya existe en el historial de vacunas.');
+								}
+
+								// Realiza otras acciones aquí si es necesario
+							}
+						}
+					}
+				}
+			};
+
+
+			var observer = new MutationObserver(tablaCallback);
+
+			observer.observe(tablaObserver, config);
+
+			/////▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
 			// Función para agregar una vacuna
 			function agregarVacuna() {
 				// Restaurar estilo de los campos de entrada
@@ -415,51 +501,90 @@
 					fechaAplicacion = fechaAplicacionInput.value;
 				}
 
+
 				// Verificar que los campos requeridos no estén vacíos antes de agregar la vacuna
 				if (idVacuna.trim() === '' || fechaAplicacion.trim() === '') {
 					alert('Debe completar los campos de ID de Vacuna y Fecha de Aplicación.');
 					return;
 				}
 
-				// Crear objeto de vacuna
-				var vacuna = {
-					id: idVacuna,
-					nombre: nombreVacuna,
-					dosis: dosis,
-					refuerzo: refuerzo,
-					fechaAplicacion: fechaAplicacion
-				};
+				// Verificar si la vacuna ya existe en el historial
+				var existeEnHistorial = verificarExistenciaEnHistorial(idVacuna, dosis, refuerzo);
 
-				// Agregar vacuna al arreglo de registros
-				registros.push(vacuna);
+				if (existeEnHistorial) {
+					alert('Esta vacuna ya existe en el historial de vacunas.');
+				} else
 
-				// Agregar fila a la tabla
-				var fila = vacunasTabla.insertRow();
-				var idVacunaCell = fila.insertCell();
-				var nombreVacunaCell = fila.insertCell();
-				var dosisCell = fila.insertCell();
-				var refuerzoCell = fila.insertCell();
-				var fechaAplicacionCell = fila.insertCell();
-				var modificarCell = fila.insertCell();
-				var eliminarCell = fila.insertCell();
 
-				idVacunaCell.innerHTML = idVacuna;
-				nombreVacunaCell.innerHTML = nombreVacuna;
-				dosisCell.innerHTML = dosis;
-				refuerzoCell.innerHTML = refuerzo;
-				fechaAplicacionCell.innerHTML = fechaAplicacion;
-				modificarCell.innerHTML = '<button type="button" class="modificar">Modificar</button>';
-				eliminarCell.innerHTML = '<button type="button" class="eliminar">Eliminar</button>';
+				{
+					// Crear objeto de vacuna
+					var vacuna = {
+						id: idVacuna,
+						nombre: nombreVacuna,
+						dosis: dosis,
+						refuerzo: refuerzo,
+						fechaAplicacion: fechaAplicacion
+					};
 
-				// Limpiar campos de entrada
-				idVacunaInput.value = '';
-				nombreVacunaLabel.innerText = '';
-				dosisSelect.value = '1era';
-				refuerzoSelect.value = '1era';
-				fechaAplicacionSelect.value = 'fecha_provista';
-				fechaAplicacionInput.style.display = 'none';
-				fechaAplicacionInput.value = '';
+					// Agregar vacuna al arreglo de registros
+					registros.push(vacuna);
+
+					// Agregar fila a la tabla
+					var fila = vacunasTabla.insertRow();
+					var idVacunaCell = fila.insertCell();
+					var nombreVacunaCell = fila.insertCell();
+					var dosisCell = fila.insertCell();
+					var refuerzoCell = fila.insertCell();
+					var fechaAplicacionCell = fila.insertCell();
+					var modificarCell = fila.insertCell();
+					var eliminarCell = fila.insertCell();
+
+					idVacunaCell.innerHTML = idVacuna;
+					nombreVacunaCell.innerHTML = nombreVacuna;
+					dosisCell.innerHTML = dosis;
+					refuerzoCell.innerHTML = refuerzo;
+					fechaAplicacionCell.innerHTML = fechaAplicacion;
+					modificarCell.innerHTML = '<button type="button" class="modificar">Modificar</button>';
+					eliminarCell.innerHTML = '<button type="button" class="eliminar">Eliminar</button>';
+
+					// Limpiar campos de entrada
+					idVacunaInput.value = '';
+					nombreVacunaLabel.innerText = '';
+					dosisSelect.value = '1era';
+					refuerzoSelect.value = '1era';
+					fechaAplicacionSelect.value = 'fecha_provista';
+					fechaAplicacionInput.style.display = 'none';
+					fechaAplicacionInput.value = '';
+				}
+
 			}
+
+			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+			// Función para verificar si la vacuna ya existe en el historial
+			function verificarExistenciaEnHistorial(idVacuna, dosis, refuerzo) {
+				// Obtener los datos del historial de vacunas
+				var historialVacunasDiv = document.getElementById('historial_vacunas');
+				var historialFilas = historialVacunasDiv.getElementsByTagName('tr');
+
+				for (var i = 0; i < historialFilas.length; i++) {
+					var historialFila = historialFilas[i];
+					var idVacunaHistorial = historialFila.cells[0].innerText;
+					var dosisHistorial = historialFila.cells[2].innerText;
+					var refuerzoHistorial = historialFila.cells[3].innerText;
+
+					if (idVacuna === idVacunaHistorial && dosis === dosisHistorial && refuerzo === refuerzoHistorial) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+
+
+			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
 
 			// Función para cargar el formulario de edición
 			function cargarFormularioEdicion(registro, index) {

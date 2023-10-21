@@ -59,7 +59,7 @@ $result = $conn->query($query);
                 <?php
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>" . $row["id_vacuna_p"] . "</td>";
+                    echo "<td>" . $row["id_vacuna"] . "</td>";
                     echo "<td>" . $row["nombre_vacuna"] . "</td>";
                     echo "<td>" . $row["dosis"] . "</td>";
                     echo "<td>" . $row["refuerzo"] . "</td>";
