@@ -6,11 +6,27 @@ require_once "../../include/conec.php";
 //require_once("../../mant-Agregaruser.php");
 
 $pagina = $_GET['pag'];
+
+// Consultar el último ID de la tabla usuarios
+$query = "SELECT MAX(id_usuario) AS max_id FROM usuario";
+$result = $conn->query($query);
+
+if ($result->num_rows > 0) {
+	$row = $result->fetch_assoc();
+	$lastId = $row["max_id"];
+	$newId = $lastId + 1;
+} else {
+	// Si no hay registros en la tabla, asignar el ID inicial
+	$newId = 1;
+}
+
+// Guardar el nuevo ID en una variable PHP
+$userid = $newId;
 ?>
 <html>
 
 <head>
-    <title>VaidrollTeam</title>
+    <title>Usuarios</title>
     <meta charset="UTF-8">
 
 
@@ -329,7 +345,7 @@ if (isset($_POST['btnregistrar'])) {
     $vainomcom     = $_POST['txtnomcom'];
     $vairol     = $_POST['txtrol'];
 
-    $queryadd    = mysqli_query($conn, "INSERT INTO usuario(nombre_usuario,pass1,confirm_pass,estado,nombre_completo,rol) VALUES('$vaiusu','$vaipass','$vaiconf','$vaiestado','$vainomcom','$vairol')");
+    $queryadd    = mysqli_query($conn, "INSERT INTO usuario(id_usuario,nombre_usuario,pass1,confirm_pass,estado,nombre_completo,rol) VALUES('$userid','$vaiusu','$vaipass','$vaiconf','$vaiestado','$vainomcom','$vairol')");
 
     if (!$queryadd) {
         echo "Error con el registro: " . mysqli_error($conn);
