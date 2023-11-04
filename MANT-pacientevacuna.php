@@ -7,16 +7,19 @@
 	<link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+
+	</style>
 </head>
 
 <body>
 	<form>
-		<div class="container">
+		<div class="container" style="height: 750px;">
 			<fieldset>
 				<legend>Paciente-vacunas</legend>
 				<div>
 					<label for="id_paciente">ID PACIENTE:</label>
-					<input type="text" id="id_paciente" name="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()">
+					<input type="text" id="id_paciente" name="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()" required>
 					<button id="buscarpaciente" class="boton" title="Buscar pacientes registrados">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
@@ -63,7 +66,7 @@
 
 				<div>
 					<label for="id_vacuna">ID Vacuna:</label>
-					<input type="text" id="id_vacuna" style="width: 45px;">
+					<input type="text" id="id_vacuna" style="width: 45px;" required>
 					<button id="buscarvacuna" class="boton" title="Buscar vacunas registras en el sistema">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
@@ -181,18 +184,20 @@
 
 
 			</fieldset>
+			<div style=" margin-top:-20;padding:0; height:0cm;">
+				<button class="boton" id="btnguardar">
+					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">save</i> Guardar
+				</button>
+				<button class="boton" onclick="resetForm()" id="btnreset">
+					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">autorenew</i> Reset
+				</button>
+				<a href="menu-pacientes.php" class="claseboton" id="btnatras">
+					<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">arrow_back</i> Atrás
+				</a>
+			</div>
+			<div id="error-message" style="color: red;"></div>
 		</div>
-		<div style="width: 100%;">
-			<button class="boton" id="btnguardar">
-				<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">save</i> Guardar
-			</button>
-			<button class="boton" onclick="resetForm()" id="btnreset">
-				<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">autorenew</i> Reset
-			</button>
-			<a href="menu-pacientes.php" class="claseboton" id="btnatras">
-				<i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">arrow_back</i> Atrás
-			</a>
-		</div>
+
 
 		<script>
 			//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓MODAL VACUNA▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒
@@ -691,8 +696,66 @@
 					inputs[i].style.color = '';
 				}
 			}
+			///██▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓███
+			///██▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓███
+			function guardar() {
+				// Obtener el valor del ID del paciente
+				const id_paciente = document.getElementById("id_paciente").value;
 
-			//FIN DE FUNCIONES DEL BOTON MOFICAR DE LA TABLA AGREGAR VACUNA A PACIENTE*///
+				// Recopilar datos de la tabla de pacientes_vacunas
+				const datosVacunas = [];
+				const tablaVacunas = document.getElementById("vacunasTabla");
+				const filasVacunas = tablaVacunas.getElementsByTagName("tr");
+				for (let i = 1; i < filasVacunas.length; i++) {
+					const filaVacuna = filasVacunas[i];
+					const celdasVacuna = filaVacuna.getElementsByTagName("td");
+					const id_vacuna = celdasVacuna[0].innerText;
+					const dosis = celdasVacuna[2].innerText;
+					const refuerzo = celdasVacuna[3].innerText;
+					const fecha_aplicacion = celdasVacuna[4].innerText;
+					datosVacunas.push({
+						id_paciente,
+						id_vacuna,
+						dosis,
+						refuerzo,
+						fecha_aplicacion,
+					});
+				}
+
+				// Hacer una petición AJAX a PHP para guardar los datos en la base de datos
+				const xhr = new XMLHttpRequest();
+				xhr.open("POST", "guardar_pacientes_vacunas.php", true);
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.onreadystatechange = function() {
+					// Si hay un error al guardar los datos, mostrar el mensaje de error en el elemento "error-message"
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						// Mostrar el mensaje de error en el elemento "error-message"
+						const errorMessageDiv = document.getElementById("error-message");
+						errorMessageDiv.textContent = "Error al guardar los datos: " + xhr.responseText;
+						errorMessageDiv.style.display = "block"; // Mostrar el elemento de error
+					} else if (xhr.readyState === 4 && xhr.status !== 200) {
+						// Mostrar el mensaje de alerta
+						alert("Error al guardar los datos. Por favor, intente nuevamente.");
+					}
+				};
+
+				// Convertir el array de datos a formato JSON
+				const datosJSON = JSON.stringify({
+					pacientesVacunas: datosVacunas,
+				});
+
+				// Enviar la petición AJAX para guardar los datos
+				xhr.send(datosJSON);
+			}
+
+			// Asignar evento de clic al botón guardar
+			document.getElementById("btnguardar").addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar que el formulario se envíe directamente
+
+				// Llamar a la función guardar()
+				guardar();
+				//location.reload();
+			});
 		</script>
 	</form>
 </body>
