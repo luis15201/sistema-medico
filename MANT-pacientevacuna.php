@@ -25,29 +25,6 @@
 
 				<!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
 				<script>
-					////////////////////////////////////
-					/*	function verificarDuplicadosEnHistorial(idVacuna, dosis, refuerzo) {
-							// Obtener el contenido HTML de historialVacunasDiv
-							var historialHtml = historialVacunasDiv.innerHTML;
-
-							// Realizar la verificación en función del contenido de historialVacunasDiv
-							return historialHtml.includes(idVacuna) && historialHtml.includes(dosis) && historialHtml.includes(refuerzo);
-						}*/
-
-
-
-
-					/*function verificarDuplicadosEnHistorial(idVacuna, dosis, refuerzo) {
-						// Obtener el contenido HTML de historialVacunasDiv
-						var historialHtml = historialVacunasDiv.innerHTML;
-
-						// Realizar la verificación en función del contenido de historialVacunasDiv
-						if (historialHtml.includes(idVacuna) && historialHtml.includes(dosis) && historialHtml.includes(refuerzo)) {
-							return true; // La vacuna ya existe en el historial
-						}
-						return false; // La vacuna no existe en el historial
-					}*/
-					// Función para búsqueda dinámica del nombre y apellido del paciente por ID
 					$("#id_paciente").on("input", function() {
 						var idPaciente = $(this).val();
 						// Realizar la solicitud AJAX para obtener los datos del paciente
@@ -484,10 +461,30 @@
 			observer.observe(tablaObserver, config);
 
 			/////▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+			function verificarIdPacienteCompleto() {
+				var idPaciente = document.getElementById('id_paciente').value;
+
+				if (idPaciente === '') {
+					alert('Por favor, complete el campo "id_paciente" antes de agregar una nueva vacuna.');
+					return false;
+				}
+
+				return true;
+			}
 			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 			// Función para agregar una vacuna
 			function agregarVacuna() {
+
+				// Verificar si el campo "id_paciente" está completo
+				if (!verificarIdPacienteCompleto()) {
+					return; // Salir de la función si no está completo
+				}
+
+				// Restaurar estilo de los campos de entrada
+				resetFieldsetStyle();
+
 				// Restaurar estilo de los campos de entrada
 				resetFieldsetStyle();
 
