@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
-/*esto es una prueba*/
+		/*esto es una prueba*/
 	</style>
 </head>
 
@@ -366,18 +366,24 @@
 			agregarVacunaBtn.addEventListener('click', function(event) {
 				event.preventDefault(); // Evitar la recarga de la página al hacer clic en Agregar
 				agregarVacuna();
+				checkFechaProvista();
+				setFechaHoy();
 			});
 
 			// Agregar evento al botón Modificar (en el fieldset)
 			modificarVacunaBtn.addEventListener('click', function(event) {
 				event.preventDefault(); // Evitar la recarga de la página al hacer clic en Modificar
 				guardarEdicion();
+				checkFechaProvista();
+				setFechaHoy();
 			});
 
 			// Agregar evento al botón Cancelar (en el fieldset)
 			cancelarEdicionBtn.addEventListener('click', function(event) {
 				event.preventDefault(); // Evitar la recarga de la página al hacer clic en Cancelar
 				cancelarEdicion();
+				checkFechaProvista();
+				setFechaHoy();
 			});
 
 			// Agregar evento para eliminar registros
@@ -479,9 +485,43 @@
 			}
 			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
+			function verificarVacunaExistente(nombre, dosis, refuerzo) {
+				// Obtener la tabla y las filas
+				var tabla = document.getElementById("vacunasTabla");
+				var filas = tabla.getElementsByTagName("tr");
+
+				// Iterar sobre las filas (comenzando desde 1 para omitir la fila de encabezado)
+				for (var i = 1; i < filas.length; i++) {
+					var celdas = filas[i].getElementsByTagName("td");
+
+					// Obtener los valores de nombre, dosis y refuerzo de la fila actual
+					var nombreActual = celdas[1].innerText;
+					var dosisActual = celdas[2].innerText;
+					var refuerzoActual = celdas[3].innerText;
+
+					// Verificar si la combinación ya existe
+					if (nombre === nombreActual && dosis === dosisActual && refuerzo === refuerzoActual) {
+						return true; // La combinación ya existe
+					}
+				}
+
+				return false; // La combinación no existe
+			}
+
+
+
+
 			// Función para agregar una vacuna
 			function agregarVacuna() {
+				// Verificar si la combinación ya existe en la tabla
+				var nombre = nombreVacunaLabel.innerText;
+				var dosis = dosisSelect.value;
+				var refuerzo = refuerzoSelect.value;
 
+				if (verificarVacunaExistente(nombre, dosis, refuerzo)) {
+					alert('Esta combinación de nombre, dosis y refuerzo ya existe en la tabla.');
+					return;
+				}
 				// Verificar si el campo "id_paciente" está completo
 				if (!verificarIdPacienteCompleto()) {
 					return; // Salir de la función si no está completo
@@ -698,6 +738,70 @@
 			}
 			///██▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓███
 			///██▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓█████▐▐▐▒▓▓███
+
+			function limpiarFormulario() {
+				// Limpiar campos del formulario
+				idVacunaInput.value = '';
+				nombreVacunaLabel.innerText = '';
+				dosisSelect.value = '1era';
+				refuerzoSelect.value = '1era';
+				fechaAplicacionSelect.value = 'fecha_provista';
+				fechaAplicacionInput.style.display = 'none';
+				fechaAplicacionInput.value = '';
+
+				// Limpiar el campo id_paciente
+				document.getElementById('id_paciente').value = '';
+
+				// Limpiar el apellido del paciente
+				document.getElementById('apellido_paciente').innerText = '';
+
+				// Limpiar la tabla
+				var tabla = document.getElementById("vacunasTabla");
+				var filas = tabla.getElementsByTagName("tr");
+
+				// Eliminar todas las filas (comenzando desde la última)
+				for (var i = filas.length - 1; i > 0; i--) {
+					tabla.deleteRow(i);
+				}
+
+				// Restablecer el arreglo de registros
+				registros = [];
+
+				// Restablecer otros elementos del paciente (agrega más según sea necesario)
+				document.getElementById('nombre_paciente').innerText = '';
+				document.getElementById('edad_paciente').innerText = '';
+				// Agrega más líneas según sea necesario para otros elementos del paciente
+
+				// Limpiar historial de vacunas
+				document.getElementById('historial_vacunas').innerHTML = '';
+			}
+
+			function verificarCamposCompletos() {
+				var idPaciente = document.getElementById('id_paciente').value;
+				var tablaVacunas = document.getElementById('vacunasTabla');
+
+				// Verificar el ID del paciente
+				if (idPaciente.trim() === '') {
+					alert('Campo ID del paciente está vacío. Por favor, complételo.');
+					document.getElementById('id_paciente').style.backgroundColor = 'red';
+					return false;
+				}
+
+				// Verificar si la tabla de vacunas tiene datos
+				if (tablaVacunas.rows.length <= 1) {
+					alert('La tabla de vacunas está vacía. Por favor, agregue al menos una vacuna.');
+					tablaVacunas.style.backgroundColor = 'red';
+					return false;
+				}
+
+				// Restablecer estilos si todo está completo
+				document.getElementById('id_paciente').style.backgroundColor = '';
+				tablaVacunas.style.backgroundColor = '';
+
+				return true;
+			}
+
+
 			function guardar() {
 				// Obtener el valor del ID del paciente
 				const id_paciente = document.getElementById("id_paciente").value;
@@ -720,6 +824,8 @@
 						refuerzo,
 						fecha_aplicacion,
 					});
+
+
 				}
 
 				// Hacer una petición AJAX a PHP para guardar los datos en la base de datos
@@ -731,8 +837,9 @@
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						// Mostrar el mensaje de error en el elemento "error-message"
 						const errorMessageDiv = document.getElementById("error-message");
-						errorMessageDiv.textContent = "Error al guardar los datos: " + xhr.responseText;
+						errorMessageDiv.textContent = "Notificación: " + xhr.responseText;
 						errorMessageDiv.style.display = "block"; // Mostrar el elemento de error
+						errorMessageDiv.style.color = "blue";
 					} else if (xhr.readyState === 4 && xhr.status !== 200) {
 						// Mostrar el mensaje de alerta
 						alert("Error al guardar los datos. Por favor, intente nuevamente.");
@@ -746,14 +853,18 @@
 
 				// Enviar la petición AJAX para guardar los datos
 				xhr.send(datosJSON);
+				limpiarFormulario();
 			}
 
 			// Asignar evento de clic al botón guardar
 			document.getElementById("btnguardar").addEventListener("click", function(event) {
 				event.preventDefault(); // Evitar que el formulario se envíe directamente
 
-				// Llamar a la función guardar()
-				guardar();
+				// Verificar si los campos están completos
+				if (verificarCamposCompletos()) {
+					// Llamar a la función guardar solo si los campos están completos
+					guardar();
+				}
 				//location.reload();
 			});
 		</script>
