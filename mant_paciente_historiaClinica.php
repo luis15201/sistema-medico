@@ -487,21 +487,31 @@
     //▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒ FIN DE FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 
 
+    function limpiarTablaPadecimientos() {
+        $("#padecimientosTabla tbody").empty();
+        cantidadFilasPadecimientos = 0;
+    }
 
+    document.getElementById('id_paciente').addEventListener('change', function() {
+        // Verificar si hay un paciente actual y filas en la tabla
+        if (idPacienteActual !== "" && cantidadFilasPadecimientos > 0) {
+            // Pregunta al usuario si desea cambiar de paciente
+            var respuesta = confirm('¿Desea cambiar de paciente?, al hacerlo se reiniciará el formulario');
 
-   /* document.getElementById('id_paciente').addEventListener('change', function() {
-        // Pregunta al usuario si desea cambiar de paciente
-        var respuesta = confirm('¿Desea cambiar de paciente?');
-
-        if (respuesta) {
-            // Limpiar la tabla de padecimientos y actualizar el id del paciente actual
-            limpiarTablaPadecimientos();
-            idPacienteActual = this.value;
+            if (respuesta) {
+                // Limpiar la tabla de padecimientos y actualizar el id del paciente actual
+                limpiarTablaPadecimientos();
+                idPacienteActual = this.value;
+            } else {
+                // Restaurar el valor anterior del input
+                this.value = idPacienteActual;
+            }
         } else {
-            // Restaurar el valor anterior del input
-            this.value = idPacienteActual;
+            // Si no hay paciente actual o la tabla está vacía, simplemente actualizar el id del paciente actual
+            idPacienteActual = this.value;
         }
-    });*/
+        cargarHistorialPadecimientos();
+    });
 </script>
 
 </html>

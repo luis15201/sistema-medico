@@ -180,7 +180,7 @@
 			<fieldset>
 				<legend>historico-vacunas</legend>
 				<div id="historial_vacunas"></div>
-				
+
 			</fieldset>
 			<div style=" margin-top:-20;padding:0; height:0cm;">
 				<button class="boton" id="btnguardar">
@@ -198,6 +198,8 @@
 
 
 		<script>
+			var idPacienteActual = "";
+			var cantidadFilasPadecimientos = 0;
 			//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓MODAL VACUNA▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒
 			////////////////FIN FUNCIONES PARA EL MODAL DE VACUNA////////////////////
 			//═════════════════════════════════════════════════════════
@@ -597,6 +599,9 @@
 					fechaAplicacionInput.value = '';
 				}
 
+				idPacienteActual = $("#id_paciente").val();
+				cantidadFilasPadecimientos = $("#vacunasTabla tbody tr").length;
+
 			}
 
 			///▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -864,6 +869,37 @@
 					guardar();
 				}
 				//location.reload();
+			});
+
+
+			//////////////////////////////////////////
+			//////////////////////////////////////
+			///////////////////////////////////
+			function limpiarTablaPadecimientos() {
+				$("#vacunasTabla tbody").empty();
+				cantidadFilasPadecimientos = 0;
+
+			}
+
+			document.getElementById('id_paciente').addEventListener('change', function() {
+				// Verificar si hay un paciente actual y filas en la tabla
+				if (idPacienteActual !== "" && cantidadFilasPadecimientos > 0) {
+					// Pregunta al usuario si desea cambiar de paciente
+					var respuesta = confirm('¿Desea cambiar de paciente?, al hacerlo se reiniciará el formulario');
+
+					if (respuesta) {
+						// Limpiar la tabla de padecimientos y actualizar el id del paciente actual
+						limpiarTablaPadecimientos();
+						idPacienteActual = this.value;
+					} else {
+						// Restaurar el valor anterior del input
+						this.value = idPacienteActual;
+					}
+				} else {
+					// Si no hay paciente actual o la tabla está vacía, simplemente actualizar el id del paciente actual
+					idPacienteActual = this.value;
+				}
+				cargarHistorialVacunas();
 			});
 		</script>
 	</form>
