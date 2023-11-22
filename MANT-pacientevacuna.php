@@ -180,9 +180,7 @@
 			<fieldset>
 				<legend>historico-vacunas</legend>
 				<div id="historial_vacunas"></div>
-				<!--iframe id="vacuna_paciente" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe-->
-
-
+				
 			</fieldset>
 			<div style=" margin-top:-20;padding:0; height:0cm;">
 				<button class="boton" id="btnguardar">

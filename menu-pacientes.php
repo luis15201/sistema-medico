@@ -27,10 +27,11 @@
     </div>
   </a>
 
-  <div class="card">
-    <div class="card-title">Subproceso #2</div>
-    <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
-    <div class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ullamcorper sapien. Integer a nisi dapibus, dignissim leo sed, porta justo. Fusce ut volutpat est, ac lacinia est. In hac habitasse platea dictumst. Nunc non ligula non mi placerat tristique. Sed id elit non elit aliquet fringilla. Vivamus in dui vitae metus semper eleifend. Quisque ullamcorper ligula vel neque vulputate eleifend.</div>
+  <a href="mant_paciente_historiaClinica.php">
+  <div class="card" style="background: linear-gradient(to right,#e4e5dc ,#62c4f9 ); ">
+      <div class="card-title" style="font-family: Anton; color:black;">Padecimientos del Paciente</div>
+    <img src="IMAGENES/historia2.png" class="card-icon" alt="Procesos">
+    <div class="card-description">Insertar padecimientos/condición médica vigentes en el paciente/s</div>
   </div>
 
   <div class="card">
