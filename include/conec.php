@@ -18,4 +18,4 @@ if ($conn->connect_error) {
 // Cerrar la conexión
 /*$conn->close();*/
 
-?>
+?> 

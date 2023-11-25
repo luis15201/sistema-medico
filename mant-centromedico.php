@@ -6,7 +6,7 @@ include("include/conec.php");
 <html>
 
 <head>
-    <title>Usuarios</title>
+    <title>Centros Medicos</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="icon" href="logo.png">
@@ -246,25 +246,25 @@ include("include/conec.php");
     if (isset($_POST['btnbuscar'])) {
         $buscar = $_POST['txtbuscar'];
 
-        $sqlusu = mysqli_query($conn, "SELECT * FROM usuario where id_usuario = '" . $buscar . "'");
+        $sqlcentro = mysqli_query($conn, "SELECT * FROM institucion_de_salud where id_centro = '" . $buscar . "'");
     } else {
-        $sqlusu = mysqli_query($conn, "SELECT * FROM usuario ORDER BY id_usuario ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
+        $sqlcentro = mysqli_query($conn, "SELECT * FROM institucion_de_salud ORDER BY id_centro ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
     }
 
-    $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_usuarios FROM usuario");
+    $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_centro FROM institucion_de_salud");
 
-    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_usuarios'];
+    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_centro'];
 
     ?>
     <div class="cont">
         <form method="POST">
         <fieldset>
-        <legend>Lista de usuarios</legend>
+        <legend>Lista de Centros Medicos </legend>
 
             <a  class='claseboton' href="menu-mant.php">Volver al menu</a>
             <a  class='claseboton' href="menu.php">Inicio</a>
 
-            <?php echo "<a  class='claseboton' href=\"modulo/user/agregar.php?pag=$pagina\">Crear usuario</a>"; ?>
+            <?php echo "<a  class='claseboton' href=\"modulo/centrosdesalud/agregar.php?pag=$pagina\">Crear usuario</a>"; ?>
             <!--input type="submit" value="Buscar" name="btnbuscar"-->
             <!--input type="text" name="txtbuscar" placeholder="Ingresar DNI de usuario" autocomplete="off" style='width:20%'-->
         </form>
@@ -281,29 +281,25 @@ include("include/conec.php");
         <table id="ejemplo" class="display nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>id usuario</th>
-                    <th>nombre del usuario</th>
-                    <th>contraseña</th>
-                    <th>estado</th>
-                    <th>nombre completo</th>
-                    <th>rol</th>
+                    <th>id centromedico</th>
+                    <th>nombre del centro medico</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
                     <th></th>
                 </tr>
             </thead>
             <?php
 
-            while ($mostrar = mysqli_fetch_assoc($sqlusu)) {
+            while ($mostrar = mysqli_fetch_assoc($sqlcentro)) {
 
                 echo "<tr>";
-                echo "<td>" . $mostrar['id_usuario'] . "</td>";
-                echo "<td>" . $mostrar['nombre_usuario'] . "</td>";
-                echo "<td>" . $mostrar['Pass1'] . "</td>";
-                echo "<td>" . $mostrar['estado'] . "</td>";
-                echo "<td>" . $mostrar['nombre_completo'] . "</td>";
-                echo "<td>" . $mostrar['rol'] . "</td>";
+                echo "<td>" . $mostrar['id_centro'] . "</td>";
+                echo "<td>" . $mostrar['nombre'] . "</td>";
+                echo "<td>" . $mostrar['direccion'] . "</td>";
+                echo "<td>" . $mostrar['telefono'] . "</td>";
                 echo "<td style='width:24%'>
 			
-			<a  class='claseboton' href=\"modulo/user/editar.php?id_usuario=$mostrar[id_usuario]&pag=$pagina\">Modificar</a> 
+			<a  class='claseboton' href=\"modulo/centrosdesalud/editar.php?id_centro=$mostrar[id_centro]&pag=$pagina\">Modificar</a> 
 			</td>";
             }
 
@@ -342,7 +338,7 @@ include("include/conec.php");
         if (isset($_GET['pag'])) {
             if ((($pagina) * $filasmax) < $maxusutabla) {
             ?>
-                <a class='claseboton' href="Agregaruser.php?pag=<?php echo $_GET['pag'] + 1; ?>">Siguiente</a>
+                <a class='claseboton' href="mant-centromedico.php?pag=<?php echo $_GET['pag'] + 1; ?>">Siguiente</a>
             <?php
             } else {
             ?>
@@ -353,7 +349,7 @@ include("include/conec.php");
         <?php
         } else {
         ?>
-            <a  class='claseboton' href="Agregaruser.php?pag=2">Siguiente</a>
+            <a  class='claseboton' href="mant-centromedico.php?pag=2">Siguiente</a>
         <?php
         }
 

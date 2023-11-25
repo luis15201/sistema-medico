@@ -8,7 +8,7 @@ require_once "../../include/conec.php";
 $pagina = $_GET['pag'];
 
 // Consultar el último ID de la tabla usuarios
-$query = "SELECT MAX(id_usuario) AS max_id FROM usuario";
+$query = "SELECT MAX(id_centro) AS max_id FROM institucion_de_salud";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
@@ -21,12 +21,12 @@ if ($result->num_rows > 0) {
 }
 
 // Guardar el nuevo ID en una variable PHP
-$userid = $newId;
+$centroid = $newId;
 ?>
 <html>
 
 <head>
-    <title>Usuarios</title>
+    <title>Centros Medicos</title>
     <meta charset="UTF-8">
 
 
@@ -285,7 +285,7 @@ $userid = $newId;
      <script type="text/javascript">
 		// Obtener el campo de entrada y el nuevo ID
 		var txtId = document.getElementById("txtid");
-		var newId = <?php echo $userid; ?>;
+		var newId = <?php echo $centroid; ?>;
 
 		// Asignar el nuevo ID al campo de entrada
 		txtId.value = newId;
@@ -329,45 +329,34 @@ $userid = $newId;
 
 <body>
     <fieldset>
-        <legend>Agregar Usuario</legend>
+        <legend>Agregar Centro de Salud</legend>
         <form class="form-container" method="POST">
             <fieldset>
-                <legend> Usuario</legend>
+                <legend> Centro De Salud </legend>
                 <div><label>ID<label>
-                            <input type="text" name="txtid" autocomplete="off" value=<?php echo $userid; ?> require readonly></div>
+                            <input type="text" name="txtid" autocomplete="off" value=<?php echo $centroid; ?> require readonly></div>
                 <br>
-                <div><label>Nombre de usuario<label>
+                <div><label>Nombre del centro<label>
                             <input type="text" autofocus name="txtnom" autocomplete="off" require></div>
                 <br>
-                <div><label>Contraseña</label>
-                    <input type="text" name="txtpass1" autocomplete="off" require>
+                <div><label>Direccion</label>
+                    <input type="text" name="txtdire" autocomplete="off" require>
                 </div>
                 <br>
-                <div><label>Confirmar Pass</label>
-                    <input type="text" name="txtconfi" autocomplete="off" require>
+                <div><label>Telefono</label>
+                    <input type="text" name="txttele" autocomplete="off" require>
                 </div>
                 <br>
-                <div><label>Estado</label>
-                    <input type="text" name="txtest" autocomplete="off" require>
-                </div>
-                <br>
-                <div><label>Nombre/s</label>
-                    <input type="text" name="txtnomcom" autocomplete="off" require>
-                </div>
-                <br>
-                <div><label>Rol</label>
-                    <input type="text" name="txtrol" autocomplete="off" require>
-                </div>
-                <br>
+                
             </fieldset>
             <div class='botones-container'>
-                <?php echo "<a href=\"../../mant-agregaruser.php?pag=$pagina\">Cancelar</a>"; ?>
+                <?php echo "<a href=\"../../mant-centromedico.php?pag=$pagina\">Cancelar</a>"; ?>
                 <input type="submit" name="btnregistrar" value="Registrar" onClick="javascript: return confirm('¿Deseas registrar a este usuario');">
             </div>
         </form>
         <div class="modal-content" style="width: 100%; height: 80%;">
             <span class="close">&times;</span>
-            <iframe id="modal-iframe" src="../../consulta_usuario.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+            <iframe id="modal-iframe" src="../../consulta_centromedico.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
         </div>
 
         <div class="botones-container2">
@@ -383,21 +372,19 @@ $userid = $newId;
 <?php
 
 if (isset($_POST['btnregistrar'])) {
-    $vaiusu     = $_POST['txtnom'];
-    $vaipass     = $_POST['txtpass1'];
-    $vaiconf     = $_POST['txtconfi'];
-    $vaiestado     = $_POST['txtest'];
-    $vainomcom     = $_POST['txtnomcom'];
-    $vairol     = $_POST['txtrol'];
+    $vainom     = $_POST['txtnom'];
+    $vaidire     = $_POST['txtdire'];
+    $vaitelefono     = $_POST['txttele'];
+    
 
-    $queryadd    = mysqli_query($conn, "INSERT INTO usuario(id_usuario,nombre_usuario,pass1,confirm_pass,estado,nombre_completo,rol) VALUES('$userid','$vaiusu','$vaipass','$vaiconf','$vaiestado','$vainomcom','$vairol')");
+    $queryadd    = mysqli_query($conn, "INSERT INTO institucion_de_salud(id_centro, nombre, direccion, telefono) VALUES('$centroid','$vainom','$vaidire','$vaitelefono')");
 
     if (!$queryadd) {
         echo "Error con el registro: " . mysqli_error($conn);
         //echo "<script>alert('DNI duplicado, intenta otra vez');</script>";
 
     } else {
-        echo "<script>window.location= '../../mant-Agregaruser.php?pag=1' </script>";
+        echo "<script>window.location= '../../mant-centromedico.php?pag=1' </script>";
     }
 }
 ?>
