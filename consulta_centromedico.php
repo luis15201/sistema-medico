@@ -13,32 +13,20 @@ if ($conn->connect_error) {
   die("Error de conexión: " . $conn->connect_error);
 }
 
-// Consulta para obtener los datos de la tabla "usuario"
-$query = "SELECT id_centro, nombre, direccion, telefono FROM institucion_de_salud";
+// Consulta para obtener los datos de la tabla "seguro"
+$query = "SELECT Id_centro, nombre, direccion, telefono FROM institucion_de_salud";
 $result = $conn->query($query);
-
-// Función para obtener los datos del usuario por ID
-function obtenerdatoscentro($id_centro, $conn)
-{
-  $query = "SELECT nombre FROM institucion_de_salud WHERE id_centro = '$id_centro'";
-  $result = $conn->query($query);
-
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $datoscentro = array('nombre' => $row['nombre']);
-    return $datoscentro;
-  } else {
-    return false;
-  }
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-<!-- Enlaces a los archivos CSS externos -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de centros de salud </title>
+  <!-- Enlaces a los archivos CSS externos -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
   <!-- Enlaces a los scripts de JavaScript -->
@@ -50,8 +38,7 @@ function obtenerdatoscentro($id_centro, $conn)
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-
-  <style>
+<style>
   .dataTables_wrapper .dataTables_filter input {
     border: 1px solid #aaa;
     border-radius: 3px;
@@ -61,64 +48,101 @@ function obtenerdatoscentro($id_centro, $conn)
     margin-left: 3px;
 }
 </style>
+  <script>
+    /* $(document).ready(function() {
+      $('#tabla_seguros').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+      });
+    });*/
+    $(document).ready(function() {
+      $('#tabla_centros').DataTable({
+        dom: 'frtip', // Mostrar solo búsqueda y paginación
+        language: {
+          url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' // Ruta al archivo de traducción
+        }
+      });
+    });
+
+
+
+
+    function seleccionarcentro(idcentro, nombrecentro, direccioncentro, telefonocentro) {
+      var openerWindow = window.opener;
+      openerWindow.document.getElementById("Id_centro").value = idcentro;
+      openerWindow.document.getElementById("nombre").textContent = nombrecentro;
+      openerWindow.document.getElementById("direccion").textContent = direccioncentro;
+      openerWindow.document.getElementById("telefono").textContent = telefonocentro;
+      window.close();
+    }
+  </script>
 </head>
 
 <body>
-  <h3 style="padding:0; margin:0;">Consulta de centros medicos</h3>
+  <h3 style="padding:0; margin:0;">Consulta de centros de Salud</h3>
 
-  <table id="tabla_centro" class="display" style="width:100%">
-  <thead>
-                <tr>
-                    <th>id centromedico</th>
-                    <th>nombre del centro medico</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                </tr>
-            </thead>
+  <table id="tabla_centros" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th>Id centro</th>
+        <th>Nombre</th>
+        <th>Direccion</th>
+        <th>Telefono</th>
+      </tr>
+    </thead>
     <tbody>
       <?php
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr>";
-          echo "<td>" . $mostrar['id_centro'] . "</td>";
-          echo "<td>" . $mostrar['nombre'] . "</td>";
-          echo "<td>" . $mostrar['direccion'] . "</td>";
-          echo "<td>" . $mostrar['telefono'] . "</td>";
+          echo "<tr onclick=\"seleccionarcentro('" . $row["Id_centro"] . "', '" . $row["nombre"] . "', '" . $row["direccion"] . "','" . $row["telefono"] . "')\">";
+          echo "<td>" . $row["Id_centro"] . "</td>";
+          echo "<td>" . $row["nombre"] . "</td>";
+          echo "<td>" . $row["direccion"] . "</td>";
+          echo "<td>" . $row["telefono"] . "</td>";
           echo "</tr>";
         }
       } else {
-        echo "<tr><td colspan='4'>No se encontraron resultados.</td></tr>";
+        echo "<tr><td colspan='2'>No se encontraron resultados.</td></tr>";
       }
       ?>
     </tbody>
   </table>
 
   <script>
-    $(document).ready(function() {
-      $('#tabla_centro').DataTable({
-        dom: 'frtip', // Mostrar solo búsqueda y paginación
-        language: {
-          url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' // Ruta al archivo de traducción
-        }
-      });
+    //evento click para el mantenimiento del paciente
 
+    $(document).ready(function() {
       // Asignar un evento de clic a las filas de la tabla
-      $("#tabla_centro tbody").on("click", "tr", function() {
+      $("#tabla_centros tbody").on("click", "tr", function() {
         // Obtener las celdas de la fila clicada
         var celdas = $(this).find("td");
 
         // Obtener los datos de las celdas
-        var id_centro = celdas.eq(0).text();
-        var nombre = celdas.eq(1).text();
-        
-        // Asignar los valores al campo de texto y al label en el otro documento
-        window.parent.document.getElementById("id_centro").value = id_centro;
-        window.parent.document.getElementById("nombre").textContent = nombre;
-       
+        var idSeguro = celdas.eq(0).text();
+        var nombreSeguro = celdas.eq(1).text();
+        var nombreSeguro = celdas.eq(2).text();
+        var nombreSeguro = celdas.eq(3).text();
+
+        // Asignar los valores al campo de texto y al label en paciente.php
+        window.parent.document.getElementById("Id_centro").value = idcentro;
+        window.parent.document.getElementById("nombre").textContent = nombrecentro;
+        window.parent.document.getElementById("direccion").textContent = direccioncentro;
+        window.parent.document.getElementById("telefono").textContent = telefonocentro;
       });
 
-      // Resto del script similar al código anterior
+      // Asignar un evento de clic al botón de cierre del modal
+      window.parent.document.querySelector("#myModal .close").addEventListener("click", function() {
+        // Cerrar el modal
+        window.parent.document.getElementById("myModal").style.display = "none";
+      });
+
+      // Evitar que el evento de clic en el modal cierre el modal
+      window.parent.document.querySelector("#myModal .modal-content").addEventListener("click", function(event) {
+        event.stopPropagation();
+      });
     });
   </script>
 
