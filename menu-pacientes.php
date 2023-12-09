@@ -1,3 +1,9 @@
+<?php
+include("menu_lateral.php");
+?>
+
+
+
 <html>
 
 <head>
