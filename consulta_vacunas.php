@@ -111,6 +111,10 @@ $result = $conn->query($query);
         // Asignar los valores al campo de texto y al label en paciente.php
         window.parent.document.getElementById("id_vacuna").value = idVacuna;
         window.parent.document.getElementById("nombre_vacuna").textContent = nombreVacuna;
+
+        setTimeout(function() {
+          window.parent.document.getElementById('Modalvacuna').style.display = 'none';
+        }, 800);
       });
 
       // Asignar un evento de clic al botón de cierre del modal

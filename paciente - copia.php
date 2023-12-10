@@ -52,11 +52,6 @@ mysqli_close($conn);
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
-
-
-
-
-
 		/* Agrega estilos para resaltar los campos incompletos */
 		.campo-incompleto {
 			border: 5px solid red;
@@ -73,7 +68,7 @@ mysqli_close($conn);
 
 
 
-
+	
 		.campo-modificado {
 			/*ESTILO PARA LA EDICION DE PADECIMIENTOS*/
 			background-color: green;
@@ -278,49 +273,6 @@ mysqli_close($conn);
 			padding-right: 10px;
 			/* Agrega un espacio entre los mensajes (opcional) */
 		}
-
-		/* Estilos específicos para el modal personalizado */
-		.custom-modal {
-			display: none;
-			position: fixed;
-			z-index: 9999;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			overflow: auto;
-			background-color: rgba(0, 0, 0, 0.7);
-		}
-
-		.custom-modal-content {
-			width: 80%;
-			height: 80%;
-			margin: auto;
-			background: linear-gradient(to right, #e4e5dc, #45bac9db);
-			padding: 20px;
-			border-radius: 20PX;
-		}
-
-		.custom-close {
-			color: #aaa;
-			float: right;
-			font-size: 28px;
-			font-weight: bold;
-		}
-
-		.custom-close:hover,
-		.custom-close:focus {
-			color: #000;
-			text-decoration: none;
-			cursor: pointer;
-		}
-
-		/* Estilos adicionales específicos para el iframe dentro del modal */
-		.custom-iframe {
-			width: 100%;
-			height: 100%;
-			border: none;
-		}
 	</style>
 	<script>
 		document.getElementById('btnguardar').addEventListener('click', function() {
@@ -329,33 +281,33 @@ mysqli_close($conn);
 			form.reportValidity();
 		});
 	</script>
-	<?php
+<?php
 
-	include("menu_lateral_header.php");
+include("menu_lateral_header.php");
 
-	?>
+?>
 
 </head>
 
 
 
 <body onload="checkFechaProvista()">
-	<?php
+<?php
 
-	include("menu_lateral.php");
+include("menu_lateral.php");
 
-	?>
+?>
 	<div id="error-banner" class="error-banner">
 		Por favor, complete todos los campos obligatorios antes de guardar.
 	</div>
-
+	
 
 	<form id="myForm" action="guardar_datos_paciente.php" method="post">
 
 
 
 		<div class="container">
-
+			
 			<fieldset>
 				<legend>Datos del Paciente</legend>
 				<DIV><label for="id_paciente">ID de Paciente:</label>
@@ -660,11 +612,10 @@ mysqli_close($conn);
 					<label for="Nombre_padecimiento">Nombre del padecimiento:</label>
 					<label id="nombre_padecimiento"></label>
 				</div>
-				<div id="ModalHistoriaClinica" class="custom-modal" >
-					<div class="custom-modal-content"  >
+				<div id="ModalHistoriaClinica" class="modal" style="width: 100%; ">
+					<div class="modal-content" style="width: 100%; ">
 						<span class="close">&times;</span>
-						<iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-
+						<iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; "></iframe>
 					</div>
 				</div>
 
@@ -742,8 +693,8 @@ mysqli_close($conn);
 				</div>
 				<br>
 
-				<div id="myModal" class="custom-modal">
-					<div class="custom-modal-content">
+				<div id="myModal" class="modal" style="width: 100%; height: 90%;">
+					<div class="modal-content" style="width: 100%; height: 80%;">
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
@@ -767,8 +718,8 @@ mysqli_close($conn);
 					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
 					<label id="nombre_vacuna"></label>
 				</div>
-				<div id="Modalvacuna" class="custom-modal" >
-					<div class="custom-modal-content" >
+				<div id="Modalvacuna" class="modal" style="width: 100%; height: 250%;">
+					<div class="modal-content" style="width: 100%; height: 100%;">
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
@@ -1394,46 +1345,38 @@ mysqli_close($conn);
 		//▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒
 		///╬╬╬Botón con el id "busquedaseguro" y el nuevo modal con id "myModal"╬╬╬
 		document.addEventListener("DOMContentLoaded", function() {
-    // Obtener referencia al botón y al modal
-    const btnBusquedaSeguro = document.getElementById("busquedaseguro");
-    const modalSeguro = document.getElementById("myModal");
+			// Obtener referencia al botón y al modal
+			const btnBusquedaSeguro = document.getElementById("busquedaseguro");
+			const modalSeguro = document.getElementById("myModal");
 
-    // Función para mostrar el modal
-    function mostrarModal() {
-        modalSeguro.style.display = "block";
-    }
+			// Función para mostrar el modal
+			function mostrarModal() {
+				modalSeguro.style.display = "block";
+			}
 
-    // Función para ocultar el modal
-    function ocultarModal() {
-        modalSeguro.style.display = "none";
-    }
+			// Función para ocultar el modal
+			function ocultarModal() {
+				modalSeguro.style.display = "none";
+			}
 
-    // Asignar evento de clic al botón para mostrar u ocultar el modal y evitar recargar la página
-    btnBusquedaSeguro.addEventListener("click", function(event) {
-        event.preventDefault(); // Evitar recargar la página
-        if (modalSeguro.style.display === "none") {
-            mostrarModal();
-        } else {
-            ocultarModal();
-        }
-    });
+			// Asignar evento de clic al botón para mostrar u ocultar el modal y evitar recargar la página
+			btnBusquedaSeguro.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalSeguro.style.display === "none") {
+					mostrarModal();
+				} else {
+					ocultarModal();
+				}
+			});
 
-    // Asignar evento de clic al botón de cierre dentro del modal para ocultarlo
-    modalSeguro.querySelector(".close").addEventListener("click", ocultarModal);
+			// Asignar evento de clic al botón de cierre dentro del modal para ocultarlo
+			modalSeguro.querySelector(".close").addEventListener("click", ocultarModal);
 
-    // Evitar que el evento de clic en el contenido del modal cierre el modal
-    modalSeguro.querySelector(".modal-content").addEventListener("click", function(event) {
-        event.stopPropagation();
-    });
-
-    document.addEventListener("dblclick", function(event) {
-        // Verificar si el doble clic ocurrió dentro del modal
-        if (event.target.closest('.modal-content')) {
-            ocultarModal();
-        }
-    });
-});
-
+			// Evitar que el evento de clic en el contenido del modal cierre el modal
+			modalSeguro.querySelector(".modal-content").addEventListener("click", function(event) {
+				event.stopPropagation();
+			});
+		});
 		//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
 		//Evento click celda del modal
 		$(document).ready(function() {
@@ -1569,120 +1512,97 @@ mysqli_close($conn);
 
 		// Función para validar los campos antes de guardar
 		function validarCampos() {
-			const campos = [{
-					id: "nombre",
-					label: "Nombre"
-				},
-				{
-					id: "apellido",
-					label: "Apellido"
-				},
-				{
-					id: "fecha_nacimiento",
-					label: "Fecha de nacimiento"
-				},
-				{
-					id: "pais",
-					label: "País"
-				},
-				{
-					id: "con_quien_vive",
-					label: "Con quien vive"
-				},
-				{
-					id: "direccion",
-					label: "Dirección"
-				},
-				{
-					id: "NSS",
-					label: "NSS"
-				},
-				{
-					id: "Id_seguro_salud",
-					label: "Seguro de salud"
-				}
-			];
+    const campos = [
+        { id: "nombre", label: "Nombre" },
+        { id: "apellido", label: "Apellido" },
+        { id: "fecha_nacimiento", label: "Fecha de nacimiento" },
+        { id: "pais", label: "País" },
+        { id: "con_quien_vive", label: "Con quien vive" },
+        { id: "direccion", label: "Dirección" },
+        { id: "NSS", label: "NSS" },
+        { id: "Id_seguro_salud", label: "Seguro de salud" }
+    ];
 
-			let formCompleto = true;
-			const mensajeErrorDiv = document.getElementById("error-banner");
-			mensajeErrorDiv.innerHTML = ""; // Limpiar mensajes de error anteriores
-			mensajeErrorDiv.style.display = "none"; // Ocultar el banner de error por defecto
+    let formCompleto = true;
+    const mensajeErrorDiv = document.getElementById("error-banner");
+    mensajeErrorDiv.innerHTML = ""; // Limpiar mensajes de error anteriores
+    mensajeErrorDiv.style.display = "none"; // Ocultar el banner de error por defecto
 
-			campos.forEach(campo => {
-				const inputCampo = document.getElementById(campo.id);
-				const valor = inputCampo.value.trim();
+    campos.forEach(campo => {
+        const inputCampo = document.getElementById(campo.id);
+        const valor = inputCampo.value.trim();
 
-				if (!valor) {
-					formCompleto = false;
-					inputCampo.classList.add("campo-incompleto");
+        if (!valor) {
+            formCompleto = false;
+            inputCampo.classList.add("campo-incompleto");
 
-					// Agregar mensaje de error al div
-					const mensajeError = document.createElement("p");
-					mensajeError.textContent = `El campo "${campo.label}" es obligatorio.`;
-					mensajeErrorDiv.appendChild(mensajeError);
-				} else if (campo.id === "fecha_nacimiento" && !esFechaValida(valor)) {
-					formCompleto = false;
-					inputCampo.classList.add("campo-incompleto");
+            // Agregar mensaje de error al div
+            const mensajeError = document.createElement("p");
+            mensajeError.textContent = `El campo "${campo.label}" es obligatorio.`;
+            mensajeErrorDiv.appendChild(mensajeError);
+        } else if (campo.id === "fecha_nacimiento" && !esFechaValida(valor)) {
+            formCompleto = false;
+            inputCampo.classList.add("campo-incompleto");
 
-					// Agregar mensaje de error al div
-					const mensajeError = document.createElement("p");
-					mensajeError.textContent = `El campo "Fecha de nacimiento" debe contener una fecha válida en formato dd/mm/yyyy.`;
-					mensajeErrorDiv.appendChild(mensajeError);
-				} else {
-					inputCampo.classList.remove("campo-incompleto");
-				}
-			});
+            // Agregar mensaje de error al div
+            const mensajeError = document.createElement("p");
+            mensajeError.textContent = `El campo "Fecha de nacimiento" debe contener una fecha válida en formato dd/mm/yyyy.`;
+            mensajeErrorDiv.appendChild(mensajeError);
+        } else {
+            inputCampo.classList.remove("campo-incompleto");
+        }
+    });
 
-			// Verificar si el campo de seguro de salud tiene un valor válido en el label
-			const labelNombreSeguro = document.getElementById("Nombre_seguro").textContent.trim();
-			const idSeguroSalud = document.getElementById("Id_seguro_salud").value.trim();
-			if (labelNombreSeguro === "" || labelNombreSeguro === "Dato no encontrado") {
-				formCompleto = false;
-				const inputSeguroSalud = document.getElementById("Id_seguro_salud");
-				inputSeguroSalud.classList.add("campo-incompleto");
+    // Verificar si el campo de seguro de salud tiene un valor válido en el label
+    const labelNombreSeguro = document.getElementById("Nombre_seguro").textContent.trim();
+    const idSeguroSalud = document.getElementById("Id_seguro_salud").value.trim();
+    if (labelNombreSeguro === "" || labelNombreSeguro === "Dato no encontrado") {
+        formCompleto = false;
+        const inputSeguroSalud = document.getElementById("Id_seguro_salud");
+        inputSeguroSalud.classList.add("campo-incompleto");
 
-				// Agregar mensaje de error al div
-				const mensajeError = document.createElement("p");
-				mensajeError.textContent = `El campo "Seguro de salud" debe contener un ID de seguro válido.`;
-				mensajeErrorDiv.appendChild(mensajeError);
-			}
+        // Agregar mensaje de error al div
+        const mensajeError = document.createElement("p");
+        mensajeError.textContent = `El campo "Seguro de salud" debe contener un ID de seguro válido.`;
+        mensajeErrorDiv.appendChild(mensajeError);
+    }
 
-			if (!formCompleto) {
-				// Mostrar el banner de error en la parte superior
-				mensajeErrorDiv.style.display = "block";
-			}
+    if (!formCompleto) {
+        // Mostrar el banner de error en la parte superior
+        mensajeErrorDiv.style.display = "block";
+    }
 
-			return formCompleto;
-		}
+    return formCompleto;
+}
 
-		function esFechaValida(fecha) {
-			// Verificar si el valor ingresado es un número
-			if (!isNaN(Date.parse(fecha))) {
-				return true;
-			}
+function esFechaValida(fecha) {
+    // Verificar si el valor ingresado es un número
+    if (!isNaN(Date.parse(fecha))) {
+        return true;
+    }
 
-			// Validar si el valor ingresado es una fecha válida en formato dd/mm/yyyy
-			const regexFecha = /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/;
-			if (!regexFecha.test(fecha)) {
-				return false;
-			}
+    // Validar si el valor ingresado es una fecha válida en formato dd/mm/yyyy
+    const regexFecha = /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/;
+    if (!regexFecha.test(fecha)) {
+        return false;
+    }
 
-			// Verificar si es una fecha válida
-			const partesFecha = fecha.split("/");
-			const dia = parseInt(partesFecha[0]);
-			const mes = parseInt(partesFecha[1]);
-			let anio = parseInt(partesFecha[2]);
+    // Verificar si es una fecha válida
+    const partesFecha = fecha.split("/");
+    const dia = parseInt(partesFecha[0]);
+    const mes = parseInt(partesFecha[1]);
+    let anio = parseInt(partesFecha[2]);
 
-			// Determinar el siglo actual para años de dos dígitos
-			const sigloActual = new Date().getFullYear().toString().slice(0, 2);
-			anio = anio < 100 ? parseInt(sigloActual + anio) : anio;
+    // Determinar el siglo actual para años de dos dígitos
+    const sigloActual = new Date().getFullYear().toString().slice(0, 2);
+    anio = anio < 100 ? parseInt(sigloActual + anio) : anio;
 
-			if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1900 || anio > 2100) {
-				return false;
-			}
+    if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1900 || anio > 2100) {
+        return false;
+    }
 
-			return true;
-		}
+    return true;
+}
 
 
 

@@ -318,9 +318,17 @@ $result = $conn->query($query);
             });
         });
     </script>
+<?php
 
+include("menu_lateral_header.php");
+
+?>
 </head>
+<?php
 
+  include("menu_lateral.php");
+
+  ?>
 <body>
     <div>
         <?php

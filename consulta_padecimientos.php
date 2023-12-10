@@ -56,6 +56,40 @@ $result = $conn->query($query);
       window.close();
     }
   </script>
+
+<style>
+    .dataTables_wrapper .dataTables_filter input {
+      border: 1px solid #aaa;
+      border-radius: 16px;
+      padding: 5px;
+      background-color: white;
+      color: inherit;
+      margin-left: 3px;
+    }
+
+    tr:hover {
+      background-color: #A8A4DE;
+    }
+
+    .resaltado {
+      background-color: #A8A4DE;
+    }
+    #tabla_padecimientos_comunes tbody tr:hover {
+       background-color: #A8A4DE;
+       cursor: pointer;
+   }
+   #tabla_padecimientos_comunes tbody tr:active {
+    background-color: #5bc0f7;
+    cursor: pointer;
+   border:4px solid red ;
+    transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease; /* Animaciones de 0.5 segundos */
+    box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red; /* Sombra inicial y sombra roja */
+    font-size: 25px;
+    color: white; /* Cambiar el color del texto */
+    font-weight: bold; /* Cambiar a negritas */
+    font-family: "Copperplate",  Fantasy;
+   }
+  </style>
 </head>
 
 <body>
@@ -89,8 +123,8 @@ $result = $conn->query($query);
     //evento click para el mantenimiento del paciente
 
     $(document).ready(function() {
-      // Asignar un evento de clic a las filas de la tabla
-      $("#tabla_padecimientos_comunes tbody").on("click", "tr", function() {
+    // Asignar un evento de clic a las filas de la tabla de padecimientos comunes
+    $("#tabla_padecimientos_comunes tbody").on("click", "tr", function() {
         // Obtener las celdas de la fila clicada
         var celdas = $(this).find("td");
 
@@ -101,20 +135,25 @@ $result = $conn->query($query);
         // Asignar los valores al campo de texto y al label en paciente.php
         window.parent.document.getElementById("id_padecimiento").value = idPadecimiento;
         window.parent.document.getElementById("nombre_padecimiento").textContent = nombrePadecimiento;
-      });
 
-      // Asignar un evento de clic al botón de cierre del modal
+        // Cerrar el modal después de 2 segundos
+        setTimeout(function() {
+            window.parent.document.getElementById('ModalHistoriaClinica').style.display = 'none';
+        }, 800);
+    });
 
-      window.parent.document.querySelector("#ModalHistoriaClinica .close").addEventListener("click", function() {
+    // Asignar un evento de clic al botón de cierre del modal
+    window.parent.document.querySelector("#ModalHistoriaClinica .close").addEventListener("click", function() {
         // Cerrar el modal
         window.parent.document.getElementById("ModalHistoriaClinica").style.display = "none";
-      });
-
-      // Evitar que el evento de clic en el modal cierre el modal
-      window.parent.document.querySelector("#ModalHistoriaClinica .modal-content").addEventListener("click", function(event) {
-        event.stopPropagation();
-      });
     });
+
+    // Evitar que el evento de clic en el modal cierre el modal
+    window.parent.document.querySelector("#ModalHistoriaClinica .modal-content").addEventListener("click", function(event) {
+        event.stopPropagation();
+    });
+});
+
   </script>
 
 </body>

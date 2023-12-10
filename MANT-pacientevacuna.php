@@ -10,8 +10,18 @@
 	<style>
 		/*esto es una prueba*/
 	</style>
-</head>
+<?php
 
+include("menu_lateral_header.php");
+
+?>
+
+</head>
+<?php
+
+include("menu_lateral.php");
+
+?>
 <body>
 	<form>
 		<div class="container" style="height: 750px;">

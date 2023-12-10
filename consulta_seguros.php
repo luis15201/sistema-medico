@@ -38,16 +38,39 @@ $result = $conn->query($query);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-<style>
-  .dataTables_wrapper .dataTables_filter input {
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    padding: 5px;
-    background-color: white;
-    color: inherit;
-    margin-left: 3px;
-}
-</style>
+  <style>
+    .dataTables_wrapper .dataTables_filter input {
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      padding: 5px;
+      background-color: white;
+      color: inherit;
+      margin-left: 3px;
+    }
+
+    tr:hover {
+      background-color: #A8A4DE;
+    }
+
+    .resaltado {
+      background-color: #A8A4DE;
+    }
+    #tabla_seguros tbody tr:hover {
+       background-color: #A8A4DE;
+       cursor: pointer;
+   }
+   #tabla_seguros tbody tr:active {
+    background-color: #5bc0f7;
+    cursor: pointer;
+   border:4px solid red ;
+    transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease; /* Animaciones de 0.5 segundos */
+    box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red; /* Sombra inicial y sombra roja */
+    font-size: 25px;
+    color: white; /* Cambiar el color del texto */
+    font-weight: bold; /* Cambiar a negritas */
+    font-family: "Copperplate",  Fantasy;
+   }
+  </style>
   <script>
     /* $(document).ready(function() {
       $('#tabla_seguros').DataTable({
@@ -64,6 +87,17 @@ $result = $conn->query($query);
           url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' // Ruta al archivo de traducción
         }
       });
+      var table = $('#tabla_seguros').DataTable();
+      $('#tabla_seguros').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        // below some operations with the data
+        // How can I set the row color as red?
+        $(this).addClass('highlight').siblings().removeClass('highlight');
+      });
+
+
+
+
     });
 
 
@@ -109,28 +143,39 @@ $result = $conn->query($query);
     //evento click para el mantenimiento del paciente
 
     $(document).ready(function() {
+      var tablaSeguros = $('#tabla_seguros').DataTable();
+
       // Asignar un evento de clic a las filas de la tabla
-      $("#tabla_seguros tbody").on("click", "tr", function() {
-        // Obtener las celdas de la fila clicada
-        var celdas = $(this).find("td");
+      $('#tabla_seguros tbody').on('click', 'tr', function() {
+        // Obtener la fila clicada
+        var fila = $(this);
 
         // Obtener los datos de las celdas
-        var idSeguro = celdas.eq(0).text();
-        var nombreSeguro = celdas.eq(1).text();
+        var idSeguro = tablaSeguros.row(fila).data()[0];
+        var nombreSeguro = tablaSeguros.row(fila).data()[1];
 
         // Asignar los valores al campo de texto y al label en paciente.php
-        window.parent.document.getElementById("Id_seguro_salud").value = idSeguro;
-        window.parent.document.getElementById("Nombre_seguro").textContent = nombreSeguro;
+        window.parent.document.getElementById('Id_seguro_salud').value = idSeguro;
+        window.parent.document.getElementById('Nombre_seguro').textContent = nombreSeguro;
+
+        // Resaltar toda la fila con un delay de 2 segundos
+        fila.addClass('resaltado');
+
+        // Cerrar el modal después de 2 segundos
+        setTimeout(function() {
+          fila.removeClass('resaltado');
+          window.parent.document.getElementById('myModal').style.display = 'none';
+        }, 800);
       });
 
       // Asignar un evento de clic al botón de cierre del modal
-      window.parent.document.querySelector("#myModal .close").addEventListener("click", function() {
+      window.parent.document.querySelector('#myModal .close').addEventListener('click', function() {
         // Cerrar el modal
-        window.parent.document.getElementById("myModal").style.display = "none";
+        window.parent.document.getElementById('myModal').style.display = 'none';
       });
 
       // Evitar que el evento de clic en el modal cierre el modal
-      window.parent.document.querySelector("#myModal .modal-content").addEventListener("click", function(event) {
+      window.parent.document.querySelector('#myModal .modal-content').addEventListener('click', function(event) {
         event.stopPropagation();
       });
     });

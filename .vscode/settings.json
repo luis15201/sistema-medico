@@ -14,5 +14,6 @@
             "username": "sqluser",
             "password": "password"
         }
-    ]
+    ],
+    "cSpell.language": "en,es-ES"
 }

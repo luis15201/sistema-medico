@@ -1,6 +1,4 @@
-<?php
-include("menu_lateral.php");
-?>
+
 
 
 
@@ -10,7 +8,20 @@ include("menu_lateral.php");
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Anton:regular" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Bitter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
+
+  <?php
+
+include("menu_lateral_header.php");
+
+?>
+
+
 </head>
+<?php
+
+  include("menu_lateral.php");
+
+  ?>
 
 <body style="background: linear-gradient(to right, #E8A9F7,#e4e5dc ); ">
   <div style="width:100%; padding: 6px; width: 100%; display: flex; flex-direction: column; align-items: center;">

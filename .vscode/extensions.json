@@ -5,6 +5,8 @@
         "royaction.color-manager",
         "pranaygp.vscode-css-peek",
         "zignd.html-css-class-completion",
-        "oracle.mysql-shell-for-vs-code"
+        "oracle.mysql-shell-for-vs-code",
+        "hearhear.html-comment",
+        "streetsidesoftware.code-spell-checker-spanish"
     ]
 }

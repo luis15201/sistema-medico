@@ -226,11 +226,20 @@ include("include/conec.php");
     </style>
 
 
+<?php
 
+  include("menu_lateral_header.php");
+
+  ?>
 
 
 
 </head>
+<?php
+
+  include("menu_lateral.php");
+
+  ?>
 
 <body>
     <?php
