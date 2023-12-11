@@ -33,9 +33,10 @@
                             </div>
 
                         </div>
-                        <a href="#" class="list-group-item list-group-item-action"> Seguros</a>
-                        <a href="#" class="list-group-item list-group-item-action"> Usuarios</a>
-                        <a href="#" class="list-group-item list-group-item-action"> Centro Médico</a>
+                        <a href="mant_seguro.php" class="list-group-item list-group-item-action"> Seguros</a>
+                        <a href="mant-Agregaruser.php" class="list-group-item list-group-item-action"> Usuarios</a>
+                        <a href="mant-centromedico.php" class="list-group-item list-group-item-action"> Centro Médico</a>
+                        <a href="mant_medicamentos.php" class="list-group-item list-group-item-action"> Medicamentos</a>
                     </div>
 
                 </div>

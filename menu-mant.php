@@ -68,6 +68,15 @@ include("menu_lateral.php");
   </div>
 </a>
 
+<a href="mant_medicamentos.php">
+<div class="card" style="background: linear-gradient(to right,#7789,#e4e5dc ); ">
+    
+<div class="card-title" style="font-family: Arial Black; color:black;">Medicamentos</div>
+    <img src="IMAGENES/usuario-100.png" class="card-icon" alt="Procesos">
+    <div class="card-description">Este el es el mantenimiento de Medicamentos.</div>
+  </div>
+</a>
+
   <div class="card">
     <div class="card-title">Subproceso #3</div>
     <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
