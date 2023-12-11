@@ -176,7 +176,24 @@ mysqli_close($conn);
 			height: auto;
 			min-height: 40px;
 		}
-
+		.boton_bus {
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 10px;
+			width: 10px;
+			margin-top: 2vw;
+			text-decoration: none;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			min-height: 40px;
+		}
 		.claseboton {
 			border: none;
 			outline: none;
@@ -359,7 +376,7 @@ mysqli_close($conn);
 			<fieldset>
 				<legend>Datos del Paciente</legend>
 				<DIV><label for="id_paciente">ID de Paciente:</label>
-					<input type="text" id="id_paciente" style="width:35px; background-color:#979998 " name="id_paciente" value="<?php echo $proximoIdPaciente; ?>" readonly>
+					<input type="text" id="id_paciente" style="width:115px; background-color:#979998 " name="id_paciente" value="<?php echo $proximoIdPaciente; ?>" readonly>
 				</DIV>
 
 				<div>
@@ -731,7 +748,7 @@ mysqli_close($conn);
 				</div>
 				<div>
 					<label for="Id_seguro_salud">ID Seguro de Salud:</label>
-					<input type="text" id="Id_seguro_salud" name="Id_seguro_salud" title="Ingrese el ID del seguro de salud" placeholder="ID Seguro de Salud" oninput="buscarSeguro()" required>
+					<input type="text" id="Id_seguro_salud" name="Id_seguro_salud" title="Ingrese el ID del seguro de salud" placeholder="ID Seguro de Salud" oninput="buscarSeguro()" style="width:110px" required>
 					<button id="busquedaseguro" class="busquedaboton" title="Buscar aseguradoras de salud registradas registrados/as">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
@@ -758,7 +775,7 @@ mysqli_close($conn);
 				<legend>Paciente-vacunas</legend>
 				<div>
 					<label for="id_vacuna">ID Vacuna:</label>
-					<input type="text" id="id_vacuna" style="width: 45px;">
+					<input type="text" id="id_vacuna" style="width: 115px;">
 					<button id="buscarvacuna" class="boton" title="Buscar en los Seguros registrados">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
