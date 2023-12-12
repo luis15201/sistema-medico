@@ -66,6 +66,41 @@ $result = $conn->query($query);
       window.close();
     }
   </script>
+
+
+<style>
+    .dataTables_wrapper .dataTables_filter input {
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      padding: 5px;
+      background-color: white;
+      color: inherit;
+      margin-left: 3px;
+    }
+
+    tr:hover {
+      background-color: #A8A4DE;
+    }
+
+    .resaltado {
+      background-color: #A8A4DE;
+    }
+    #tabla_tipos_vacunas tbody tr:hover {
+       background-color: #A8A4DE;
+       cursor: pointer;
+   }
+   #tabla_tipos_vacunas tbody tr:active {
+    background-color: #5bc0f7;
+    cursor: pointer;
+   border:4px solid red ;
+    transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease; /* Animaciones de 0.5 segundos */
+    box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red; /* Sombra inicial y sombra roja */
+    font-size: 25px;
+    color: white; /* Cambiar el color del texto */
+    font-weight: bold; /* Cambiar a negritas */
+    font-family: "Copperplate",  Fantasy;
+   }
+  </style>
 </head>
 
 <body>
@@ -114,7 +149,7 @@ $result = $conn->query($query);
 
         setTimeout(function() {
           window.parent.document.getElementById('Modalvacuna').style.display = 'none';
-        }, 800);
+        }, 600);
       });
 
       // Asignar un evento de clic al botón de cierre del modal
