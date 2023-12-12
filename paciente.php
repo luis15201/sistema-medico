@@ -358,7 +358,7 @@ mysqli_close($conn);
 		#fieldsetContainer {
 			width: 100%;
 			/* Ajusta el ancho del fieldset según tus necesidades */
-			
+
 			/* Márgenes para mejorar el aspecto visual */
 			font-size: 16px;
 			/* Tamaño de fuente inicial */
@@ -775,7 +775,8 @@ mysqli_close($conn);
 							},
 							dataType: "json",
 							success: function(data) {
-								$("#nombre_padecimiento").text(data ? data.nombre_padecimiento : "Valor no encontrado");
+								$("#nombre_padecimiento").text(data ? data.nombre_padecimiento :
+									"Valor no encontrado");
 							},
 							error: function(error) {
 								console.log("Error:", error);
@@ -1036,6 +1037,14 @@ mysqli_close($conn);
 			$("#btnAgregarPadecimiento").show();
 		}
 
+		function padecimientoExiste(idPadecimiento) {
+			const ids = $("#padecimientosTabla tbody td:first-child").map(function() {
+				return $(this).text();
+			}).get();
+
+			return ids.includes(idPadecimiento);
+		}
+
 		$(document).ready(function() {
 			// Restaurar estilos del fieldset y ocultar botones "Modificar" y "Cancelar"
 			restoreFieldsetStyle();
@@ -1046,7 +1055,11 @@ mysqli_close($conn);
 				const nombrePadecimiento = $("#nombre_padecimiento").text();
 				let notas = $("#notas").val();
 				const desdeCuando = $("#desde_cuando").val();
-
+				// Verificar si el padecimiento ya existe en la tabla
+				if (padecimientoExiste(idPadecimiento)) {
+					alert("Este padecimiento ya está en la tabla. Inserta otro padecimiento.");
+					return;
+				}
 				// Si notas está vacío, asignar un valor por defecto
 				if (!notas.trim()) {
 					notas = "ninguna nota/descripción";
@@ -1078,15 +1091,22 @@ mysqli_close($conn);
 				$("#yearsSince").text("");
 
 				// Actualizar el valor del campo oculto tieneDatosPadecimientos
-				const tieneDatosPadecimientos = document.getElementById("padecimientosTabla").getElementsByTagName("tbody")[0].hasChildNodes();
+				// const tieneDatosPadecimientos = document.getElementById("padecimientosTabla").getElementsByTagName(
+				// 	"tbody")[0].hasChildNodes();
+				// document.getElementById("tieneDatosPadecimientos").value = tieneDatosPadecimientos;
+				const tieneDatosPadecimientos = $("#padecimientosTabla tbody tr").length > 0;
 				document.getElementById("tieneDatosPadecimientos").value = tieneDatosPadecimientos;
+
+				// Limpiar los campos después de agregar el padecimiento
+				$("#id_padecimiento").val("");
+				$("#nombre_padecimiento").text("");
+				$("#notas").val("");
+				$("#desde_cuando").val("");
+				$("#yearsSince").text("");
+
 			}
 
-			// Asignar el evento click al botón de agregar padecimiento
-			/*$("#btnAgregarPadecimiento").click(function() {
-				agregarPadecimiento();
-				return false; // Evita el envío del formulario
-			});*/
+
 
 			$("#btnAgregarPadecimiento").click(function() {
 				const idPadecimiento = $("#id_padecimiento").val();
@@ -1215,7 +1235,8 @@ mysqli_close($conn);
 			const espacioDisponible = tablaContainer.clientHeight; // Altura disponible del contenedor
 
 			// Ajustar la fuente según el espacio disponible
-			const nuevoTamanoFuente = Math.min(fuenteBase, fuenteBase * (espacioDisponible / 400)); // Ajusta según tus necesidades
+			const nuevoTamanoFuente = Math.min(fuenteBase, fuenteBase * (espacioDisponible /
+				400)); // Ajusta según tus necesidades
 
 			// Aplicar el nuevo tamaño de fuente a la tabla
 			document.getElementById('padecimientosTabla').style.fontSize = `${nuevoTamanoFuente}px`;
@@ -1643,7 +1664,8 @@ mysqli_close($conn);
 			const fechaSeleccionada = document.getElementById("desde_cuando").value;
 			const fechaActual = new Date();
 			const diferencia = fechaActual.getFullYear() - new Date(fechaSeleccionada).getFullYear();
-			document.getElementById("yearsSince").textContent = "Lleva padeciendo esta enfermedad durante " + diferencia + " años.";
+			document.getElementById("yearsSince").textContent = "Lleva padeciendo esta enfermedad durante " + diferencia +
+				" años.";
 		}
 
 		///▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░▓▒░
@@ -1753,7 +1775,8 @@ mysqli_close($conn);
 
 					// Agregar mensaje de error al div
 					const mensajeError = document.createElement("p");
-					mensajeError.textContent = `El campo "Fecha de nacimiento" debe contener una fecha válida en formato dd/mm/yyyy.`;
+					mensajeError.textContent =
+						`El campo "Fecha de nacimiento" debe contener una fecha válida en formato dd/mm/yyyy.`;
 					mensajeErrorDiv.appendChild(mensajeError);
 				} else {
 					inputCampo.classList.remove("campo-incompleto");
