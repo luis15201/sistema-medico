@@ -52,11 +52,6 @@ mysqli_close($conn);
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
-
-
-
-
-
 		/* Agrega estilos para resaltar los campos incompletos */
 		.campo-incompleto {
 			border: 5px solid red;
@@ -176,6 +171,7 @@ mysqli_close($conn);
 			height: auto;
 			min-height: 40px;
 		}
+
 		.boton_bus {
 			border: none;
 			outline: none;
@@ -184,16 +180,35 @@ mysqli_close($conn);
 			font-size: 1.6vw;
 			background: linear-gradient(to right, #4a90e2, #63b8ff);
 			cursor: pointer;
-			border-radius: 10px;
-			width: 10px;
+			border-radius: 60px;
+			width: 60px;
 			margin-top: 2vw;
 			text-decoration: none;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			height: auto;
-			min-height: 40px;
+
+
 		}
+
+		.boton_bus:active {
+			background-color: #5bc0f7;
+			scale: 1.5;
+			cursor: pointer;
+
+			transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+			/* Animaciones de 0.5 segundos */
+			box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+			/* Sombra inicial y sombra roja */
+			font-size: 25px;
+			color: white;
+			/* Cambiar el color del texto */
+			font-weight: bold;
+			/* Cambiar a negritas */
+			font-family: "Copperplate", Fantasy;
+		}
+
 		.claseboton {
 			border: none;
 			outline: none;
@@ -337,6 +352,40 @@ mysqli_close($conn);
 			width: 100%;
 			height: 100%;
 			border: none;
+		}
+
+		/*para las tablas de los fieldsets*/
+		#fieldsetContainer {
+			width: 100%;
+			/* Ajusta el ancho del fieldset según tus necesidades */
+			
+			/* Márgenes para mejorar el aspecto visual */
+			font-size: 16px;
+			/* Tamaño de fuente inicial */
+		}
+
+		#tablaContainer {
+			max-height: 100%;
+			/* Altura máxima para el contenedor de la tabla, ajusta según tus necesidades */
+			overflow-y: auto;
+			/* Habilita la barra de desplazamiento vertical si la tabla es más grande que el contenedor */
+		}
+
+		#padecimientosTabla {
+			margin-top: 10px;
+			width: 100%;
+			/* Hace que la tabla ocupe el 100% del contenedor */
+			border-collapse: collapse;
+		}
+
+		#padecimientosTabla th,
+		#padecimientosTabla td {
+			border: 1px solid #ddd;
+			/* Añade bordes a las celdas */
+			padding: 8px;
+			/* Espaciado interno */
+			text-align: left;
+			/* Alineación del texto */
 		}
 	</style>
 	<script>
@@ -666,19 +715,19 @@ mysqli_close($conn);
 
 			<!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
 			<!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
-			<fieldset>
+			<fieldset id="fieldsetContainer">
 				<legend>Historia Clínica</legend>
 				<label for="id_padecimiento">ID Padecimiento:</label>
 				<input type="text" id="id_padecimiento" style="width:110px">
-				<button id="busquedaHC" class="busquedaboton" title="Buscar Padecimientos/enfermedades registrados/as">
+				<button id="busquedaHC" class="boton_bus" title="Buscar Padecimientos/enfermedades registrados/as">
 					<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 				</button>
 				<div>
 					<label for="Nombre_padecimiento">Nombre del padecimiento:</label>
 					<label id="nombre_padecimiento"></label>
 				</div>
-				<div id="ModalHistoriaClinica" class="custom-modal" >
-					<div class="custom-modal-content"  >
+				<div id="ModalHistoriaClinica" class="custom-modal">
+					<div class="custom-modal-content">
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 
@@ -700,20 +749,21 @@ mysqli_close($conn);
 				<!-- Botones adicionales para Modificar y Cancelar -->
 				<button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
 				<button id="btnCancelarEdicion" style="display: none;">Cancelar</button>
-				<table id="padecimientosTabla" style="display: none;">
-					<thead>
-						<tr>
-							<th>ID Padecimiento</th>
-							<th>Nombre del Padecimiento</th>
-							<th>Notas</th>
-							<th>Desde cuándo</th>
-							<th>Modificar</th>
-							<th>Eliminar</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-
+				<div id="tablaContainer">
+					<table id="padecimientosTabla" style="display: none; font: size small;">
+						<thead>
+							<tr>
+								<th>ID Padecimiento</th>
+								<th>Nombre del Padecimiento</th>
+								<th>Notas</th>
+								<th>Desde cuándo</th>
+								<th>Modificar</th>
+								<th>Eliminar</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 				<script>
 					function buscarNombrePadecimiento() {
 						var idPadecimiento = $("#id_padecimiento").val();
@@ -744,12 +794,12 @@ mysqli_close($conn);
 				<legend>Datos de Seguro del paciente</legend>
 				<div>
 					<label for="NSS">Número de Seguro:</label>
-					<input type="text" id="NSS" name="NSS" title="Ingrese el número de seguro" placeholder="Número de Seguro" required>
+					<input type="text" id="NSS" namNombre dele="NSS" title="Ingrese el número de seguro" placeholder="Número de Seguro" required>
 				</div>
 				<div>
 					<label for="Id_seguro_salud">ID Seguro de Salud:</label>
 					<input type="text" id="Id_seguro_salud" name="Id_seguro_salud" title="Ingrese el ID del seguro de salud" placeholder="ID Seguro de Salud" oninput="buscarSeguro()" style="width:110px" required>
-					<button id="busquedaseguro" class="busquedaboton" title="Buscar aseguradoras de salud registradas registrados/as">
+					<button id="busquedaseguro" class="boton_bus" title="Buscar aseguradoras de salud registradas registrados/as">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
 				</div>
@@ -776,7 +826,7 @@ mysqli_close($conn);
 				<div>
 					<label for="id_vacuna">ID Vacuna:</label>
 					<input type="text" id="id_vacuna" style="width: 115px;">
-					<button id="buscarvacuna" class="boton" title="Buscar en los Seguros registrados">
+					<button id="buscarvacuna" class="boton_bus" title="Buscar en los Seguros registrados">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
 				</div>
@@ -784,8 +834,8 @@ mysqli_close($conn);
 					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
 					<label id="nombre_vacuna"></label>
 				</div>
-				<div id="Modalvacuna" class="custom-modal" >
-					<div class="custom-modal-content" >
+				<div id="Modalvacuna" class="custom-modal">
+					<div class="custom-modal-content">
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
@@ -919,7 +969,7 @@ mysqli_close($conn);
 	<script>
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
-		//✨✨✨busqueda de la historia clinina✨✨✨//
+		//✨✨✨búsqueda de la historia clínica✨✨✨//
 		document.addEventListener("DOMContentLoaded", function() {
 			// Obtener referencia al botón y al modal
 			const btnBusquedaHC = document.getElementById("busquedaHC");
@@ -953,7 +1003,7 @@ mysqli_close($conn);
 				event.stopPropagation();
 			});
 		});
-		//✨✨✨ fin busqueda de la historia clinina✨✨✨//
+		//✨✨✨ fin búsqueda de la historia clínica✨✨✨//
 
 		// Función para cambiar el estilo del fieldset de Historia Clínica
 		function changeFieldsetStyle() {
@@ -993,23 +1043,29 @@ mysqli_close($conn);
 			// Función para agregar un nuevo padecimiento a la tabla
 			function agregarPadecimiento() {
 				const idPadecimiento = $("#id_padecimiento").val();
-				const nombrePadecimiento = $("#nombre_padecimiento").text(); /**/
-				const notas = $("#notas").val();
+				const nombrePadecimiento = $("#nombre_padecimiento").text();
+				let notas = $("#notas").val();
 				const desdeCuando = $("#desde_cuando").val();
 
-				if (idPadecimiento && notas && desdeCuando) {
+				// Si notas está vacío, asignar un valor por defecto
+				if (!notas.trim()) {
+					notas = "ninguna nota/descripción";
+				}
+
+				if (idPadecimiento && desdeCuando) {
 					const table = $("#padecimientosTabla");
 					const tbody = table.find("tbody");
 					const row = $("<tr>");
 
 					row.html(`
             <td>${idPadecimiento}</td>
-			<td>${nombrePadecimiento}</td>
+            <td>${nombrePadecimiento}</td>
             <td>${notas}</td>
             <td>${desdeCuando}</td>
             <td><button class="modificarPadecimiento">Modificar</button></td>
-            <td><button class="eliminarPadecimiento" onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>
-          `);
+			<td><button class="eliminarPadecimiento eliminar">Eliminar</button></td>
+            <!--td><button class="eliminarPadecimiento" onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>-->
+        `);
 
 					tbody.append(row);
 					table.css("display", "table");
@@ -1027,10 +1083,35 @@ mysqli_close($conn);
 			}
 
 			// Asignar el evento click al botón de agregar padecimiento
+			/*$("#btnAgregarPadecimiento").click(function() {
+				agregarPadecimiento();
+				return false; // Evita el envío del formulario
+			});*/
+
 			$("#btnAgregarPadecimiento").click(function() {
+				const idPadecimiento = $("#id_padecimiento").val();
+				const desdeCuando = $("#desde_cuando").val();
+
+				// Validar que idPadecimiento no esté vacío y desdeCuando sea una fecha válida
+				if (!idPadecimiento) {
+					alert("Por favor, seleccione un padecimiento.");
+					return false;
+				}
+
+				if (!isValidDate(desdeCuando)) {
+					alert("Por favor, ingrese una fecha válida.");
+					return false;
+				}
+
 				agregarPadecimiento();
 				return false; // Evita el envío del formulario
 			});
+
+			// Función para validar si una cadena es una fecha válida
+			function isValidDate(dateString) {
+				const regexDate = /^\d{4}-\d{2}-\d{2}$/;
+				return regexDate.test(dateString);
+			}
 
 			// Evento delegado para los botones "Eliminar" dentro de la tabla
 			// Código de evento delegado para los botones "Eliminar", sin cambios
@@ -1109,7 +1190,36 @@ mysqli_close($conn);
 				$("#desde_cuando").val("");
 				return false; // Evitar el envío del formulario
 			});
+
+			// Función para eliminar una fila al hacer clic en el botón "Eliminar"
+			function eliminarFila(event) {
+				// Obtener la fila correspondiente al botón clicado
+				const fila = $(event.target).closest("tr");
+
+				// Eliminar la fila
+				fila.remove();
+			}
+
+			// Asignar un evento de clic a los botones "Eliminar"
+			$("#padecimientosTabla").on("click", ".eliminar", eliminarFila);
+
+
+
+
+
 		});
+
+		function ajustarTamanoFuente() {
+			const tablaContainer = document.getElementById('tablaContainer');
+			const fuenteBase = 16; // Tamaño de fuente base
+			const espacioDisponible = tablaContainer.clientHeight; // Altura disponible del contenedor
+
+			// Ajustar la fuente según el espacio disponible
+			const nuevoTamanoFuente = Math.min(fuenteBase, fuenteBase * (espacioDisponible / 400)); // Ajusta según tus necesidades
+
+			// Aplicar el nuevo tamaño de fuente a la tabla
+			document.getElementById('padecimientosTabla').style.fontSize = `${nuevoTamanoFuente}px`;
+		}
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 		//▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓▓▓▒ FIN DE FUNCIONES DE HISTORIA CLINICA░▓▒▓▓▓▒░▓▒▓▓▓▒░▓▒▓
 
@@ -1411,45 +1521,45 @@ mysqli_close($conn);
 		//▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒▓▓▓▒
 		///╬╬╬Botón con el id "busquedaseguro" y el nuevo modal con id "myModal"╬╬╬
 		document.addEventListener("DOMContentLoaded", function() {
-    // Obtener referencia al botón y al modal
-    const btnBusquedaSeguro = document.getElementById("busquedaseguro");
-    const modalSeguro = document.getElementById("myModal");
+			// Obtener referencia al botón y al modal
+			const btnBusquedaSeguro = document.getElementById("busquedaseguro");
+			const modalSeguro = document.getElementById("myModal");
 
-    // Función para mostrar el modal
-    function mostrarModal() {
-        modalSeguro.style.display = "block";
-    }
+			// Función para mostrar el modal
+			function mostrarModal() {
+				modalSeguro.style.display = "block";
+			}
 
-    // Función para ocultar el modal
-    function ocultarModal() {
-        modalSeguro.style.display = "none";
-    }
+			// Función para ocultar el modal
+			function ocultarModal() {
+				modalSeguro.style.display = "none";
+			}
 
-    // Asignar evento de clic al botón para mostrar u ocultar el modal y evitar recargar la página
-    btnBusquedaSeguro.addEventListener("click", function(event) {
-        event.preventDefault(); // Evitar recargar la página
-        if (modalSeguro.style.display === "none") {
-            mostrarModal();
-        } else {
-            ocultarModal();
-        }
-    });
+			// Asignar evento de clic al botón para mostrar u ocultar el modal y evitar recargar la página
+			btnBusquedaSeguro.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalSeguro.style.display === "none") {
+					mostrarModal();
+				} else {
+					ocultarModal();
+				}
+			});
 
-    // Asignar evento de clic al botón de cierre dentro del modal para ocultarlo
-    modalSeguro.querySelector(".close").addEventListener("click", ocultarModal);
+			// Asignar evento de clic al botón de cierre dentro del modal para ocultarlo
+			modalSeguro.querySelector(".close").addEventListener("click", ocultarModal);
 
-    // Evitar que el evento de clic en el contenido del modal cierre el modal
-    modalSeguro.querySelector(".modal-content").addEventListener("click", function(event) {
-        event.stopPropagation();
-    });
+			// Evitar que el evento de clic en el contenido del modal cierre el modal
+			modalSeguro.querySelector(".modal-content").addEventListener("click", function(event) {
+				event.stopPropagation();
+			});
 
-    document.addEventListener("dblclick", function(event) {
-        // Verificar si el doble clic ocurrió dentro del modal
-        if (event.target.closest('.modal-content')) {
-            ocultarModal();
-        }
-    });
-});
+			document.addEventListener("dblclick", function(event) {
+				// Verificar si el doble clic ocurrió dentro del modal
+				if (event.target.closest('.modal-content')) {
+					ocultarModal();
+				}
+			});
+		});
 
 		//╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬
 		//Evento click celda del modal
