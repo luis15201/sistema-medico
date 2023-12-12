@@ -71,7 +71,7 @@ function obtenerDatosPaciente($idPaciente, $conn)
       padding: 5px;
       background-color: white;
       color: inherit;
-      margin-left: 3px;
+      margin: 3px;
     }
 
     tr:hover {
@@ -81,11 +81,12 @@ function obtenerDatosPaciente($idPaciente, $conn)
     .resaltado {
       background-color: #A8A4DE;
     }
-    #tabla_seguros tbody tr:hover {
+    #tabla_pacientes tbody tr:hover {
        background-color: #A8A4DE;
        cursor: pointer;
+      
    }
-   #tabla_seguros tbody tr:active {
+   #tabla_pacientes tbody tr:active {
     background-color: #5bc0f7;
     cursor: pointer;
    border:4px solid red ;
@@ -99,10 +100,10 @@ function obtenerDatosPaciente($idPaciente, $conn)
   </style>
 </head>
 
-<body>
+<body >
   <h3 style="padding:0; margin:0;">Consulta de Pacientes</h3>
 
-  <table id="tabla_pacientes" class="display" style="width:100%">
+  <table id="tabla_pacientes" class="display"  >
     <thead>
       <tr>
         <th>ID Paciente</th>
@@ -156,6 +157,9 @@ function obtenerDatosPaciente($idPaciente, $conn)
         var idPaciente = celdas.eq(0).text();
         var nombrePaciente = celdas.eq(1).text();
         var apellidoPaciente = celdas.eq(2).text();
+        setTimeout(function() {
+          window.parent.document.getElementById('Modalpaciente').style.display = 'none';
+        }, 600);
         // Asignar los valores al campo de texto y al label en el otro documento
         window.parent.document.getElementById("id_paciente").value = idPaciente;
         window.parent.document.getElementById("nombre_paciente").textContent = nombrePaciente;
