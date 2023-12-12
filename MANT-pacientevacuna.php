@@ -8,7 +8,84 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
-		/*esto es una prueba*/
+		.boton_bus {
+				border: none;
+				outline: none;
+				height: 4vw;
+				color: #fff;
+				font-size: 1.6vw;
+				background: linear-gradient(to right, #4a90e2, #63b8ff);
+				cursor: pointer;
+				border-radius: 60px;
+				width: 60px;
+				margin-top: 2vw;
+				text-decoration: none;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				height: auto;
+	
+	
+			}
+	
+			.boton_bus:active {
+				background-color: #5bc0f7;
+				scale: 1.5;
+				cursor: pointer;
+	
+				transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+				/* Animaciones de 0.5 segundos */
+				box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+				/* Sombra inicial y sombra roja */
+				font-size: 25px;
+				color: white;
+				/* Cambiar el color del texto */
+				font-weight: bold;
+				/* Cambiar a negritas */
+				font-family: "Copperplate", Fantasy;
+			}
+			/* Estilos específicos para el modal personalizado */
+			.custom-modal {
+				display: none;
+				position: fixed;
+				z-index: 9999;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				overflow: auto;
+				background-color: rgba(0, 0, 0, 0.7);
+			}
+	
+			.custom-modal-content {
+				width: 80%;
+				height: 80%;
+				margin: auto;
+				background: linear-gradient(to right, #e4e5dc, #45bac9db);
+				padding: 20px;
+				border-radius: 20PX;
+			}
+	
+			.custom-close {
+				color: #aaa;
+				float: right;
+				font-size: 28px;
+				font-weight: bold;
+			}
+	
+			.custom-close:hover,
+			.custom-close:focus {
+				color: #000;
+				text-decoration: none;
+				cursor: pointer;
+			}
+	
+			/* Estilos adicionales específicos para el iframe dentro del modal */
+			.custom-iframe {
+				width: 100%;
+				height: 100%;
+				border: none;
+			}
 	</style>
 <?php
 
@@ -29,8 +106,8 @@ include("menu_lateral.php");
 				<legend>Paciente-vacunas</legend>
 				<div>
 					<label for="id_paciente">ID PACIENTE:</label>
-					<input type="text" id="id_paciente" name="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()" required>
-					<button id="buscarpaciente" class="boton" title="Buscar pacientes registrados">
+					<input type="text" id="id_paciente" name="id_paciente" style="width: 115px;" onblur="cargarHistorialVacunas()" required>
+					<button id="buscarpaciente" class="boton_bus" title="Buscar pacientes registrados">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
 				</div>
@@ -66,18 +143,32 @@ include("menu_lateral.php");
 					<label for="Apellido_paciente">Apellido del paciente:</label>
 					<label id="apellido_paciente"></label>
 				</div>
-				<div id="Modalpaciente" class="modal" style="width: 100%; height: 250%;">
-					<div class="modal-content" style="width: 100%; height: 100%;">
+				<!-- <div id="Modalpaciente" class="custom-modal">
+					<div class="custom-modal-content" >
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+					</div>
+				</div> -->
+
+				<div id="Modalpaciente" class="custom-modal">
+					<div class="custom-modal-content">
+						<span class="close">&times;</span>
+						<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 200%;"></iframe>
+
 					</div>
 				</div>
 
 
+
+
+
+
+
+
 				<div>
 					<label for="id_vacuna">ID Vacuna:</label>
-					<input type="text" id="id_vacuna" style="width: 45px;" required>
-					<button id="buscarvacuna" class="boton" title="Buscar vacunas registras en el sistema">
+					<input type="text" id="id_vacuna" style="width: 115px;" required>
+					<button id="buscarvacuna" class="boton_bus" title="Buscar vacunas registras en el sistema">
 						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 					</button>
 				</div>
@@ -85,12 +176,21 @@ include("menu_lateral.php");
 					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
 					<label id="nombre_vacuna"></label>
 				</div>
-				<div id="Modalvacuna" class="modal" style="width: 100%; height: 250%;">
+				<!-- <div id="Modalvacuna" class="modal" style="width: 100%; height: 250%;">
 					<div class="modal-content" style="width: 100%; height: 100%;">
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
+				</div> -->
+
+				<div id="Modalvacuna" class="custom-modal">
+					<div class="custom-modal-content">
+						<span class="close">&times;</span>
+						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 200%;"></iframe>
+
+					</div>
 				</div>
+
 
 
 				<div style="border-top:20px;">
