@@ -28,9 +28,10 @@
                             <a href="menu-pacientes.php" data-bs-toggle="collapse" data-bs-target="#submenu_paciente" data-bs-parent="#submenu-container" style="text-decoration:none" class="list-group-item list-group-item-action"> <i class="material-icons">personal_injury</i> Pacientes</a>
                             <div class="collapse" id="submenu_paciente" data-bs-parent="#submenu-container">
                             <a href="menu-pacientes.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Pacientes</a>
+                               
                                 <a href="paciente.php" class="list-group-item list-group-item-action"><i class="material-icons">group</i> Pacientes</a>
                                 <a href="MANT-pacientevacuna.php" class="list-group-item list-group-item-action"><i class="material-icons">vaccines</i> Vacunas</a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="material-icons">healing</i> Padecimientos</a>
+                                <a href="mant_paciente_historiaClinica.php" class="list-group-item list-group-item-action"><i class="material-icons">healing</i> Padecimientos</a>
 
                             </div>
 

@@ -50,5 +50,6 @@
         padding: 5px;
 
     }
+    
 </style>
 <!-- ▓▓▓▓▓▓▓▓▓▓╬══   fin de MENU LATERAL CÓDIGO bootstrap header ══╬▓▓▓▓▓▓▓▓▓▓ -->
