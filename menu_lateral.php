@@ -22,13 +22,13 @@
                     <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu_Mantenimientos" data-bs-parent="#submenu-container" style="text-decoration:none" class="list-group-item list-group-item-action">
                         <i class="material-icons">tabs</i>Mantenimientos</a>
                     <div class="collapse" id="submenu_Mantenimientos" data-bs-parent="#submenu-container">
-                    <a href="menu-mant.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Mant</a>
+                        <a href="menu-mant.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Mant</a>
                         <!-- Elementos  acordeón 1.2 -->
                         <div class="list-group-item list-group-item-action">
                             <a href="menu-pacientes.php" data-bs-toggle="collapse" data-bs-target="#submenu_paciente" data-bs-parent="#submenu-container" style="text-decoration:none" class="list-group-item list-group-item-action"> <i class="material-icons">personal_injury</i> Pacientes</a>
                             <div class="collapse" id="submenu_paciente" data-bs-parent="#submenu-container">
-                            <a href="menu-pacientes.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Pacientes</a>
-                               
+                                <a href="menu-pacientes.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Pacientes</a>
+
                                 <a href="paciente.php" class="list-group-item list-group-item-action"><i class="material-icons">group</i> Pacientes</a>
                                 <a href="MANT-pacientevacuna.php" class="list-group-item list-group-item-action"><i class="material-icons">vaccines</i> Vacunas</a>
                                 <a href="mant_paciente_historiaClinica.php" class="list-group-item list-group-item-action"><i class="material-icons">healing</i> Padecimientos</a>
@@ -36,9 +36,9 @@
                             </div>
 
                         </div>
-                        <a href="mant_seguro.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_information</i>  Seguros</a>
+                        <a href="mant_seguro.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_information</i> Seguros</a>
                         <a href="mant-Agregaruser.php" class="list-group-item list-group-item-action"> <i class="material-icons">account_circle</i> Usuarios</a>
-                        <a href="mant-centromedico.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_services</i>  Centro Médico</a>
+                        <a href="mant-centromedico.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_services</i> Centro Médico</a>
                         <a href="mant_medicamentos.php" class="list-group-item list-group-item-action"> <i class="material-icons">local_pharmacy</i> Medicamentos</a>
                     </div>
 
@@ -61,7 +61,7 @@
                     </div>
 
                 </div>
-                <a href="#" class="list-group-item list-group-item-action"> <i class="material-icons">logout</i>
+                <a href="index.php" class="list-group-item list-group-item-action"> <i class="material-icons">logout</i>
                     Volver al Login</a>
             </div>
         </div>
@@ -80,5 +80,78 @@
             </div> -->
 </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function getCurrentPage() {
+            var pathArray = window.location.pathname.split('/');
+            var currentPage = pathArray.pop();
+            return currentPage;
+        }
+
+        function isElementInsideAccordion(element) {
+            // Verificar si el elemento padre del elemento dado es un acordeón de Bootstrap
+            return element.closest('.accordion');
+        }
+
+        function showAccordionForElement(element) {
+            // Mostrar el acordeón asociado al elemento
+            var accordion = element.closest('.accordion');
+            if (accordion) {
+                var accordionId = accordion.id;
+                var accordionInstance = new bootstrap.Collapse(document.getElementById(accordionId));
+                accordionInstance.show();
+            }
+        }
+
+        function focusOrOpenAccordion() {
+            var currentPage = getCurrentPage();
+            var listGroupItems = document.querySelectorAll('.list-group-item-action');
+
+            listGroupItems.forEach(function(item) {
+                var href = item.getAttribute('href');
+                if (href && href.endsWith(currentPage)) {
+                    item.focus();
+                    item.classList.add('active');
+
+                    if (isElementInsideAccordion(item)) {
+                        showAccordionForElement(item);
+                    }
+                }
+            });
+        }
+
+        focusOrOpenAccordion();
+    });
+
+
+   
+</script>
+<script>
+    //abre el offcanvas de forma automática
+   /*document.addEventListener("DOMContentLoaded", function() {
+        function openAllAccordions() {
+            var accordions = document.querySelectorAll('.accordion');
+            accordions.forEach(function(accordion) {
+                var accordionInstance = new bootstrap.Collapse(accordion);
+                accordionInstance.show();
+            });
+        }
+       
+        // Esperar a que el offcanvas se haya inicializado
+        var offcanvasExample = new bootstrap.Offcanvas(document.getElementById('offcanvasExample'));
+        offcanvasExample._element.addEventListener('shown.bs.offcanvas', function() {
+            // Esperar un breve momento para asegurar que el offcanvas se haya mostrado completamente
+            setTimeout(function() {
+                openAllAccordions();
+            }, 100);
+        });
+
+        // Mostrar el offcanvas automáticamente al cargar la página
+        offcanvasExample.show();
+    });*/
+
+</script>
+
 
 <!-- ▓▓▓▓▓▓▓▓▓▓╬══ FIN CÓDIGO MENU LATERAL ══╬▓▓▓▓▓▓▓▓▓▓ -->
