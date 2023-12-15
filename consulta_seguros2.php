@@ -39,7 +39,7 @@ $result = $conn->query($query);
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css"> 
   <style>
     .dataTables_wrapper .dataTables_filter input {
@@ -284,6 +284,9 @@ $result = $conn->query($query);
         }
 
         .clasebotonVER {
+          color:#f0f0f0;
+          text-shadow:2px 2px 4px #000000;
+          font-weight: bold;
             border: none;
             outline: none;
             background: linear-gradient(to right, #05c20e, #84e788);
@@ -291,7 +294,7 @@ $result = $conn->query($query);
             width: auto;
             text-decoration: none;
             height: 40px;
-            color: #080808;
+          
             font-size: 16px;
             padding: 7px;
             margin: 5px;
@@ -326,7 +329,7 @@ $result = $conn->query($query);
           echo "<tr onclick=\"seleccionarSeguro('" . $row["Id_seguro_salud"] . "', '" . $row["Nombre"] . "')\">";
           echo "<td>" . $row["Id_seguro_salud"] . "</td>";
           echo "<td>" . $row["Nombre"] . "</td>";
-          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\">Modificar</a> </td>";
+          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
