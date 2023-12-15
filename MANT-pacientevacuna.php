@@ -24,7 +24,7 @@
 	color:white;
 	margin: 0;
 	padding: 0;
-	background-color:rgba(102,153,144,0.0) ;
+	background-color:transparent;
 	border-radius: 2px;
 	margin-top: -20px;
 	text-shadow: 2px 1px 2px #000000;
