@@ -113,7 +113,17 @@ $segid = $newId;
 			input.focus();
 		}
 	</script>
+<?php
+
+include("menu_lateral_header.php");
+
+?>
 </head>
+<?php
+
+  include("menu_lateral.php");
+
+  ?>
 
 <body>
 	<div class="caja_popup2">

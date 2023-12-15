@@ -113,7 +113,17 @@ $segid = $newId;
 			input.focus();
 		}
 	</script>
+<?php
+
+include("../../menu_lateral_header.php");
+
+?>
 </head>
+<?php
+
+  include("../../menu_lateral.php");
+
+  ?>
 
 <body>
 	<div class="caja_popup2">
@@ -138,6 +148,8 @@ $segid = $newId;
 						<iframe id="modal-iframe" src="../../consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
 				</div>
+
+				<iframe id="modal-iframe" src="../../consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 				<div class="botones-container">
             <a href="../../mant_seguro.php" class="claseboton">← Atrás</a>
             <a href="../../index.php" class="claseboton">Login</a>

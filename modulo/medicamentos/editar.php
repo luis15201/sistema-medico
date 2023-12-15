@@ -107,7 +107,17 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             background: linear-gradient(to right, #63b8ff, #4a90e2);
         }
     </style>
+<?php
+
+include("menu_lateral_header.php");
+
+?>
 </head>
+<?php
+
+  include("menu_lateral.php");
+
+?>
 
 <body>
     <div class="caja_popup2">
