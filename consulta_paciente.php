@@ -161,9 +161,15 @@ function obtenerDatosPaciente($idPaciente, $conn)
           window.parent.document.getElementById('Modalpaciente').style.display = 'none';
         }, 600);
         // Asignar los valores al campo de texto y al label en el otro documento
+        
         window.parent.document.getElementById("id_paciente").value = idPaciente;
         window.parent.document.getElementById("nombre_paciente").textContent = nombrePaciente;
         window.parent.document.getElementById("apellido_paciente").textContent = apellidoPaciente;
+        window.parent.document.getElementById("id_paciente").focus();
+        window.parent.cargarHistorialVacunas();
+
+        // Activar el evento "change" de forma forzosa
+  //$(window.parent.document.getElementById("id_paciente")).change();
       });
 
       // Resto del script similar al código anterior

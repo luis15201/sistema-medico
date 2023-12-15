@@ -8,90 +8,177 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
+
+.caja {
+	border: 3px solid #ddd;
+	padding: 10px;
+	box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+	margin: 10px;
+	border-radius: 5px;
+}
+
+.cajalegend {
+	border: 0px solid rgba(102,153,144,0.0);
+	font-weight: bolder;
+	font-size: 16px;
+	color:white;
+	margin: 0;
+	padding: 0;
+	background-color:rgba(102,153,144,0.0) ;
+	border-radius: 2px;
+	margin-top: -20px;
+	text-shadow: 2px 1px 2px #000000;
+	
+	
+}
+		.container {
+			display: grid;
+			grid-template-columns: 60% 40%;
+			/* Cambiado a una relación de 60/40 */
+			grid-template-rows: repeat(3, 1fr);
+			grid-gap: 6px 10px;
+		}
+
+		label {
+			font-size: 14px;
+			color: #444;
+			margin: 8px;
+			font-weight: bold;
+		}
+
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+			margin: 0;
+
+			font-size: 12px;
+			line-height: 14px;
+			margin: 10px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		input[type="text"],
+		input[type="date"],
+		select {
+
+			width: 150px;
+			height: 40px;
+			color: #444;
+			margin-bottom: 6%;
+			border: none;
+			border-bottom: 0.1vw solid #444;
+			outline: none;
+			border-radius: 10px;
+
+		}
+
+		button {
+			border: none;
+			outline: none;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			padding: 10px;
+			border-radius: 2vw;
+
+			margin: 10px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			min-height: 40px;
+		}
+
+
 		.boton_bus {
-				border: none;
-				outline: none;
-				height: 4vw;
-				color: #fff;
-				font-size: 1.6vw;
-				background: linear-gradient(to right, #4a90e2, #63b8ff);
-				cursor: pointer;
-				border-radius: 60px;
-				width: 60px;
-				margin-top: 2vw;
-				text-decoration: none;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				height: auto;
-	
-	
-			}
-	
-			.boton_bus:active {
-				background-color: #5bc0f7;
-				scale: 1.5;
-				cursor: pointer;
-	
-				transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
-				/* Animaciones de 0.5 segundos */
-				box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
-				/* Sombra inicial y sombra roja */
-				font-size: 25px;
-				color: white;
-				/* Cambiar el color del texto */
-				font-weight: bold;
-				/* Cambiar a negritas */
-				font-family: "Copperplate", Fantasy;
-			}
-			/* Estilos específicos para el modal personalizado */
-			.custom-modal {
-				display: none;
-				position: fixed;
-				z-index: 9999;
-				left: 0;
-				top: 0;
-				width: 100%;
-				height: 100%;
-				overflow: auto;
-				background-color: rgba(0, 0, 0, 0.7);
-			}
-	
-			.custom-modal-content {
-				width: 80%;
-				height: 80%;
-				margin: auto;
-				background: linear-gradient(to right, #e4e5dc, #45bac9db);
-				padding: 20px;
-				border-radius: 20PX;
-			}
-	
-			.custom-close {
-				color: #aaa;
-				float: right;
-				font-size: 28px;
-				font-weight: bold;
-			}
-	
-			.custom-close:hover,
-			.custom-close:focus {
-				color: #000;
-				text-decoration: none;
-				cursor: pointer;
-			}
-	
-			/* Estilos adicionales específicos para el iframe dentro del modal */
-			.custom-iframe {
-				width: 100%;
-				height: 100%;
-				border: none;
-			}
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 60px;
+			width: 60px;
+			margin-top: 2vw;
+			text-decoration: none;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+
+
+		}
+
+		.boton_bus:active {
+			background-color: #5bc0f7;
+			scale: 1.5;
+			cursor: pointer;
+
+			transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+			/* Animaciones de 0.5 segundos */
+			box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+			/* Sombra inicial y sombra roja */
+			font-size: 25px;
+			color: white;
+			/* Cambiar el color del texto */
+			font-weight: bold;
+			/* Cambiar a negritas */
+			font-family: "Copperplate", Fantasy;
+		}
+
+		/* Estilos específicos para el modal personalizado */
+		.custom-modal {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.7);
+		}
+
+		.custom-modal-content {
+			width: 80%;
+			height: 80%;
+			margin: auto;
+			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			padding: 20px;
+			border-radius: 20PX;
+		}
+
+		.custom-close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.custom-close:hover,
+		.custom-close:focus {
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		/* Estilos adicionales específicos para el iframe dentro del modal */
+		.custom-iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
 	</style>
-<?php
+	<?php
 
-include("menu_lateral_header.php");
+	include("menu_lateral_header.php");
 
-?>
+	?>
 
 </head>
 <?php
@@ -99,169 +186,172 @@ include("menu_lateral_header.php");
 include("menu_lateral.php");
 
 ?>
+
 <body>
 	<form>
 		<div class="container" style="height: 750px;">
 			<fieldset>
 				<legend>Paciente-vacunas</legend>
-				<div>
-					<label for="id_paciente">ID PACIENTE:</label>
-					<input type="text" id="id_paciente" name="id_paciente" style="width: 115px;" onblur="cargarHistorialVacunas()" required>
-					<button id="buscarpaciente" class="boton_bus" title="Buscar pacientes registrados">
-						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-					</button>
-				</div>
+				<fieldset class="caja">
+				<legend class="cajalegend">══ Datos del Paciente ══</legend>
+					<div>
+						<label for="id_paciente">ID PACIENTE:</label>
+						<input type="text" id="id_paciente" name="id_paciente" style="width: 115px;" onblur="cargarHistorialVacunas()" focus="cargarHistorialVacunas()" change="cargarHistorialVacunas()" required>
+						<button id="buscarpaciente" class="boton_bus" title="Buscar pacientes registrados">
+							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+						</button>
+					</div>
 
 
-				<!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
-				<script>
-					$("#id_paciente").on("input", function() {
-						var idPaciente = $(this).val();
-						// Realizar la solicitud AJAX para obtener los datos del paciente
-						$.ajax({
-							url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
-							type: 'POST',
-							data: {
-								id_paciente: idPaciente
-							},
-							dataType: 'json',
-							success: function(data) {
-								$("#nombre_paciente").text(data.nombre || '');
-								$("#apellido_paciente").text(data.apellido || '');
-							},
-							error: function() {
-								alert('Hubo un error al obtener los datos del paciente.');
-							}
+					<!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
+					<script>
+						$("#id_paciente").on("input", function() {
+							var idPaciente = $(this).val();
+							// Realizar la solicitud AJAX para obtener los datos del paciente
+							$.ajax({
+								url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
+								type: 'POST',
+								data: {
+									id_paciente: idPaciente
+								},
+								dataType: 'json',
+								success: function(data) {
+									$("#nombre_paciente").text(data.nombre || '');
+									$("#apellido_paciente").text(data.apellido || '');
+								},
+								error: function() {
+									alert('Hubo un error al obtener los datos del paciente.');
+								}
+							});
 						});
-					});
-				</script>
-				<div>
-					<label for="Nombre_paciente">Nombre del paciente:</label>
-					<label id="nombre_paciente"></label>
-				</div>
-				<div>
-					<label for="Apellido_paciente">Apellido del paciente:</label>
-					<label id="apellido_paciente"></label>
-				</div>
-				<!-- <div id="Modalpaciente" class="custom-modal">
+					</script>
+					<div>
+						<label for="Nombre_paciente">Nombre del paciente:</label>
+						<label id="nombre_paciente"></label>
+					</div>
+					<div>
+						<label for="Apellido_paciente">Apellido del paciente:</label>
+						<label id="apellido_paciente"></label>
+					</div>
+					<!-- <div id="Modalpaciente" class="custom-modal">
 					<div class="custom-modal-content" >
 						<span class="close">&times;</span>
 						<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 					</div>
 				</div> -->
 
-				<div id="Modalpaciente" class="custom-modal">
-					<div class="custom-modal-content">
-						<span class="close">&times;</span>
-						<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 200%;"></iframe>
+					<div id="Modalpaciente" class="custom-modal">
+						<div class="custom-modal-content">
+							<span class="close">&times;</span>
+							<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 200%;"></iframe>
 
+						</div>
 					</div>
-				</div>
+
+
+				</fieldset>
 
 
 
+				<fieldset class="caja">
+				<legend class="cajalegend">══ Datos de la Vacuna ══</legend>
+					<div>
+						<label for="id_vacuna">ID Vacuna:</label>
+						<input type="text" id="id_vacuna" style="width: 115px;" required>
+						<button id="buscarvacuna" class="boton_bus" title="Buscar vacunas registras en el sistema">
+							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+						</button>
+					</div>
+					<div>
+						<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
+						<label id="nombre_vacuna"></label>
+					</div>
+
+
+					<div id="Modalvacuna" class="custom-modal">
+						<div class="custom-modal-content">
+							<span class="close">&times;</span>
+							<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+
+						</div>
+					</div>
 
 
 
-
-
-				<div>
-					<label for="id_vacuna">ID Vacuna:</label>
-					<input type="text" id="id_vacuna" style="width: 115px;" required>
-					<button id="buscarvacuna" class="boton_bus" title="Buscar vacunas registras en el sistema">
-						<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+					<div style="border-top:20px;">
+						<label for="dosis">Dosis:</label>
+						<select id="dosis" style=" width: 110px; ">
+							<option selected value="1era">1era</option>
+							<option value="2da">2da</option>
+							<option value="3ra">3ra</option>
+							<option value="4ta">4ta</option>
+							<option value="5ta">5ta</option>
+							<option value="6ta">6ta</option>
+							<option value="7ma">7ma</option>
+							<option value="8va">8va</option>
+							<option value="9na">9na</option>
+							<option value="10ma">10ma</option>
+							<option value="NA">NA</option>
+						</select>
+					</div>
+					<div>
+						<label for="refuerzo">Refuerzo:</label>
+						<select id="refuerzo" style=" width: 110px; ">
+							<option value="1er">1era</option>
+							<option value="2do">2da</option>
+							<option value="3ro">3ra</option>
+							<option value="4to">4ta</option>
+							<option value="5to">5ta</option>
+							<option value="6to">6ta</option>
+							<option value="7mo">7ma</option>
+							<option value="8vo">8va</option>
+							<option value="9no">9na</option>
+							<option value="10mo">10ma</option>
+							<option selected value="NA">NA</option>
+						</select>
+					</div>
+					<div>
+						<label for="fecha_aplicacion">Fecha de Aplicación:</label>
+						<select id="fecha_aplicacion_select" style="width: 180px;">
+							<option value="fecha_provista">Fecha Provista</option>
+							<option value="fecha_no_provista">Fecha No Provista</option>
+						</select>
+						<input type="date" id="fecha_aplicacion_input" style="display: none;">
+					</div>
+					<button id="agregarVacuna" onclick="agregarVacuna(); return false;" type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+						<i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+						Agregar
 					</button>
-				</div>
-				<div>
-					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
-					<label id="nombre_vacuna"></label>
-				</div>
-				<!-- <div id="Modalvacuna" class="modal" style="width: 100%; height: 250%;">
-					<div class="modal-content" style="width: 100%; height: 100%;">
-						<span class="close">&times;</span>
-						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-					</div>
-				</div> -->
 
-				<div id="Modalvacuna" class="custom-modal">
-					<div class="custom-modal-content">
-						<span class="close">&times;</span>
-						<iframe id="modal-iframe" src="consulta_vacunas.php" frameborder="0" style="width: 100%; height: 200%;"></iframe>
-
-					</div>
-				</div>
-
-
-
-				<div style="border-top:20px;">
-					<label for="dosis">Dosis:</label>
-					<select id="dosis" style=" width: 110px; ">
-						<option selected value="1era">1era</option>
-						<option value="2da">2da</option>
-						<option value="3ra">3ra</option>
-						<option value="4ta">4ta</option>
-						<option value="5ta">5ta</option>
-						<option value="6ta">6ta</option>
-						<option value="7ma">7ma</option>
-						<option value="8va">8va</option>
-						<option value="9na">9na</option>
-						<option value="10ma">10ma</option>
-						<option value="NA">NA</option>
-					</select>
-				</div>
-				<div>
-					<label for="refuerzo">Refuerzo:</label>
-					<select id="refuerzo" style=" width: 110px; ">
-						<option value="1er">1era</option>
-						<option value="2do">2da</option>
-						<option value="3ro">3ra</option>
-						<option value="4to">4ta</option>
-						<option value="5to">5ta</option>
-						<option value="6to">6ta</option>
-						<option value="7mo">7ma</option>
-						<option value="8vo">8va</option>
-						<option value="9no">9na</option>
-						<option value="10mo">10ma</option>
-						<option selected value="NA">NA</option>
-					</select>
-				</div>
-				<div>
-					<label for="fecha_aplicacion">Fecha de Aplicación:</label>
-					<select id="fecha_aplicacion_select" style="width: 180px;">
-						<option value="fecha_provista">Fecha Provista</option>
-						<option value="fecha_no_provista">Fecha No Provista</option>
-					</select>
-					<input type="date" id="fecha_aplicacion_input" style="display: none;">
-				</div>
-				<button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
+					<!-- <button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
 					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
 					Agregar
-				</button>
+				</button> -->
 
-				<button id="modificarVacuna" class="boton" style="display: none;">
-					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i>
-					Modificar
-				</button>
+					<button id="modificarVacuna" class="boton" style="display: none;">
+						<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">edit</i>
+						Modificar
+					</button>
 
-				<button id="cancelarEdicion" class="boton" style="display: none;">
-					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
-					Cancelar
-				</button>
-				<table id="vacunasTabla">
-					<thead>
-						<tr>
-							<th>ID Vacuna</th>
-							<th>Nombre de Vacuna</th>
-							<th>Dosis</th>
-							<th>Refuerzo</th>
-							<th>Fecha de Aplicación</th>
-							<th>Modificar</th>
-							<th>Eliminar</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-
+					<button id="cancelarEdicion" class="boton" style="display: none;">
+						<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
+						Cancelar
+					</button>
+					<table id="vacunasTabla" style=" font-size: 14px;">
+						<thead>
+							<tr>
+								<th>ID Vacuna</th>
+								<th>Nombre de Vacuna</th>
+								<th>Dosis</th>
+								<th>Refuerzo</th>
+								<th>Fecha de Aplicación</th>
+								<th>Modificar</th>
+								<th>Eliminar</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</fieldset>
 				<script>
 					// Función para búsqueda dinámica del nombre de la vacuna por ID
 					function buscarNombreVacuna() {
@@ -289,7 +379,7 @@ include("menu_lateral.php");
 
 			<fieldset>
 				<legend>historico-vacunas</legend>
-				<div id="historial_vacunas"></div>
+				<div id="historial_vacunas" style="font-size:14px;"></div>
 
 			</fieldset>
 			<div style=" margin-top:-20;padding:0; height:0cm;">
@@ -359,7 +449,8 @@ include("menu_lateral.php");
 
 			// Agregar evento oninput al elemento input
 			document.getElementById('id_paciente').addEventListener('input', cargarHistorialVacunas);
-
+            document.getElementById('id_paciente').addEventListener('change', cargarHistorialVacunas);
+			document.getElementById('id_paciente').addEventListener('blur', cargarHistorialVacunas);
 			function cargarHistorialVacunas() {
 				var idPaciente = document.getElementById('id_paciente').value;
 				var historialVacunasDiv = document.getElementById('historial_vacunas');
@@ -895,7 +986,7 @@ include("menu_lateral.php");
 
 				// Verificar el ID del paciente
 				if (idPaciente.trim() === '') {
-					alert('Campo ID del paciente está vacío. Por favor, complételo.');
+					alert('Campo ID del paciente está vacío. Por favor, complétalo.');
 					document.getElementById('id_paciente').style.backgroundColor = 'red';
 					return false;
 				}
@@ -1011,6 +1102,7 @@ include("menu_lateral.php");
 				}
 				cargarHistorialVacunas();
 			});
+			
 		</script>
 	</form>
 </body>

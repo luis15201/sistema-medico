@@ -97,7 +97,7 @@ mysqli_close($conn);
 		}
 
 		fieldset fieldset legend {
-			font-size: 20px;
+			font-size: 16px;
 			text-transform: uppercase;
 			padding-left: 10%;
 			padding-right: 10%;
@@ -106,7 +106,7 @@ mysqli_close($conn);
 
 		legend {
 			font-weight: bold;
-			font-size: 30px;
+			font-size: 16px;
 			font-weight: bold;
 			margin-bottom: 1vw;
 			background: linear-gradient(to right, #e4e5dc, #45bac9db);
@@ -115,23 +115,38 @@ mysqli_close($conn);
 		}
 
 		label {
-			font-size: 1.4vw;
+			font-size: 14px;
 			color: #444;
-			margin: 10px;
+			margin: 8px;
+			font-weight: bold;
+		}
+
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+			margin: 0;
+			
+			font-size: 12px;
+			line-height: 14px;
+			margin: 5%;
+			padding-top: 5px;
+			padding-bottom: 5px;
 		}
 
 		input[type="text"],
 		input[type="date"],
 		select {
-			width: 45%;
-			padding: 1vw;
-			font-size: 1vw;
+			
+			
+			
 			color: #444;
-			margin-bottom: 2vw;
+			margin-bottom: 6%;
 			border: none;
 			border-bottom: 0.1vw solid #444;
 			outline: none;
-			border-radius: 15px;
+			border-radius: 10px;
 			margin: 10px;
 		}
 
@@ -144,7 +159,7 @@ mysqli_close($conn);
 			cursor: pointer;
 			padding: 10px;
 			border-radius: 2vw;
-			width: 10%;
+			
 			margin: 10px;
 			white-space: nowrap;
 			overflow: hidden;
@@ -158,11 +173,11 @@ mysqli_close($conn);
 			outline: none;
 			height: 4vw;
 			color: #fff;
-			font-size: 1.6vw;
+			font-size: 14px;
 			background: linear-gradient(to right, #4a90e2, #63b8ff);
 			cursor: pointer;
 			border-radius: 2vw;
-			width: 25%;
+			width: 110px;
 			margin-top: 2vw;
 			text-decoration: none;
 			white-space: nowrap;
@@ -377,6 +392,20 @@ mysqli_close($conn);
 			/* Hace que la tabla ocupe el 100% del contenedor */
 			border-collapse: collapse;
 		}
+		table{
+			margin-top: 10px;
+			width: 100%;
+			/* Hace que la tabla ocupe el 100% del contenedor */
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid #ddd;
+			/* Añade bordes a las celdas */
+			padding: 8px;
+			/* Espaciado interno */
+			text-align: left;
+			/* Alineación del texto */
+		}
 
 		#padecimientosTabla th,
 		#padecimientosTabla td {
@@ -406,11 +435,7 @@ mysqli_close($conn);
 
 
 <body onload="checkFechaProvista()">
-	<?php
 
-	include("menu_lateral.php");
-
-	?>
 	<div id="error-banner" class="error-banner">
 		Por favor, complete todos los campos obligatorios antes de guardar.
 	</div>
@@ -418,7 +443,11 @@ mysqli_close($conn);
 
 	<form id="myForm" action="guardar_datos_paciente.php" method="post">
 
+		<?php
 
+		include("menu_lateral.php");
+
+		?>
 
 		<div class="container">
 
@@ -743,8 +772,9 @@ mysqli_close($conn);
 				<label for="desde_cuando">Desde cuándo:</label>
 				<input type="date" id="desde_cuando" onchange="calculateYears()"><br>
 				<span id="yearsSince"></span>
-				<button id="btnAgregarPadecimiento" class="boton">
-					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
+				
+				<button id="btnAgregarPadecimiento" type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+					<i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar 
 				</button>
 				<!-- Botones adicionales para Modificar y Cancelar -->
 				<button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
@@ -883,8 +913,8 @@ mysqli_close($conn);
 					</select>
 					<input type="date" id="fecha_aplicacion_input" style="display: none;">
 				</div>
-				<button id="agregarVacuna" class="boton" onclick="agregarVacuna(); return false;">
-					<i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+				<button id="agregarVacuna"  onclick="agregarVacuna(); return false;"  type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+					<i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
 					Agregar
 				</button>
 
@@ -897,7 +927,7 @@ mysqli_close($conn);
 					<i class="material-icons" style="font-size:32px;color:#f33112;text-shadow:2px 2px 4px #000000;">cancel</i>
 					Cancelar
 				</button>
-				<table id="vacunasTabla">
+				<table id="vacunasTabla" style=" font-size: 14px;">
 					<thead>
 						<tr>
 							<th>ID Vacuna</th>

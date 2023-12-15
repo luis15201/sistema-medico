@@ -8,6 +8,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
+
+    /* Estilo para el botón offcanvas */
+.btn-offcanvas {
+    /*float: left;*/
+    margin: 0px;
+   position:static;
+
+    /*top: 12px; /* Ajusta la distancia desde la parte superior según tu preferencia */
+   left: 10px; /* Ajusta la distancia desde la izquierda según tu preferencia */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+   
+}
     .active-item {
         background-color: #6DC4F5;
         color: white;

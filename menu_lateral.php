@@ -1,5 +1,5 @@
 <!-- ▓▓▓▓▓▓▓▓▓▓╬══  MENU LATERAL CÓDIGO ══╬▓▓▓▓▓▓▓▓▓▓ -->
-<a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+<a class="btn btn-primary btn-offcanvas" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
     <i class="material-icons">menu</i>
 </a>
 
@@ -123,34 +123,30 @@
 
         focusOrOpenAccordion();
     });
-
-
-   
 </script>
 <script>
     //abre el offcanvas de forma automática
-   /*document.addEventListener("DOMContentLoaded", function() {
-        function openAllAccordions() {
-            var accordions = document.querySelectorAll('.accordion');
-            accordions.forEach(function(accordion) {
-                var accordionInstance = new bootstrap.Collapse(accordion);
-                accordionInstance.show();
-            });
-        }
-       
-        // Esperar a que el offcanvas se haya inicializado
-        var offcanvasExample = new bootstrap.Offcanvas(document.getElementById('offcanvasExample'));
-        offcanvasExample._element.addEventListener('shown.bs.offcanvas', function() {
-            // Esperar un breve momento para asegurar que el offcanvas se haya mostrado completamente
-            setTimeout(function() {
-                openAllAccordions();
-            }, 100);
-        });
+    /*document.addEventListener("DOMContentLoaded", function() {
+         function openAllAccordions() {
+             var accordions = document.querySelectorAll('.accordion');
+             accordions.forEach(function(accordion) {
+                 var accordionInstance = new bootstrap.Collapse(accordion);
+                 accordionInstance.show();
+             });
+         }
+        
+         // Esperar a que el offcanvas se haya inicializado
+         var offcanvasExample = new bootstrap.Offcanvas(document.getElementById('offcanvasExample'));
+         offcanvasExample._element.addEventListener('shown.bs.offcanvas', function() {
+             // Esperar un breve momento para asegurar que el offcanvas se haya mostrado completamente
+             setTimeout(function() {
+                 openAllAccordions();
+             }, 100);
+         });
 
-        // Mostrar el offcanvas automáticamente al cargar la página
-        offcanvasExample.show();
-    });*/
-
+         // Mostrar el offcanvas automáticamente al cargar la página
+         offcanvasExample.show();
+     });*/
 </script>
 
 
