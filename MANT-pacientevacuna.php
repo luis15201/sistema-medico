@@ -8,29 +8,29 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
+		.caja {
+			border: 3px solid #ddd;
+			padding: 10px;
+			box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+			margin: 10px;
+			border-radius: 5px;
+		}
 
-.caja {
-	border: 3px solid #ddd;
-	padding: 10px;
-	box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
-	margin: 10px;
-	border-radius: 5px;
-}
+		.cajalegend {
+			border: 0px solid rgba(102, 153, 144, 0.0);
+			font-weight: bolder;
+			font-size: 16px;
+			color: white;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+			border-radius: 2px;
+			margin-top: -20px;
+			text-shadow: 2px 1px 2px #000000;
 
-.cajalegend {
-	border: 0px solid rgba(102,153,144,0.0);
-	font-weight: bolder;
-	font-size: 16px;
-	color:white;
-	margin: 0;
-	padding: 0;
-	background-color:transparent;
-	border-radius: 2px;
-	margin-top: -20px;
-	text-shadow: 2px 1px 2px #000000;
-	
-	
-}
+
+		}
+
 		.container {
 			display: grid;
 			grid-template-columns: 60% 40%;
@@ -193,7 +193,7 @@ include("menu_lateral.php");
 			<fieldset>
 				<legend>Paciente-vacunas</legend>
 				<fieldset class="caja">
-				<legend class="cajalegend">══ Datos del Paciente ══</legend>
+					<legend class="cajalegend">══ Datos del Paciente ══</legend>
 					<div>
 						<label for="id_paciente">ID PACIENTE:</label>
 						<input type="text" id="id_paciente" name="id_paciente" style="width: 115px;" onblur="cargarHistorialVacunas()" focus="cargarHistorialVacunas()" change="cargarHistorialVacunas()" required>
@@ -254,7 +254,7 @@ include("menu_lateral.php");
 
 
 				<fieldset class="caja">
-				<legend class="cajalegend">══ Datos de la Vacuna ══</legend>
+					<legend class="cajalegend">══ Datos de la Vacuna ══</legend>
 					<div>
 						<label for="id_vacuna">ID Vacuna:</label>
 						<input type="text" id="id_vacuna" style="width: 115px;" required>
@@ -449,8 +449,9 @@ include("menu_lateral.php");
 
 			// Agregar evento oninput al elemento input
 			document.getElementById('id_paciente').addEventListener('input', cargarHistorialVacunas);
-            document.getElementById('id_paciente').addEventListener('change', cargarHistorialVacunas);
+			document.getElementById('id_paciente').addEventListener('change', cargarHistorialVacunas);
 			document.getElementById('id_paciente').addEventListener('blur', cargarHistorialVacunas);
+
 			function cargarHistorialVacunas() {
 				var idPaciente = document.getElementById('id_paciente').value;
 				var historialVacunasDiv = document.getElementById('historial_vacunas');
@@ -1102,7 +1103,6 @@ include("menu_lateral.php");
 				}
 				cargarHistorialVacunas();
 			});
-			
 		</script>
 	</form>
 </body>

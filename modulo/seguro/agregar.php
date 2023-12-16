@@ -26,11 +26,11 @@ $segid = $newId;
 <html>
 
 <head>
-	<title>VaidrollTeam</title>
+	<title>Sis_Pediátrico</title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" type="text/css" href="../../css/estilo-paciente.css">
-
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<style>
 		.botones-container {
 			display: flex;
@@ -48,7 +48,7 @@ $segid = $newId;
 			margin: 5px;
 			padding: 10px 20px;
 			border: none;
-			border-radius: 20px;
+			border-radius: 10px;
 			text-align: center;
 			text-decoration: none;
 			cursor: pointer;
@@ -58,9 +58,9 @@ $segid = $newId;
 			transition: background-color 0.3s ease;
 			flex: 1 1 auto;
 			/* Esto hace que los botones se expandan igualmente */
-			max-width: 200px;
+			max-width: 150px;
 			/* Establece el ancho máximo para mantener la responsividad */
-			font-size: 1.2em;
+			font-size: 14px;
 		}
 
 		.botones-container>a:hover,
@@ -68,6 +68,190 @@ $segid = $newId;
 		.botones-container>input[type="submit"]:hover,
 		.botones-container>button:hover {
 			background: linear-gradient(to right, #63b8ff, #4a90e2);
+
+			box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.1);
+		}
+	</style>
+
+
+
+	<style>
+		.caja {
+			border: 3px solid #ddd;
+			padding: 10px;
+			box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+			margin: 10px;
+			border-radius: 5px;
+
+
+
+
+
+		}
+
+		.cajalegend {
+			border: 0px solid rgba(102, 153, 144, 0.0);
+			font-weight: bolder;
+			font-size: 16px;
+			color: white;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+			border-radius: 2px;
+			margin-top: -20px;
+			text-shadow: 2px 1px 2px #000000;
+
+
+		}
+
+		.container {
+			display: grid;
+			grid-template-columns: 80% 20%;
+			/* Cambiado a una relación de 60/40 */
+			grid-template-rows: repeat(3, 1fr);
+			grid-gap: 6px 10px;
+		}
+
+		label {
+			font-size: 14px;
+			color: #444;
+			margin: 0;
+			font-weight: bold;
+		}
+
+		input[type="text"]:read-only {
+			background-color: rgb(115, 140, 136);
+			color: #000;
+			font-weight: bold;
+			width: 65px;
+		}
+
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+			margin: 0;
+
+			font-size: 12px;
+			line-height: 14px;
+			margin: 10px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		input[type="text"],
+		input[type="date"],
+		select {
+
+			width: 150px;
+			height: 40px;
+			color: #444;
+			margin-bottom: 0;
+			border: none;
+			border-bottom: 0.1vw solid #444;
+			outline: none;
+			border-radius: 10px;
+
+		}
+
+		button {
+			border: none;
+			outline: none;
+			color: #fff;
+			font-size: 14px;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			padding: 10px;
+			border-radius: 10px;
+
+			margin: 10px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			min-height: 40px;
+		}
+
+
+		.boton_bus {
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 60px;
+			width: 60px;
+			margin-top: 2vw;
+			text-decoration: none;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+
+
+		}
+
+		.boton_bus:active {
+			background-color: #5bc0f7;
+			scale: 1.5;
+			cursor: pointer;
+
+			transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+			/* Animaciones de 0.5 segundos */
+			box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+			/* Sombra inicial y sombra roja */
+			font-size: 25px;
+			color: white;
+			/* Cambiar el color del texto */
+			font-weight: bold;
+			/* Cambiar a negritas */
+			font-family: "Copperplate", Fantasy;
+		}
+
+		/* Estilos específicos para el modal personalizado */
+		.custom-modal {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.7);
+		}
+
+		.custom-modal-content {
+			width: 80%;
+			height: 80%;
+			margin: auto;
+			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			padding: 20px;
+			border-radius: 20PX;
+		}
+
+		.custom-close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.custom-close:hover,
+		.custom-close:focus {
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		/* Estilos adicionales específicos para el iframe dentro del modal */
+		.custom-iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
 		}
 	</style>
 	<script type="text/javascript">
@@ -81,7 +265,7 @@ $segid = $newId;
 		// Cambiar el fondo a gris claro
 		txtId.style.backgroundColor = "#f0f0f0";
 
-		
+
 
 
 		function placeCursorAtEnd() {
@@ -113,34 +297,46 @@ $segid = $newId;
 			input.focus();
 		}
 	</script>
-<?php
+	<?php
 
-include("../../menu_lateral_header.php");
+	include("../../menu_lateral_header.php");
 
-?>
+	?>
 </head>
 <?php
 
-  include("../../menu_lateral.php");
+include("../../menu_lateral.php");
 
-  ?>
+?>
 
 <body>
-	<div class="caja_popup2">
+	<div class="container" >
 		<form class="contenedor_popup" method="POST">
-			<fieldset>
+			<fieldset >
 
 				<legend>Registrar NUEVO Seguro│ASEGURADORA</legend>
-				<label for="txtid">ID Seguro</label>
-				<input type="text" name="txtid" id="txtid" value="<?php echo $segid; ?>" required readonly>
-				</br>
-				<label for="txtseg">Nombre de Aseguradora de Salud</label>
-				<input type="text"  autofocus name="txtseg" id="txtseg" value="<?php echo $segnom; ?>" required></br>
-				</br>
-				<div class="botones-container">
-					<?php echo "<a href=\"../../mant_seguro.php?pag=$pagina\">Cancelar</a>"; ?>
+				<fieldset class="caja">
+					<legend class="cajalegend">══ Agregar Nuevo ══</legend>
+					<p style="   margin:0;"><label for="txtid">ID Seguro</label>
+						<input type="text" name="txtid" id="txtid" value="<?php echo $segid; ?>" required readonly>
+					</p>
 
-					<input type="submit" name="btnregistrar" value="Registrar" onClick="javascript: return confirm('¿Deseas registrar a este *NUEVO* seguro');">
+					<p style="   margin-top:-10;"><label for="txtseg">Nombre de Aseguradora de Salud</label>
+						<input type="text" autofocus name="txtseg" id="txtseg" value="<?php echo $segnom; ?>" required>
+					</p>
+
+				</fieldset>
+				<div class="botones-container">
+					
+					<button type="submit" name="btnregistrar" value="Registrar" onClick="javascript: return confirm('¿Deseas registrar a este *NUEVO* seguro');" > <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Registrar</button>
+
+
+					<?php echo "<a class='boton' href=\"../../mant_seguro.php?pag=$pagina\">
+					<i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
+
+
+
+
 				</div>
 				<div id="myModal" class="modal" style="width: 100%; height: 90%;">
 					<div class="modal-content" style="width: 100%; height: 80%;">
@@ -151,11 +347,11 @@ include("../../menu_lateral_header.php");
 
 				<iframe id="modal-iframe" src="../../consulta_seguros.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 				<div class="botones-container">
-            <a href="../../mant_seguro.php" class="claseboton">← Atrás</a>
-            <a href="../../index.php" class="claseboton">Login</a>
-            <a href="../../menu.php" class="claseboton">Menú Principal</a>
+					<a href="../../mant_seguro.php" class="boton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">arrow_back</i> Atrás</a>
+					<a href="../../index.php" class="claseboton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">logout</i>Login</a>
+					<a href="../../menu.php" class="claseboton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">menu</i>Menú Principal</a>
 
-        </div>
+				</div>
 			</fieldset>
 
 
