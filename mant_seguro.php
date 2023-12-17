@@ -535,7 +535,7 @@ include("menu_lateral.php");
                         <a href="index.php" class="claseboton">Login</a>
                         <a href="menu.php" class="claseboton">Menú Principal</a>
                        
-                    </div> -->
+                    </div> .-->
 
                     <a href="modulo/seguro/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                         <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>Agregar
