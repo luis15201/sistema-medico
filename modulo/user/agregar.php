@@ -489,7 +489,7 @@ include("../../menu_lateral.php");
                     <div><label>Rol</label>
                         <select id="rol" name="txtrol" style=" width: 110px; " autocomplete="off" require>
                             <option selected value="Administrador">Administrador</option>
-                            <option value="Secretaria">Secretaría</option>
+                            <option value="Secretaría">Secretaría</option>
                             <option value="Doctor">Doctor</option>
                         </select>
                         <!-- <input type="text" name="txtrol" autocomplete="off" require> -->

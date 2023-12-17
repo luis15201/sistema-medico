@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(E_ERROR | E_PARSE);
 $servername = "localhost";
 $username = "root";
@@ -31,6 +32,11 @@ function obtenerDatosUsuario($idUsuario, $conn)
     return false;
   }
 }
+
+
+function in_iframe() {
+    return $_SERVER['HTTP_REFERER'] !== null && $_SERVER['HTTP_REFERER'] !== $_SERVER['REQUEST_URI'];
+  }
 ?>
 
 <!DOCTYPE html>
@@ -340,7 +346,11 @@ function obtenerDatosUsuario($idUsuario, $conn)
           echo "<td>" . $row["nombre_usuario"] . "</td>";
           echo "<td>" . $row["nombre_completo"] . "</td>";
           echo "<td>" . $row["rol"] . "</td>";
-          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/user/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          /*echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/user/editar.php?id_usuario=$row[id_usuario]&pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";*/
+
+          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/user/editar.php?id_usuario=$row[id_usuario]&pag=$pagina\" " . (in_iframe() ? 'target="_blank"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+
+
           echo "</tr>";
         }
       } else {

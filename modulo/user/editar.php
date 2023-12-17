@@ -29,8 +29,16 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
 
 
     <style>
+        .container {
+            display: grid;
+            grid-template-columns: 80%;
+            grid-template-rows: repeat(3, 1fr);
+            grid-gap: 6px 10px;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
 
-.botones-container2 {
+        .botones-container2 {
             margin: 2px;
             padding: 2px;
             box-sizing: unset;
@@ -39,13 +47,14 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             text-align: left;
             /*justify-content: center;*/
         }
+
         .botones-container {
             display: flex;
             flex-wrap: wrap;
             margin: 2px;
             padding: 2px;
             box-sizing: border-box;
-            justify-content:left;
+            justify-content: left;
         }
 
         .botones-container>a,
@@ -91,18 +100,28 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
         label {
             width: 40%;
             text-align: right;
-            /*margin-right: 10%;*/
+
         }
 
 
-        input {
+        input:read-only {
+            background-color: #63b8ff;
+            border: 2px solid #fff;
+            width: 70px;
+
+        }
+
+        option {
+            width: 75PX;
+        }
+
+        input,
+        select {
             border: none;
-            width: 40%;
+            width: 30%;
             border-radius: 6px;
             padding: 5px;
-            /* text-align: left;
-            padding: 5px;
-            margin-bottom: 10px;*/
+
         }
 
 
@@ -198,7 +217,8 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             border-radius: 10px;
         }
 
-        input[type="search"] {
+        input[type="search"],
+        select {
             /* Tus estilos personalizados aquí */
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -281,57 +301,187 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             padding: 7px;
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
+
+        .caja {
+            border: 3px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .cajalegend {
+            border: 0px solid rgba(102, 153, 144, 0.0);
+            font-weight: bolder;
+            font-size: 16px;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 2px;
+            margin-top: -20px;
+            text-shadow: 2px 1px 2px #000000;
+
+
+        }
+
+        .boton {
+            border: none;
+            outline: none;
+            height: 4vw;
+            color: #fff;
+            font-size: 14px;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            border-radius: 2vw;
+            width: 110px;
+            margin-top: 2vw;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+            min-height: 40px;
+        }
     </style>
+
+    <style>
+        /* Agrega algún estilo si lo deseas */
+
+        input[type="password"] {
+            padding-right: 30px;
+            /* Ajusta el espacio para el ojo */
+            transition: background-color 0.3s;
+            /* Agrega una transición suave para el cambio de color */
+        }
+
+        .eye-icon {
+
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        input[type="password"].visible {
+            background-color: #87CEEB;
+            /* Cambia a un color azul cielo cuando es visible */
+        }
+    </style>
+    <?php
+
+    include("../../menu_lateral_header.php");
+
+    ?>
 </head>
+<?php
+
+include("../../menu_lateral.php");
+?>
 
 <body>
-    <div class="caja_popup2">
+    <div class="container" >
         <form method="POST">
 
-            <fieldset>
+            <fieldset style=" /*height: 1000px;*/">
                 <legend>Modificar usuario</legend>
-                <div class="form-container">
-                    <label for="txtid">ID del usuario:</label>
-                    <input type="text" name="txtid" value="<?php echo $usuid; ?>" required readonly><br>
+                <form class="contenedor_popup" method="POST">
+                    <fieldset class="caja">
+                        <legend class="cajalegend"> ══ DATOS DEL Usuario ══ </legend>
+                        <div><label>ID</label>
+                            <input type="text" name="txtid" value="<?php echo $usuid; ?>" required readonly>
+                        </div>
+                        <br>
+                        <div><label>Nombre de usuario</label>
+                            <input type="text" name="txtnom" value="<?php echo $usunom; ?>" required>
+                        </div>
+                        <br>
 
-                    <label for="txtnom">Nombre del usuario:</label>
-                    <input type="text" name="txtnom" value="<?php echo $usunom; ?>" required><br>
+                        <div>
+                            <label for="password">Contraseña</label>
+                            <input id="password" type="password" name="txtpass1" value="<?php echo $usupass; ?>" required>
+                            <label style=" font-size:11px; font-weight:bold;margin-left:210px;">Ver</label>
+                            <span style="margin-left:20px;" class="eye-icon" onclick="togglePasswordVisibility('password')">👁️</span>
+                        </div>
+                        <div>
+                            <label for="confirmPassword">Confirmar Pass</label>
+                            <input id="confirmPassword" type="password" name="txtconfi" value="<?php echo $usuconfpass; ?>" required>
+                            <label style=" font-size:11px; font-weight:bold;margin-left:210px;">Ver</label>
+                            <span style="margin-left:20px;" class="eye-icon" onclick="togglePasswordVisibility('confirmPassword')">👁️</span>
+                        </div>
 
-                    <label for="txtpass">Contraseña:</label>
-                    <input type="number" name="txtpass" value="<?php echo $usupass; ?>" required><br>
 
-                    <label for="txtconfpass">Confirmar contraseña:</label>
-                    <input type="number" name="txtconfpass" value="<?php echo $usuconfpass; ?>" required><br>
+                        <script>
+                            function togglePasswordVisibility(inputId) {
+                                var passwordInput = document.getElementById(inputId);
+                                var eyeIcon = document.querySelector('.eye-icon');
 
-                    <label for="txtestado">Estado:</label>
-                    <input type="text" name="txtestado" value="<?php echo $usuestado; ?>" required><br>
+                                if (passwordInput.type === 'password') {
+                                    passwordInput.type = 'text';
+                                    passwordInput.style.backgroundColor = 'skyblue';
+                                    eyeIcon.textContent = '👁️';
+                                    passwordInput.classList.add('visible'); // Agrega la clase para cambiar el color de fondo
+                                } else {
+                                    passwordInput.type = 'password';
+                                    eyeIcon.textContent = '👁️';
+                                    passwordInput.style.backgroundColor = 'white';
+                                    passwordInput.classList.remove('visible'); // Remueve la clase para volver al color original
+                                }
+                            }
+                        </script>
+                        <br>
+                        <div><label>Estado</label>
+                            <select id="estado" name="txtest" style="width: 110px;" required>
+                                <option <?php echo ($usuestado == 'Activo') ? 'selected' : ''; ?> value="Activo">Activo</option>
+                                <option <?php echo ($usuestado == 'Inactivo') ? 'selected' : ''; ?> value="Inactivo">Inactivo</option>
+                            </select>
+                            <!-- <input type="text" name="txtest" autocomplete="off" require> -->
+                        </div>
+                        <br>
+                        <div><label>Nombre/s</label>
+                            <input type="text" name="txtnomcom" value="<?php echo $usunomcom; ?>" required>
+                        </div>
+                        <br>
+                        <div><label>Rol</label>
+                            <select id="rol" name="txtrol" style="width: 110px;" required>
+                                <option <?php echo ($usurol == 'Administrador') ? 'selected' : ''; ?> value="Administrador">Administrador</option>
+                                <option <?php echo ($usurol == 'Secretaría') ? 'selected' : ''; ?> value="Secretaria">Secretaría</option>
+                                <option <?php echo ($usurol == 'Doctor') ? 'selected' : ''; ?> value="Doctor">Doctor</option>
+                            </select>
+                            <!-- <input type="text" name="txtrol" autocomplete="off" require> -->
+                        </div>
+                        <br>
+                    </fieldset>
+                    <hr>
+                    <div class="botones-container" style=" height: 400px;" >
+                    <button  class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas MODIFICAR a este usuario');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> Modificar</button>
 
-                    <label for="txtnomcom">Nombre completo:</label>
-                    <input type="text" name="txtnomcom" value="<?php echo $usunomcom; ?>" required><br>
+                        <?php echo "<a  class='btn btn-primary boton' href=\"../../mant-Agregaruser.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
 
-                    <label for="txtrol">Rol:</label>
-                    <input type="text" name="txtrol" value="<?php echo $usurol; ?>" required><br>
-                </div>
-                <hr>
-                <div class="botones-container">
-                    <?php echo "<a  href=\"../../mant-Agregaruser.php?pag=$pagina\">Cancelar</a>"; ?>
-                    <input type="submit"  name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
+                        
 
-                </div>
-                <hr>
 
-                <div id="myModal" class="modal" style="width: 100%; height: 90%;">
-                    <div class="modal-content" style="width: 100%; height: 80%;">
-                        <span class="close">&times;</span>
+                        <!-- <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');"> -->
                         <iframe id="modal-iframe" src="../../consulta_usuario.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-                    </div>
-                </div>
-                <div class="botones-container2">
-                    <a href="../../mant-Agregaruser.php" class="claseboton">← Atrás</a>
-                    <a href="../../index.php" class="claseboton">Login</a>
-                    <a href="../../menu.php" class="claseboton">Menú Principal</a>
 
-                </div>
+                    </div>
+                    
+
+                    <div class="botones-container2">
+                        <a href="../../menu.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                            <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">menu</i>
+                            Menú Gnral
+                        </a>
+                        <a href="../../index.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                            <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">login</i>
+                            Login
+                        </a>
+                        <a href="../../mant-Agregaruser.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                            <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">arrow_back</i> Atrás
+                        </a>
+
+
+                    </div>
             </fieldset>
         </form>
     </div>

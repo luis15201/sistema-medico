@@ -309,7 +309,7 @@ include("menu_lateral.php");
 
     <div class="container">
         <form method="POST">
-            <fieldset>
+            <fieldset style=" height: 600px;">
                 <legend>Usuarios</legend>
                 <?php echo "<a  class='btn btn-primary boton' href=\"modulo/user/agregar.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>person_add</i> Crear usuario</a>"; ?>
         </form>

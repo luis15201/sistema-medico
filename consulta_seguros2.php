@@ -16,6 +16,11 @@ if ($conn->connect_error) {
 // Consulta para obtener los datos de la tabla "seguro"
 $query = "SELECT Id_seguro_salud, Nombre FROM seguro";
 $result = $conn->query($query);
+
+
+function in_iframe() {
+              return $_SERVER['HTTP_REFERER'] !== null && $_SERVER['HTTP_REFERER'] !== $_SERVER['REQUEST_URI'];
+          }
 ?>
 
 <!DOCTYPE html>
@@ -329,7 +334,12 @@ $result = $conn->query($query);
           echo "<tr onclick=\"seleccionarSeguro('" . $row["Id_seguro_salud"] . "', '" . $row["Nombre"] . "')\">";
           echo "<td>" . $row["Id_seguro_salud"] . "</td>";
           echo "<td>" . $row["Nombre"] . "</td>";
-          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          /*echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";*/
+          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\" " . (in_iframe() ? 'target="_blank"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+
+          
+
+
           echo "</tr>";
         }
       } else {
