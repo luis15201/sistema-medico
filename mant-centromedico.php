@@ -10,7 +10,7 @@ if (isset($_GET['pag'])) {
 } else {
     $pagina = 1;
 }
-
+/*
 if (isset($_POST['btnbuscar'])) {
     $buscar = $_POST['txtbuscar'];
 
@@ -22,7 +22,7 @@ if (isset($_POST['btnbuscar'])) {
 $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_centro FROM institucion_de_salud");
 
 $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_centro'];
-?>
+*/?>
 
 <html>
 

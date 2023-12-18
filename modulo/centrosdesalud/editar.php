@@ -80,6 +80,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
     <!-- Incluir Botones de impresión -->
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         .botones-container {
             display: flex;
@@ -97,7 +98,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             margin: 5px;
             padding: 10px 20px;
             border: none;
-            border-radius: 20px;
+            border-radius: 10px;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
@@ -107,9 +108,9 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             transition: background-color 0.3s ease;
             flex: 1 1 auto;
             /* Esto hace que los botones se expandan igualmente */
-            max-width: 200px;
+            max-width: 150px;
             /* Establece el ancho máximo para mantener la responsividad */
-            font-size: 1.2em;
+            font-size: 14px;
         }
 
         .botones-container>a:hover,
@@ -117,55 +118,248 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
         .botones-container>input[type="submit"]:hover,
         .botones-container>button:hover {
             background: linear-gradient(to right, #63b8ff, #4a90e2);
+
+            box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.1);
         }
     </style>
-<?php
 
-include("menu_lateral_header.php");
 
-?>
+
+    <style>
+        .caja {
+            border: 3px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            border-radius: 5px;
+
+
+
+
+
+        }
+
+        .cajalegend {
+            border: 0px solid rgba(102, 153, 144, 0.0);
+            font-weight: bolder;
+            font-size: 16px;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 2px;
+            margin-top: -20px;
+            text-shadow: 2px 1px 2px #000000;
+
+
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80% 20%;
+            /* Cambiado a una relación de 60/40 */
+            grid-template-rows: repeat(3, 1fr);
+            grid-gap: 6px 10px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #444;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        input[type="text"]:read-only {
+            background-color: rgb(115, 140, 136);
+            color: #000;
+            font-weight: bold;
+            width: 65px;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+
+            font-size: 12px;
+            line-height: 14px;
+            margin: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+
+            width: 150px;
+            height: 40px;
+            color: #444;
+            margin-bottom: 0;
+            border: none;
+            border-bottom: 0.1vw solid #444;
+            outline: none;
+            border-radius: 10px;
+
+        }
+
+        button {
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 14px;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+
+            margin: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+            min-height: 40px;
+        }
+
+
+        .boton_bus {
+            border: none;
+            outline: none;
+            height: 4vw;
+            color: #fff;
+            font-size: 1.6vw;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            border-radius: 60px;
+            width: 60px;
+            margin-top: 2vw;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+
+
+        }
+
+        .boton_bus:active {
+            background-color: #5bc0f7;
+            scale: 1.5;
+            cursor: pointer;
+
+            transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+            /* Animaciones de 0.5 segundos */
+            box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+            /* Sombra inicial y sombra roja */
+            font-size: 25px;
+            color: white;
+            /* Cambiar el color del texto */
+            font-weight: bold;
+            /* Cambiar a negritas */
+            font-family: "Copperplate", Fantasy;
+        }
+
+        /* Estilos específicos para el modal personalizado */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .custom-modal-content {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+            background: linear-gradient(to right, #e4e5dc, #45bac9db);
+            padding: 20px;
+            border-radius: 20PX;
+        }
+
+        .custom-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .custom-close:hover,
+        .custom-close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos adicionales específicos para el iframe dentro del modal */
+        .custom-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <?php
+
+    include("../../menu_lateral_header.php");
+
+    ?>
 </head>
 <?php
 
-  include("menu_lateral.php");
+include("../../menu_lateral.php");
 
-  ?>
+?>
+
 
 <body>
-    <div class="caja_popup2">
+    <div class="container">
         <form class="contenedor_popup" method="POST">
             <fieldset>
 
                 <legend>Modificar centro medico</legend>
-                <label for="txtid">ID Centro Medico</label>
-                <input type="text" name="txtid" id="txtid" value="<?php echo $centid; ?>" required readonly>
-                </br>
-                <label for="txtseg">Nombre de Centro de salud </label>
-                <input type="text" name="txtnom" id="txtnom" value="<?php echo $centnom; ?>" required></br>
-                </br>
-                <label for="txtseg">Direccion de Centro medico</label>
-                <input type="text" name="txtdire" id="txtdire" value="<?php echo $centdire; ?>" required></br>
-                </br>
-                <label for="txtseg">Telefono de Centro medico</label>
-                <input type="text" name="txttel" id="txttel" value="<?php echo $centtele; ?>" required></br>
-                </br>
+                <fieldset class="caja">
+                    <legend class="cajalegend">══ EDITAR ══</legend>
+                    <label for="txtid">ID Centro Medico</label>
+                    <input type="text" name="txtid" id="txtid" value="<?php echo $centid; ?>" required readonly>
+                    </br>
+                    <label for="txtseg">Nombre de Centro de salud </label>
+                    <input type="text" name="txtnom" id="txtnom" value="<?php echo $centnom; ?>" required></br>
+                    </br>
+                    <label for="txtseg">Direccion de Centro medico</label>
+                    <input type="text" name="txtdire" id="txtdire" value="<?php echo $centdire; ?>" required></br>
+                    </br>
+                    <label for="txtseg">Telefono de Centro medico</label>
+                    <input type="text" name="txttel" id="txttel" value="<?php echo $centtele; ?>" required></br>
+                    </br>
+                </fieldset>
                 <div class="botones-container">
-                    <?php echo "<a   href=\"../../mant-centromedico.php?pag=$pagina\">  Cancelar  </a>"; ?>
+                    <button class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas MODIFICAR a este Centro de Salud');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> modificar</button>
 
-                    <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este centro medico?');">
+
+                    <?php echo "<a class='btn btn-primary boton' href=\"../../mant-centromedico.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
+
+
+
+
+                    <!-- <?php //echo "<a   href=\"../../mant-centromedico.php?pag=$pagina\">  Cancelar  </a>"; ?>
+
+                    <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este centro medico?');"> -->
                 </div>
-                <div id="myModal" class="modal" style="width: 100%; height: 90%;">
-                    <div class="modal-content" style="width: 100%; height: 80%;">
-                        <span class="close">&times;</span>
-                        <iframe id="modal-iframe" src="../../consulta_centromedico.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-                    </div>
-                </div>
+
+                <iframe id="modal-iframe" src="../../consulta_centromedico.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+
             </fieldset>
 
 
         </form>
     </div>
-    
+
 </body>
 
 </html>

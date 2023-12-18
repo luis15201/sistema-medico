@@ -334,10 +334,6 @@ include("../../menu_lateral.php");
 
 					<?php echo "<a class='boton' href=\"../../mant_seguro.php?pag=$pagina\">
 					<i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
-
-
-
-
 				</div>
 				<div id="myModal" class="modal" style="width: 100%; height: 90%;">
 					<div class="modal-content" style="width: 100%; height: 80%;">
