@@ -1,7 +1,8 @@
 <html>
 
 <head>
-
+<title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

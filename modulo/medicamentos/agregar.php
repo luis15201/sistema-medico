@@ -26,7 +26,8 @@ $segid = $newId;
 <html>
 
 <head>
-	<title>medicamentos</title>
+	<title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="../../IMAGENES/hospital2.ico">
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" type="text/css" href="../../css/estilo-paciente.css">

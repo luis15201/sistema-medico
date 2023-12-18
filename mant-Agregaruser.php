@@ -29,7 +29,8 @@ $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_usuarios'];
 <html>
 
 <head>
-    <title>Usuarios</title>
+<title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
     <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
     <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">

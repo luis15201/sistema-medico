@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-
+error_reporting(E_ALL & ~E_WARNING);
 require_once "../../include/conec.php";
 //require_once("../../mant-Agregaruser.php");
 
@@ -26,262 +26,238 @@ $centroid = $newId;
 <html>
 
 <head>
-    <title>Centros Medicos</title>
+    <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="../../IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
-
-
+    <link rel="stylesheet" type="text/css" href="../../css/estilo-paciente.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
-        .botones-container2 {
-            margin: 2px;
-            padding: 2px;
-            box-sizing: unset;
-            width: 100%;
-            float: left;
-            text-align: left;
-            /*justify-content: center;*/
-        }
+		.botones-container {
+			display: flex;
+			flex-wrap: wrap;
+			margin: 2px;
+			padding: 2px;
+			box-sizing: border-box;
+			justify-content: center;
+		}
 
-        .botones-container {
-            display: flex;
-            flex-wrap: wrap;
-            margin: 2px;
-            padding: 2px;
-            box-sizing: border-box;
-            justify-content: left;
-        }
+		.botones-container>a,
+		.botones-container>input[type="button"],
+		.botones-container>input[type="submit"],
+		.botones-container>button {
+			margin: 5px;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 10px;
+			text-align: center;
+			text-decoration: none;
+			cursor: pointer;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			color: #fff;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
+			flex: 1 1 auto;
+			/* Esto hace que los botones se expandan igualmente */
+			max-width: 150px;
+			/* Establece el ancho máximo para mantener la responsividad */
+			font-size: 14px;
+		}
 
-        .botones-container>a,
-        .botones-container>input[type="button"],
-        .botones-container>input[type="submit"],
-        .botones-container>button {
-            margin: 5px;
-            padding: 5px 5px;
-            border: none;
-            border-radius: 10px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            color: #fff;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            flex: 1 1 auto;
-            /* Esto hace que los botones se expandan igualmente */
-            max-width: 200px;
-            /* Establece el ancho máximo para mantener la responsividad */
-            font-size: 1.2em;
-        }
+		.botones-container>a:hover,
+		.botones-container>input[type="button"]:hover,
+		.botones-container>input[type="submit"]:hover,
+		.botones-container>button:hover {
+			background: linear-gradient(to right, #63b8ff, #4a90e2);
 
-        .botones-container>a:hover,
-        .botones-container>input[type="button"]:hover,
-        .botones-container>input[type="submit"]:hover,
-        .botones-container>button:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        .form-container {
-            display: flex;
-            flex-wrap: wrap;
-            align-content: space-between;
-            gap: 10px;
-            width: 55%;
-            margin-bottom: 10px;
-
-        }
+			box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.1);
+		}
+	</style>
 
 
-        label {
-            width: 40%;
-            text-align: right;
 
-        }
-
-
-        input {
-            border: none;
-            width: 40%;
-            border-radius: 6px;
-            padding: 5px;
-
-        }
+	<style>
+		.caja {
+			border: 3px solid #ddd;
+			padding: 10px;
+			box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+			margin: 10px;
+			border-radius: 5px;
 
 
-        .claseboton {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #fff;
-            font-size: 16px;
-            padding: 7px;
-
-        }
-
-        .claseboton:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        .botones-container {
-            margin: 2px;
-            padding: 2px;
-            box-sizing: unset;
-            width: 100%;
-            float: left;
-            text-align: center;
-            /*justify-content: center;*/
-        }
-
-        fieldset {
-            border: 1px solid #ddd;
-            border-radius: 2vw;
-            background: linear-gradient(to right, #e4e5dc, #45bac9db);
-            padding: 1vw;
-            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
-            margin-bottom: 2vw;
-        }
 
 
-        .clasebotonVER {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #05c20e, #84e788);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #080808;
-            font-size: 16px;
-            padding: 7px;
 
-        }
+		}
 
-        .clasebotonVER:hover {
-            background: linear-gradient(to right, #84e788, #05c20e);
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .dt-button.dtbotopersonal {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #fff;
-            font-size: 16px;
-            padding: 7px;
-        }
-
-        .dt-button.dtbotopersonal:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        fieldset fieldset legend {
-            font-size: 20px;
-            text-transform: uppercase;
-            padding-left: 10%;
-            padding-right: 10%;
-            background-color: transparent;
-        }
-
-        legend {
-            font-weight: bold;
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 1vw;
-            background: linear-gradient(to right, #e4e5dc, #45bac9db);
-            border: solid 1px #45bac9db;
-            border-radius: 10px;
-        }
-
-        input[type="search"] {
-            /* Tus estilos personalizados aquí */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 5px;
-            background-color: #f2f2f2;
-            color: #333;
-            width: 200px;
-            /* Ancho personalizado */
-        }
-
-        .dataTables_filter input {
-            color: white;
-            background-color: red;
-        }
-
-        .dataTables_wrapper .dataTables_filter input {
-            width: 170px;
-            padding: 10px;
-            font-size: 1vw;
-            color: #444;
-            margin-bottom: 2vw;
-            border: none;
-            border-bottom: 0.1vw solid #444;
-            outline: none;
-            border-radius: 15px;
-            margin: 10px;
-            background-color: white;
-
-        }
-
-        .dataTables_wrapper .dataTables_length,
-        div.dataTables_wrapper div.dataTables_filter label,
-        div.dataTables_wrapper div.dataTables_info {
-            color: black;
-            font-weight: bold;
-
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
-            /*padding: 0.5em 1em;*/
-            margin-left: 2px;
-            text-align: center;
-            /*text-decoration: none !important;*/
-            cursor: pointer;
-            color: #fff;
-            border: 1px solid transparent;
+		.cajalegend {
+			border: 0px solid rgba(102, 153, 144, 0.0);
+			font-weight: bolder;
+			font-size: 16px;
+			color: white;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+			border-radius: 2px;
+			margin-top: -20px;
+			text-shadow: 2px 1px 2px #000000;
 
 
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            font-size: 16px;
-            padding: 7px;
-        }
+		}
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
+		.container {
+			display: grid;
+			grid-template-columns: 80% 20%;
+			/* Cambiado a una relación de 60/40 */
+			grid-template-rows: repeat(3, 1fr);
+			grid-gap: 6px 10px;
+		}
 
-            margin-left: 2px;
-            text-align: center;
+		label {
+			font-size: 14px;
+			color: #444;
+			margin: 0;
+			font-weight: bold;
+		}
 
-            cursor: pointer;
-            color: #fff;
-            border: 1px solid transparent;
+		input[type="text"]:read-only {
+			background-color: rgb(115, 140, 136);
+			color: #000;
+			font-weight: bold;
+			width: 65px;
+		}
+
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+			margin: 0;
+
+			font-size: 12px;
+			line-height: 14px;
+			margin: 10px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		input[type="text"],
+		input[type="date"],
+		select {
+
+			width: 150px;
+			height: 40px;
+			color: #444;
+			margin-bottom: 0;
+			border: none;
+			border-bottom: 0.1vw solid #444;
+			outline: none;
+			border-radius: 10px;
+
+		}
+
+		button {
+			border: none;
+			outline: none;
+			color: #fff;
+			font-size: 14px;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			padding: 10px;
+			border-radius: 10px;
+
+			margin: 10px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+			min-height: 40px;
+		}
 
 
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            font-size: 16px;
-            padding: 7px;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-        }
-    </style>
+		.boton_bus {
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 60px;
+			width: 60px;
+			margin-top: 2vw;
+			text-decoration: none;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
+
+
+		}
+
+		.boton_bus:active {
+			background-color: #5bc0f7;
+			scale: 1.5;
+			cursor: pointer;
+
+			transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+			/* Animaciones de 0.5 segundos */
+			box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+			/* Sombra inicial y sombra roja */
+			font-size: 25px;
+			color: white;
+			/* Cambiar el color del texto */
+			font-weight: bold;
+			/* Cambiar a negritas */
+			font-family: "Copperplate", Fantasy;
+		}
+
+		/* Estilos específicos para el modal personalizado */
+		.custom-modal {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.7);
+		}
+
+		.custom-modal-content {
+			width: 80%;
+			height: 80%;
+			margin: auto;
+			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			padding: 20px;
+			border-radius: 20PX;
+		}
+
+		.custom-close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.custom-close:hover,
+		.custom-close:focus {
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		/* Estilos adicionales específicos para el iframe dentro del modal */
+		.custom-iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+	</style>
+    
+
+
+    
      <script type="text/javascript">
 		// Obtener el campo de entrada y el nuevo ID
 		var txtId = document.getElementById("txtid");
@@ -325,29 +301,30 @@ $centroid = $newId;
 			input.focus();
 		}
 	</script>
-<?php
+ <?php
 
-include("menu_lateral_header.php");
+include("../../menu_lateral_header.php");
 
 ?>
 </head>
 <?php
 
-  include("menu_lateral.php");
+include("../../menu_lateral.php");
 
-  ?>
+?>
 
 <body>
-    <fieldset>
+<div class="container" >
+    <fieldset style=" padding-bottom:40%" >
         <legend>Agregar Centro de Salud</legend>
-        <form class="form-container" method="POST">
-            <fieldset>
-                <legend> Centro De Salud </legend>
-                <div><label>ID<label>
-                            <input type="text" name="txtid" autocomplete="off" value=<?php echo $centroid; ?> require readonly></div>
+        <form  class="contenedor_popup" method="POST">
+        <fieldset class="caja" >
+        <legend class="cajalegend">══ Centro de Salud ══</legend>
+                <div><label for="txtid">ID<label>
+                            <input type="text" name="txtid" autocomplete="off" style="margin-left:40px ;" value=<?php echo $centroid; ?> require readonly></div>
                 <br>
                 <div><label>Nombre del centro<label>
-                            <input type="text" autofocus name="txtnom" autocomplete="off" require></div>
+                            <input type="text" autofocus name="txtnom" autocomplete="off" require ></div>
                 <br>
                 <div><label>Direccion</label>
                     <input type="text" name="txtdire" autocomplete="off" require>
@@ -358,24 +335,28 @@ include("menu_lateral_header.php");
                 </div>
                 <br>
                 
+               
             </fieldset>
-            <div class='botones-container'>
+            
+            
+        
+        <div class='botones-container'>
                 <?php echo "<a href=\"../../mant-centromedico.php?pag=$pagina\">Cancelar</a>"; ?>
                 <input type="submit" name="btnregistrar" value="Registrar" onClick="javascript: return confirm('¿Deseas registrar a este usuario');">
             </div>
-        </form>
-        <div class="modal-content" style="width: 100%; height: 80%;">
-            <span class="close">&times;</span>
+            </form>
             <iframe id="modal-iframe" src="../../consulta_centromedico.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-        </div>
+       
 
-        <div class="botones-container2">
-            <a href="../../mant-Agregaruser.php" class="claseboton">← Atrás</a>
-            <a href="../../index.php" class="claseboton">Login</a>
-            <a href="../../menu.php" class="claseboton">Menú Principal</a>
+        <div class="botones-container" style=" margin-top:-80px">
+        <a href="../../mant_seguro.php" class="boton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">arrow_back</i> Atrás</a>
+					<a href="../../index.php" class="claseboton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">logout</i>Login</a>
+					<a href="../../menu.php" class="claseboton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">menu</i>Menú Principal</a>
+
 
         </div>
     </fieldset>
+    </div>
 </body>
 
 </html>

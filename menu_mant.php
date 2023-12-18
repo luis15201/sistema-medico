@@ -2,6 +2,8 @@
 
 <html>
 <head>
+  <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>

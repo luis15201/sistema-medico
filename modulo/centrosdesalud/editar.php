@@ -2,12 +2,24 @@
 session_start();
 
 
+error_reporting(E_ALL & ~E_WARNING);
 require_once "../../include/conec.php";
 /*require_once("../../mant_seguro.php");*/
 
 $pagina = $_GET['pag'];
 $coddni = $_GET['id_centro'];
+//echo $coddni;
 
+// Verificar si id_centro está presente y no está vacío
+/*if (isset($_GET['id_centro']) && !empty($_GET['id_centro'])) {
+    $coddni = $_GET['id_centro'];
+    echo $coddni;
+
+    // Resto del código aquí...
+    $querybuscar = mysqli_query($conn, "SELECT * FROM institucion_de_salud WHERE id_centro =$coddni");
+} else {
+    echo "La variable id_centro no está presente o está vacía.";
+}*/
 $querybuscar = mysqli_query($conn, "SELECT * FROM institucion_de_salud WHERE id_centro =$coddni");
 
 while ($mostrar = mysqli_fetch_array($querybuscar)) {
@@ -20,7 +32,8 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
 <html>
 
 <head>
-    <title>VaidrollTeam</title>
+    <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="../../IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
 
     <!--link rel="stylesheet" type="text/css" href="../../css/style.css"-->

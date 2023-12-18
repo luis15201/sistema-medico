@@ -44,6 +44,7 @@ $conn->close();
 <head>
     <title>Login Sistema de Pediatría</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
 </head>
 <body>
 <div class="message <?php echo $messageColor; ?>"><?php echo $message; ?></div>

@@ -4,6 +4,8 @@
 <html>
 
 <head>
+  <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Anton:regular" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Bitter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />

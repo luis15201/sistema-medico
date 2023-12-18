@@ -26,7 +26,8 @@ $result = $conn->query($query);
 <html>
 
 <head>
-    <title>Sis_Pediatrico</title>
+    <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
     <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
     <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
@@ -79,183 +80,7 @@ $result = $conn->query($query);
 
 
 
-    <style>
-        /*.claseboton {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #fff;
-            font-size: 16px;
-            padding: 7px;
-
-        }
-
-        .claseboton:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        .botones-container {
-            margin: 2px;
-            padding: 2px;
-            box-sizing: unset;
-            width: 100%;
-            float: left;
-            text-align: center;
-            /*justify-content: center;*/
-        /*}*/
-
-        /*fieldset {
-            border: 1px solid #ddd;
-            border-radius: 2vw;
-            background: linear-gradient(to right, #e4e5dc, #45bac9db);
-            padding: 1vw;
-            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
-            margin-bottom: 2vw;
-        }
-
-
-        .clasebotonVER {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #05c20e, #84e788);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #080808;
-            font-size: 16px;
-            padding: 7px;
-
-        }
-
-        .clasebotonVER:hover {
-            background: linear-gradient(to right, #84e788, #05c20e);
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .dt-button.dtbotopersonal {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #fff;
-            font-size: 16px;
-            padding: 7px;
-        }
-
-        .dt-button.dtbotopersonal:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        fieldset fieldset legend {
-            font-size: 20px;
-            text-transform: uppercase;
-            padding-left: 10%;
-            padding-right: 10%;
-            background-color: transparent;
-        }
-
-        legend {
-            font-weight: bold;
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 1vw;
-            background: linear-gradient(to right, #e4e5dc, #45bac9db);
-            border: solid 1px #45bac9db;
-            border-radius: 10px;
-        }
-
-        input[type="search"] {
-            /* Tus estilos personalizados aquí */
-        /*border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 5px;
-            background-color: #f2f2f2;
-            color: #333;
-            width: 200px;
-            /* Ancho personalizado */
-        /* }*/
-
-        /* .dataTables_filter input {
-            color: white;
-            background-color: red;
-        }
-
-        .dataTables_wrapper .dataTables_filter input {
-            width: 170px;
-            padding: 10px;
-            font-size: 1vw;
-            color: #444;
-            margin-bottom: 2vw;
-            border: none;
-            border-bottom: 0.1vw solid #444;
-            outline: none;
-            border-radius: 15px;
-            margin: 10px;
-            background-color: white;
-
-        }
-
-        .dataTables_wrapper .dataTables_length,
-        div.dataTables_wrapper div.dataTables_filter label,
-        div.dataTables_wrapper div.dataTables_info {
-            color: black;
-            font-weight: bold;
-
-        }
-
-        /*.dataTables_wrapper .dataTables_paginate .paginate_button {
-            box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
-            /*padding: 0.5em 1em;*/
-        /* margin-left: 2px;
-            text-align: center;
-            /*text-decoration: none !important;*/
-        /*  cursor: pointer;
-            color: #fff;
-            border: 1px solid transparent;
-
-
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            font-size: 16px;
-            padding: 7px;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-           /* box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
-
-            margin-left: 2px;
-            text-align: center;
-
-            cursor: pointer;
-            color: #fff;
-            border: 1px solid transparent;
-
-
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            font-size: 16px;
-            padding: 7px;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);*/
-        /*}*/
-    </style>
+    
 
     <script>
         /*  $(document).ready(function() {
@@ -530,18 +355,11 @@ include("menu_lateral.php");
                 <fieldset style=" height:700px;">
 
                     <legend>Registrar ARS</legend>
-                    <!-- <div class="botones-container">
-                        <a href="menu-mant.php" class="claseboton">← Atrás</a>
-                        <a href="index.php" class="claseboton">Login</a>
-                        <a href="menu.php" class="claseboton">Menú Principal</a>
-                       
-                    </div> .-->
-
+                    
                     <a href="modulo/seguro/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                         <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>Agregar
                     </a>
-                    <?php //echo "<a  class='claseboton' href=\"modulo/seguro/agregar.php?pag=$pagina\"> <b style='color:green;font: size 15px;'> + </b> Registrar Seguro</a></br> </br>"; 
-                    ?>
+                    
                     <input type="hidden" value="Buscar" name="btnbuscar">
 
             </form>
@@ -596,9 +414,6 @@ include("menu_lateral.php");
                 <a href="menu-mant.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                     <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">arrow_back</i> Atrás
                 </a>
-
-
-
             </div>
             </form>
         </div>
