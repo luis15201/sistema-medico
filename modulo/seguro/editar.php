@@ -19,6 +19,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
 
 <head>
     <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="../../IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
 
     <!--link rel="stylesheet" type="text/css" href="../../css/style.css"-->

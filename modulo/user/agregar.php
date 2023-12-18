@@ -26,7 +26,9 @@ $userid = $newId;
 <html>
 
 <head>
-    <title>Usuarios</title>
+    <title>Sis_Pediátrico</title>
+    <link rel="icon" type="image/x-icon" href="../../IMAGENES/hospital2.ico">
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
 
 
