@@ -1,12 +1,13 @@
 <?php
 
+
 error_reporting(E_ERROR | E_PARSE);
 $servername = "localhost";
 $username = "root";
 $password = "";
 $database = "pediatra_sis";
 
-// Crear conexión
+// Crear conexión.
 $conn = new mysqli($servername, $username, $password, $database);
 
 // Verificar la conexión
@@ -385,7 +386,7 @@ include("menu_lateral.php");
                         echo "<td>" . $row['Nombre'] . "</td>";
                         echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/seguro/editar.php?Id_seguro_salud=$row[Id_seguro_salud]&pag=$pagina\">Modificar</a> </td>";
                     }
-                } else {
+                } .else {
                     echo "<tr><td colspan='2'>No se encontraron resultados.</td></tr>";
                 }
 

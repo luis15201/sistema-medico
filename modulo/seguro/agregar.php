@@ -60,7 +60,7 @@ $segid = $newId;
 			flex: 1 1 auto;
 			/* Esto hace que los botones se expandan igualmente */
 			max-width: 150px;
-			/* Establece el ancho máximo para mantener la responsividad */
+			/* Establece el ancho máximo para mantener la responsividad. */
 			font-size: 14px;
 		}
 

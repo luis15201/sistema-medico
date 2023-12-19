@@ -367,7 +367,7 @@ include("../../menu_lateral.php");
             <iframe id="modal-iframe" src="../../consulta_centromedico.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 
 
-            <div class="botones-container" style=" margin-top:-80px">
+            <div class="botones-container" style=" margin-top:-20px">
                 <a href="../../mant-centromedico" class="boton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">arrow_back</i> Atrás</a>
                 <a href="../../index.php" class="claseboton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">logout</i>Login</a>
                 <a href="../../menu.php" class="claseboton"><i class="material-icons" style="font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;">menu</i>Menú Principal</a>

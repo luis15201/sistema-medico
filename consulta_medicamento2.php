@@ -17,6 +17,10 @@ if ($conn->connect_error) {
 // Consulta para obtener los datos de la tabla "tipo_vacunas"
 $query = "SELECT * FROM medicamento";
 $result = $conn->query($query);
+
+function in_iframe() {
+    return $_SERVER['HTTP_REFERER'] !== null && $_SERVER['HTTP_REFERER'] !== $_SERVER['REQUEST_URI'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,19 +70,19 @@ $result = $conn->query($query);
     }
 
     #tabla_medicamento tbody tr:active {
-      background-color: #5bc0f7;
+     /* background-color: #5bc0f7;
       cursor: pointer;
       border: 4px solid red;
       transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease;
       /* Animaciones de 0.5 segundos */
-      box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+      /*box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
       /* Sombra inicial y sombra roja */
-      font-size: 25px;
+      /*font-size: 25px;
       color: white;
       /* Cambiar el color del texto */
-      font-weight: bold;
+     /* font-weight: bold;
       /* Cambiar a negritas */
-      font-family: "Copperplate", Fantasy;
+      /*font-family: "Copperplate", Fantasy;*/
     }
   </style>
   <style>
@@ -303,6 +307,7 @@ $result = $conn->query($query);
 
 
 
+
     function seleccionarmedicamento(idmedicamento, nombremedicamento, descripcionmed, formatomed, cantidadmed) {
       var openerWindow = window.opener;
       openerWindow.document.getElementById("Id_seguro_salud").value = idmed;
@@ -316,7 +321,7 @@ $result = $conn->query($query);
 </head>
 
 <body>
-  <h3 style="padding:0; margin:0;">Consulta de medicamentos</h3>
+ 
 
   <table id="tabla_medicamento" class="display" style="width:100%">
     <thead>
@@ -326,6 +331,7 @@ $result = $conn->query($query);
         <th>Description</th>
         <th>Formato</th>
         <th>Medida</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -339,6 +345,8 @@ $result = $conn->query($query);
           echo "<td>" . $row['descripcion'] . "</td>";
           echo "<td>" . $row['formato'] . "</td>";
           echo "<td>" . $row['Cantidad_total'] . "</td>";
+          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/medicamentos/editar.php?Id_medicamento=$row[Id_medicamento]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          //echo "<td style='width:24%'><a class='clasebotonVER' href=\"modulo/medicamentos/editar.php?Id_medicamento=$row[Id_medicamento]&pag=$pagina\">Modificar</a> </td>";
           echo "</tr>";
         }
       } else {

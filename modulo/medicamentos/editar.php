@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-
+error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ALL & ~E_WARNING);
 require_once "../../include/conec.php";
 /*require_once("../../mant_seguro.php");*/
 
@@ -69,6 +70,8 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
     <!-- Incluir Botones de impresión -->
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
     <style>
         .botones-container {
             display: flex;
@@ -108,56 +111,272 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             background: linear-gradient(to right, #63b8ff, #4a90e2);
         }
     </style>
-<?php
+    <style>
+        .caja {
+            border: 3px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            border-radius: 5px;
 
-include("menu_lateral_header.php");
 
-?>
+
+
+
+        }
+
+        .cajalegend {
+            border: 0px solid rgba(102, 153, 144, 0.0);
+            font-weight: bolder;
+            font-size: 16px;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 2px;
+            margin-top: -20px;
+            text-shadow: 2px 1px 2px #000000;
+
+
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80% 20%;
+            /* Cambiado a una relación de 60/40 */
+            grid-template-rows: repeat(3, 1fr);
+            grid-gap: 6px 10px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #444;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        input[type="text"]:read-only {
+            background-color: rgb(115, 140, 136);
+            color: #000;
+            font-weight: bold;
+            width: 65px;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+
+            font-size: 12px;
+            line-height: 14px;
+            margin: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+
+            width: 150px;
+            height: 40px;
+            color: #444;
+            margin-bottom: 0;
+            border: none;
+            border-bottom: 0.1vw solid #444;
+            outline: none;
+            border-radius: 10px;
+
+        }
+
+        button {
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 14px;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+
+            margin: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+            min-height: 40px;
+        }
+
+
+        .boton_bus {
+            border: none;
+            outline: none;
+            height: 4vw;
+            color: #fff;
+            font-size: 1.6vw;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            border-radius: 60px;
+            width: 60px;
+            margin-top: 2vw;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+
+
+        }
+
+        .boton_bus:active {
+            background-color: #5bc0f7;
+            scale: 1.5;
+            cursor: pointer;
+
+            transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+            /* Animaciones de 0.5 segundos */
+            box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+            /* Sombra inicial y sombra roja */
+            font-size: 25px;
+            color: white;
+            /* Cambiar el color del texto */
+            font-weight: bold;
+            /* Cambiar a negritas */
+            font-family: "Copperplate", Fantasy;
+        }
+
+        /* Estilos específicos para el modal personalizado */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .custom-modal-content {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+            background: linear-gradient(to right, #e4e5dc, #45bac9db);
+            padding: 20px;
+            border-radius: 20PX;
+        }
+
+        .custom-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .custom-close:hover,
+        .custom-close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos adicionales específicos para el iframe dentro del modal */
+        .custom-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <?php
+
+    include("../../menu_lateral_header.php");
+
+    ?>
 </head>
 <?php
 
-  include("menu_lateral.php");
+include("../../menu_lateral.php");
 
 ?>
 
+
 <body>
-    <div class="caja_popup2">
+    <div class="container">
         <form class="contenedor_popup" method="POST">
             <fieldset>
 
-                <legend>Modificar medicamentos</legend>
-                <label for="txtid">ID medicamentos</label>
-				<input type="text" name="txtid" id="txtid" value="<?php echo $medid; ?>" required readonly>
-				</br>
-				<label for="txtseg">Nombre Medicamento</label>
-				<input type="text"  autofocus name="txtmed" id="txtmed" value="<?php echo $mednom; ?>" required></br>
-				</br>
-                <label for="txtid">Descripcion</label>
-				<input type="text" name="txtdesc" id="txtdesc" value="<?php echo $meddesc; ?>" required>
-				</br>
-                <label for="txtid">Formato</label>
-				<input type="text" name="txtform" id="txtform" value="<?php echo $medform; ?>" required>
-				</br>
-                <label for="txtid">Cantidad total</label>
-				<input type="text" name="txtcant" id="txtcant" value="<?php echo $medcant; ?>" required>
-				</br>
-                <div class="botones-container">
-                    <?php echo "<a   href=\"../../mant_medicamentos.php?pag=$pagina\">  Cancelar  </a>"; ?>
+                <legend>Modificar Medicamento</legend>
+                <fieldset class="caja">
+                    <legend class="cajalegend">══ EDITAR ══</legend>
+                    <label for="txtid">ID medicamentos</label>
+                    <input type="text" name="txtid" id="txtid" value="<?php echo $medid; ?>" required readonly>
+                    </br>
+                    <label for="txtseg">Nombre Medicamento</label>
+                    <input type="text" autofocus name="txtmed" id="txtmed" value="<?php echo $mednom; ?>" required></br>
+                    </br>
+                    <label for="txtid">Descripcion</label>
+                    <input type="text" name="txtdesc" id="txtdesc" value="<?php echo $meddesc; ?>" required>
+                    </br>
+                    </br>
 
-                    <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este medicamento?');">
-                </div>
-                <div id="myModal" class="modal" style="width: 100%; height: 90%;">
-                    <div class="modal-content" style="width: 100%; height: 80%;">
-                        <span class="close">&times;</span>
-                        <iframe id="modal-iframe" src="../../consulta_medicamento.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                    <label for="txtform">Formato</label>
+                    <select name="txtform" id="txtform">
+                        <option <?php echo ($medform == 'Pastilla') ? 'selected' : ''; ?> value="Pastilla">Pastilla</option>
+                        <option <?php echo ($medform == 'Tableta') ? 'selected' : ''; ?> value="Tableta">Tableta</option>
+                        <option <?php echo ($medform == 'Comprimido') ? 'selected' : ''; ?> value="Comprimido">Comprimido</option>
+                        <option <?php echo ($medform == 'Cápsula') ? 'selected' : ''; ?> value="Cápsula">Cápsula</option>
+                        <option <?php echo ($medform == 'Jarabe') ? 'selected' : ''; ?> value="Jarabe">Jarabe</option>
+                        <option <?php echo ($medform == 'Suspensión Oral') ? 'selected' : ''; ?> value="Suspensión Oral">Suspensión Oral</option>
+                        <option <?php echo ($medform == 'Tableta Masticable') ? 'selected' : ''; ?> value="Tableta Masticable">Tableta Masticable</option>
+                        <option <?php echo ($medform == 'Supositorio') ? 'selected' : ''; ?> value="Supositorio">Supositorio</option>
+                        <option <?php echo ($medform == 'Crema') ? 'selected' : ''; ?> value="Crema">Crema</option>
+                        <option <?php echo ($medform == 'Pomada') ? 'selected' : ''; ?> value="Pomada">Pomada</option>
+                        <option <?php echo ($medform == 'Solución Inyectable') ? 'selected' : ''; ?> value="Solución Inyectable">Solución Inyectable</option>
+                        <option <?php echo ($medform == 'Polvo para Reconstitución') ? 'selected' : ''; ?> value="Polvo para Reconstitución">Polvo para Reconstitución</option>
+                        <option <?php echo ($medform == 'Gotas Oftálmicas') ? 'selected' : ''; ?> value="Gotas Oftálmicas">Gotas Oftálmicas</option>
+                        <option <?php echo ($medform == 'Inhalador') ? 'selected' : ''; ?> value="Inhalador">Inhalador</option>
+                        <option <?php echo ($medform == 'Óvulo') ? 'selected' : ''; ?> value="Óvulo">Óvulo</option>
+                        <option <?php echo ($medform == 'Gel') ? 'selected' : ''; ?> value="Gel">Gel</option>
+                        <option <?php echo ($medform == 'Parche Transdérmico') ? 'selected' : ''; ?> value="Parche Transdérmico">Parche Transdérmico</option>
+                        <option <?php echo ($medform == 'Aerosol') ? 'selected' : ''; ?> value="Aerosol">Aerosol</option>
+                        <option <?php echo ($medcant == 'Goma de Mascar Medicada') ? 'selected' : ''; ?> value="Goma de Mascar Medicada">Goma de Mascar Medicada</option>
+                        <option <?php echo ($medform == 'Inyección Intravenosa (IV)') ? 'selected' : ''; ?> value="Inyección Intravenosa (IV)">Inyección Intravenosa (IV)</option>
+                        <option <?php echo ($medform == 'Inyección Intramuscular (IM)') ? 'selected' : ''; ?> value="Inyección Intramuscular (IM)">Inyección Intramuscular (IM)</option>
+                        <option <?php echo ($medform == 'Inyección Subcutánea (SC o Sub-Q)') ? 'selected' : ''; ?> value="Inyección Subcutánea (SC o Sub-Q)">Inyección Subcutánea (SC o Sub-Q)</option>
+                        <option <?php echo ($medform == 'Jeringa Precargada') ? 'selected' : ''; ?> value="Jeringa Precargada">Jeringa Precargada</option>
+                        <option <?php echo ($medform== 'Loción') ? 'selected' : ''; ?> value="Loción">Loción</option>
+                        <option <?php echo ($medform == 'Colirio') ? 'selected' : ''; ?> value="Colirio">Colirio</option>
+                        <option <?php echo ($medform == 'Polvo') ? 'selected' : ''; ?> value="Polvo">Polvo</option>
+                        <option <?php echo ($medform == 'Tintura') ? 'selected' : ''; ?> value="Tintura">Tintura</option>
+                        <option <?php echo ($medform == 'Emulsión') ? 'selected' : ''; ?> value="Emulsión">Emulsión</option>
+                        <option <?php echo ($medform == 'Solución') ? 'selected' : ''; ?> value="Solución">Solución</option>
+                    </select>
+                    <!-- <input type="text" name="txtform" id="txtform" value="<?php echo $medform; ?>" required> -->
+                    </br>
+                    <label for="txtcant">Medida total</label>
+                    <input type="text" name="txtcant" id="txtcant" value="<?php echo $medcant; ?>" required>
+                    <label for="txtcant">Medida en (gramos, mililitros, onzas, etc.)</label>
+                    </br>
+                    <div class="botones-container">
+                        <?php echo "<a   href=\"../../mant_medicamentos.php?pag=$pagina\">  Cancelar  </a>"; ?>
+
+                        <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este medicamento?');">
                     </div>
-                </div>
+                </fieldset>
+                <br>
+                <br>
+
+                <iframe id="modal-iframe" src="../../consulta_medicamento.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+
             </fieldset>
 
 
         </form>
     </div>
-    
+
 </body>
 
 </html>

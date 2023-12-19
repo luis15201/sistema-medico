@@ -313,7 +313,7 @@ include("../../menu_lateral.php");
                     <input type="text" name="txtseg" id="txtseg" value="<?php echo $segnom; ?>" required></br>
                     </br>
                     <div class="botones-container">
-                        <?php /*echo "<a   href=\"../../mant_seguro.php?pag=$pagina\">  Cancelar  </a>";*/ ?>
+                        <?php /*echo "<a   href=\"../../mant_seguro.php?pag=$pagina\">  Cancelar  </a>";.*/ ?>
 
                         <!-- <input type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este seguro?');"> -->
 

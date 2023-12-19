@@ -348,7 +348,7 @@ function in_iframe() {
           echo "<td>" . $row["rol"] . "</td>";
           /*echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/user/editar.php?id_usuario=$row[id_usuario]&pag=$pagina\"><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";*/
 
-          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/user/editar.php?id_usuario=$row[id_usuario]&pag=$pagina\" " . (in_iframe() ? 'target="_blank"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/user/editar.php?id_usuario=$row[id_usuario]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
 
 
           echo "</tr>";

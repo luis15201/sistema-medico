@@ -18,6 +18,41 @@ if ($conn->connect_error) {
 $query = "SELECT * FROM medicamento";
 $result = $conn->query($query);
 
+// //<!-- <table id="ejemplo" class="display nowrap mi-tabla" style="width:90%">
+//                 <thead>
+//                     <tr>
+//                         <th>ID MEDICAMENTOS</th>
+//                         <th>Nombre Medicamento</th>
+//                         <th>Description</th>
+//                         <th>Formato</th>
+//                         <th>Cantidad Total</th>
+//                         <th>ACCIONES</th>
+//                     </tr>
+//                 </thead>
+//                 <? php/*
+
+//     if ($result->num_rows > 0) {
+//         while ($row = $result->fetch_assoc()) {
+
+//             echo "<tr>";
+//             echo "<td>" . $row['Id_medicamento'] . "</td>";
+//             echo "<td>" . $row['nombre_medicamento'] . "</td>";
+//             echo "<td>" . $row['descripcion'] . "</td>";
+//             echo "<td>" . $row['formato'] . "</td>";
+//             echo "<td>" . $row['Cantidad_total'] . "</td>";
+//             echo "<td style='width:24%'><a class='clasebotonVER' href=\"modulo/medicamentos/editar.php?Id_medicamento=$row[Id_medicamento]&pag=$pagina\">Modificar</a> </td>";
+//         }
+//     } else {
+//         echo "<tr><td colspan='2'>No se encontraron resultados.</td></tr>";
+//     }
+
+//    /* 
+// </table>
+
+
+
+
+
 ?>
 
 
@@ -29,7 +64,8 @@ $result = $conn->query($query);
     <title>Sis_Pediátrico</title>
     <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
     <!--link rel="stylesheet" type="text/css" href="css/estilo-paciente.css"-->
     <link rel="icon" href="logo.png">
     <!--link rel="stylesheet" type="text/css" href="css/buttons.dataTables.min.css"-->
@@ -73,44 +109,174 @@ $result = $conn->query($query);
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
     <!-- Incluir Botones de impresión -->
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
-        .claseboton {
+        .caja {
+            border: 3px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .cajalegend {
+            border: 0px solid rgba(102, 153, 144, 0.0);
+            font-weight: bolder;
+            font-size: 16px;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 2px;
+            margin-top: -20px;
+            text-shadow: 2px 1px 2px #000000;
+
+
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80%;
+            grid-template-rows: repeat(3, 1fr);
+            grid-gap: 6px 10px;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        label {
+            font-size: 14px;
+            color: #444;
+            margin: 8px;
+            font-weight: bold;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+
+            font-size: 12px;
+            line-height: 14px;
+            margin: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+
+            width: 150px;
+            height: 40px;
+            color: #444;
+            margin-bottom: 6%;
+            border: none;
+            border-bottom: 0.1vw solid #444;
+            outline: none;
+            border-radius: 10px;
+
+        }
+
+        button {
             border: none;
             outline: none;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
             color: #fff;
-            font-size: 16px;
-            padding: 7px;
-
-        }
-
-        .claseboton:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        .botones-container {
-            margin: 2px;
-            padding: 2px;
-            box-sizing: unset;
-            width: 100%;
-            float: left;
-            text-align: center;
-            /*justify-content: center;*/
-        }
-
-        fieldset {
-            border: 1px solid #ddd;
+            font-size: 1.6vw;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            padding: 10px;
             border-radius: 2vw;
-            background: linear-gradient(to right, #e4e5dc, #45bac9db);
-            padding: 1vw;
-            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
-            margin-bottom: 2vw;
+
+            margin: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+            min-height: 40px;
         }
 
+
+        .boton_bus {
+            border: none;
+            outline: none;
+            height: 4vw;
+            color: #fff;
+            font-size: 1.6vw;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            border-radius: 60px;
+            width: 60px;
+            margin-top: 2vw;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+
+
+        }
+
+        .boton_bus:active {
+            background-color: #5bc0f7;
+            scale: 1.5;
+            cursor: pointer;
+
+            transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+            /* Animaciones de 0.5 segundos */
+            box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+            /* Sombra inicial y sombra roja */
+            font-size: 25px;
+            color: white;
+            /* Cambiar el color del texto */
+            font-weight: bold;
+            /* Cambiar a negritas */
+            font-family: "Copperplate", Fantasy;
+        }
+
+        /* Estilos específicos para el modal personalizado */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .custom-modal-content {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+            background: linear-gradient(to right, #e4e5dc, #45bac9db);
+            padding: 20px;
+            border-radius: 20PX;
+        }
+
+        .custom-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .custom-close:hover,
+        .custom-close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos adicionales específicos para el iframe dentro del modal */
+        .custom-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
         .clasebotonVER {
             border: none;
@@ -123,6 +289,7 @@ $result = $conn->query($query);
             color: #080808;
             font-size: 16px;
             padding: 7px;
+            margin: 5px;
 
         }
 
@@ -131,123 +298,17 @@ $result = $conn->query($query);
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .dt-button.dtbotopersonal {
-            border: none;
-            outline: none;
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            color: #fff;
-            font-size: 16px;
-            padding: 7px;
+        .dataTables_wrapper {
+            position: relative;
+            clear: both;
         }
 
-        .dt-button.dtbotopersonal:hover {
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-        }
-
-        fieldset fieldset legend {
-            font-size: 20px;
-            text-transform: uppercase;
-            padding-left: 10%;
-            padding-right: 10%;
-            background-color: transparent;
-        }
-
-        legend {
-            font-weight: bold;
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 1vw;
-            background: linear-gradient(to right, #e4e5dc, #45bac9db);
-            border: solid 1px #45bac9db;
-            border-radius: 10px;
-        }
-
-        input[type="search"] {
-            /* Tus estilos personalizados aquí */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 5px;
-            background-color: #f2f2f2;
-            color: #333;
-            width: 200px;
-            /* Ancho personalizado */
-        }
-
-        .dataTables_filter input {
-            color: white;
-            background-color: red;
-        }
-
-        .dataTables_wrapper .dataTables_filter input {
-            width: 170px;
-            padding: 10px;
-            font-size: 1vw;
-            color: #444;
-            margin-bottom: 2vw;
-            border: none;
-            border-bottom: 0.1vw solid #444;
-            outline: none;
-            border-radius: 15px;
-            margin: 10px;
-            background-color: white;
-
-        }
-
-        .dataTables_wrapper .dataTables_length,
-        div.dataTables_wrapper div.dataTables_filter label,
-        div.dataTables_wrapper div.dataTables_info {
-            color: black;
-            font-weight: bold;
-
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
-            /*padding: 0.5em 1em;*/
-            margin-left: 2px;
-            text-align: center;
-            /*text-decoration: none !important;*/
-            cursor: pointer;
-            color: #fff;
-            border: 1px solid transparent;
-
-
-            background: linear-gradient(to right, #4a90e2, #63b8ff);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            font-size: 16px;
-            padding: 7px;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
-
-            margin-left: 2px;
-            text-align: center;
-
-            cursor: pointer;
-            color: #fff;
-            border: 1px solid transparent;
-
-
-            background: linear-gradient(to right, #63b8ff, #4a90e2);
-            border-radius: 7px;
-            width: auto;
-            text-decoration: none;
-            height: 40px;
-            font-size: 16px;
-            padding: 7px;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        .dataTables_wrapper:after {
+            visibility: hidden;
+            display: block;
+            content: "";
+            clear: both;
+            height: 0;
         }
     </style>
     <script>
@@ -319,115 +380,56 @@ $result = $conn->query($query);
             });
         });
     </script>
-<?php
+    <?php
 
-include("menu_lateral_header.php");
+    include("menu_lateral_header.php");
 
-?>
+    ?>
 </head>
 <?php
 
-  include("menu_lateral.php");
+include("menu_lateral.php");
 
-  ?>
+?>
+
 <body>
-    <div>
-        <?php
+    <!-- <div> -->
 
-        /*$filasmax = 5;
+    <div class="container">
 
-        if (isset($_GET['pag'])) {
-            $pagina = $_GET['pag'];
-        } else {
-            $pagina = 1;
-        }
+        <form method="POST">
 
-        if (isset($_POST['btnbuscar'])) {
-            $buscar = $_POST['txtbuscar'];
+            <fieldset style=" height:750px;">
 
-            $sqlseg = mysqli_query($conn, "SELECT * FROM seguro where Id_seguro_salud = '" . $buscar . "'");
-        } else {
-            $sqlseg = mysqli_query($conn, "SELECT * FROM seguro ORDER BY Id_seguro_salud ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
-        }
+                <legend>Registrar Medicamentos</legend>
+                <div class="botones-container">
+                    <a href="modulo/medicamentos/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;"> <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>Agregar
+                    </a>
+                </div>
+                <div>
+                    <iframe id="modal-iframe" src="consulta_medicamento2.php" frameborder="0" style="width: 100%; height: 100%;margin:0%; padding:0%;"></iframe>
 
-        $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_seguros FROM seguro");
-
-        $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_seguros'];
-*/
-        ?>
-        <div class="cont">
-
-            <form method="POST">
-
-                <fieldset>
-
-                    <legend>Registrar Medicamentos</legend>
-                    <div class="botones-container">
-                        <a href="menu-mant.php" class="claseboton">← Atrás</a>
+                    <div class="botones-container2" style=" margin-top:-80px; padding:0%">
+                        <!-- <a href="menu-mant.php" class="claseboton">← Atrás</a>
                         <a href="index.php" class="claseboton">Login</a>
-                        <a href="menu.php" class="claseboton">Menú Principal</a>
-                       
+                        <a href="menu.php" class="claseboton">Menú Principal</a>-->
+                        <a href="menu.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                            <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">menu</i> Menú Principal
+                        </a>
+                        <a href="index.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                            <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">login</i> Login
+                        </a>
+                        <a href="menu-mant.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                            <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">arrow_back</i> Atrás
+                        </a>
                     </div>
-
-
-                    <?php echo "<a  class='claseboton' href=\"modulo/medicamentos/agregar.php?pag=$pagina\"> <b style='color:green;font: size 15px;'> + </b> Registrar medicamento</a></br> </br>"; ?>
-                    <input type="hidden" value="Buscar" name="btnbuscar">
-
-            </form>
-
-
-
-            <table id="ejemplo" class="display nowrap mi-tabla" style="width:90%">
-                <thead>
-                    <tr>
-                        <th>ID MEDICAMENTOS</th>
-                        <th>Nombre Medicamento</th>
-                        <th>Description</th>
-                        <th>Formato</th>
-                        <th>Cantidad Total</th>
-                        <th>ACCIONES</th>
-                    </tr>
-                </thead>
-                <?php
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-
-                        echo "<tr>";
-                        echo "<td>" . $row['Id_medicamento'] . "</td>";
-                        echo "<td>" . $row['nombre_medicamento'] . "</td>";
-                        echo "<td>" . $row['descripcion'] . "</td>";
-                        echo "<td>" . $row['formato'] . "</td>";
-                        echo "<td>" . $row['Cantidad_total'] . "</td>";
-                        echo "<td style='width:24%'>
-			
-			<a class='clasebotonVER' href=\"modulo/medicamentos/editar.php?Id_medicamento=$row[Id_medicamento]&pag=$pagina\">Modificar</a> 
-			
-			</td>";
-                    }
-                } else {
-                    echo "<tr><td colspan='2'>No se encontraron resultados.</td></tr>";
-                }
-
-                ?>
-            </table>
-
-            <div style='text-align:right'>
-                <br>
-                <?php /*echo "<p style='margin-left:-10px'>Total de seguros: " . $maxusutabla."</p>";*/ ?>
-            </div>
-        </div>
-        <div style='text-align:right'>
-            <br>
-        </div>
-        <div style="text-align:center">
-
-        </div>
-        </fieldset>
-
+                </div>
+            </fieldset>
         </form>
     </div>
-    </div>
+
+    <!-- </div> -->
+
 </body>
 
 </html>
