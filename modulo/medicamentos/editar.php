@@ -290,6 +290,26 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             border: none;
         }
     </style>
+    <script>
+
+function validarFormulario() {
+				// Obtener referencias a los campos del formulario
+				var txtmed = document.getElementById('txtseg');
+				var txtdesc = document.getElementById('txtdesc');
+				var txtform = document.getElementById('txtform');
+				var txtcant = document.getElementById('txtcant');
+
+				// Validar que los campos no estén vacíos
+				if (txtmed.value === '' || txtdesc.value === '' || txtform.value === '' || txtcant.value === '') {
+					alert('Todos los campos son obligatorios. Por favor, completa todos los campos.');
+					return false; // Impide el envío del formulario
+				}
+
+				// Agrega otras validaciones según sea necesario
+
+				return true; // Permite el envío del formulario si todas las validaciones pasan
+			}
+    </script>
     <?php
 
     include("../../menu_lateral_header.php");
@@ -317,8 +337,10 @@ include("../../menu_lateral.php");
                     <label for="txtseg">Nombre Medicamento</label>
                     <input type="text" autofocus name="txtmed" id="txtmed" value="<?php echo $mednom; ?>" required></br>
                     </br>
-                    <label for="txtid">Descripcion</label>
-                    <input type="text" name="txtdesc" id="txtdesc" value="<?php echo $meddesc; ?>" required>
+                    <label for="txtdesc">Descripcion</label>
+                    <textarea name="txtdesc" id="txtdesc" required><?php echo $meddesc; ?></textarea>
+                    <label for="txtdesc">(componente o molécula/otros datos sobre producto)</label>
+                    <!-- <input type="text" name="txtdesc" id="txtdesc" value="<?php //echo $meddesc; ?>" required> -->
                     </br>
                     </br>
 

@@ -344,7 +344,8 @@ include("../../menu_lateral.php");
 					</br>
 					
 					<label for="txtdesc">Descripcion</label>
-					<input type="text" name="txtdesc" id="txtdesc" value="<?php echo $meddesc; ?>" required>
+					<textarea name="txtdesc" id="txtdesc" required><?php echo $meddesc; ?></textarea>
+					<!-- <input type="text" name="txtdesc" id="txtdesc" value="<?php echo $meddesc; ?>" required> -->
 					<label for="txtdesc">(componente o molécula/otros datos sobre producto)</label>
 				</br>
 				</br>
