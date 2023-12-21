@@ -448,6 +448,13 @@ mysqli_close($conn);
 		fieldset {
 			background: linear-gradient(to right, #e4e5dc, #62c4f9);
 		}
+
+		input[type="text"]:read-only {
+			background-color: rgb(115, 140, 136);
+			color: #000;
+			font-weight: bold;
+			width: 65px;
+		}
 	</style>
 	<script>
 		document.getElementById('btnguardar').addEventListener('click', function() {
@@ -785,7 +792,7 @@ mysqli_close($conn);
 				</button>
 				<div>
 					<label for="Nombre_padecimiento">Nombre del padecimiento:</label>
-					<label id="nombre_padecimiento"></label>
+					<label id="nombre_padecimiento" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 				</div>
 				<div id="ModalHistoriaClinica" class="custom-modal">
 					<div class="custom-modal-content">
@@ -895,7 +902,7 @@ mysqli_close($conn);
 				</div>
 				<div>
 					<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
-					<label id="nombre_vacuna"></label>
+					<label id="nombre_vacuna" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 				</div>
 				<div id="Modalvacuna" class="custom-modal">
 					<div class="custom-modal-content">

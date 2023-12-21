@@ -1,5 +1,5 @@
 <!-- ▓▓▓▓▓▓▓▓▓▓╬══  MENU LATERAL CÓDIGO ══╬▓▓▓▓▓▓▓▓▓▓ -->
-<a class="btn btn-primary btn-offcanvas" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
+<a class="btn btn-primary btn-offcanvas boton_bus" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
     <i class="material-icons">menu</i>
 </a>
 

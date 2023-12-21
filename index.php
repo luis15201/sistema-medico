@@ -45,11 +45,81 @@ $conn->close();
     <title>Login Sistema de Pediatría</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
+    <style>body {
+			background: linear-gradient(to right, #E8A9F7, #e4e5dc);
+		}
+
+		fieldset {
+			background: linear-gradient(to right, #e4e5dc, #62c4f9);
+		}
+
+        /* Estilos para las tarjetas (card) */
+.card {
+	float: left;
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
+	background: linear-gradient(to right, #e4e5dc, #62c4f9);
+	text-align: center;
+    margin-bottom: 30px;
+    color: #444;
+    margin: 10px;
+    transition: transform 0.3s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card img {
+      width: 50px;
+      /* Ajusta el tamaño del icono según sea necesario */
+      height: 50px;
+      margin-top: 10px;
+      /* Espaciado entre el icono y el texto */
+    }
+
+    /*.card:hover {
+    transform: scale(1.1);
+}*/
+
+    .card-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .card-description {
+      display: none;
+    }
+
+    .card:hover .card-description {
+      display: block;
+    }
+
+    .card-container {
+ 
+ display: flex;
+ justify-content: space-around; /* Ajusta según tus necesidades de espaciado */
+ /*display: flex;
+ flex-direction: column;*/
+ display: grid;
+   grid-template-columns: repeat(3, 30%);
+   grid-template-rows: repeat(3, 1fr);
+   /* "1fr" representa una fracción del espacio disponible */
+   grid-gap: 6px 10px;
+ width: 60%;
+ margin:2% 20% 0% 20%;
+}
+</style>
 </head>
 <body>
 <div class="message <?php echo $messageColor; ?>"><?php echo $message; ?></div>
-    <div class="login-box">
-        <h2>Login Sistema de Pediatría</h2>
+    <div class="login-box" style="background: linear-gradient(to right, #e4e5dc, #62c4f9);" >
+    <img src="IMAGENES/hospital-3-30.png" class="card-icon" alt="Mantenimientos" style="margin-right:40%;margin-left:40%"> 
+    <h2>Login Sistema de Pediatría</h2>
         <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
             <div class="user-box">
                 <input type="text" name="username" required="">

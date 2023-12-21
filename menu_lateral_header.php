@@ -8,7 +8,42 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
+.boton_bus {
+			border: none;
+			outline: none;
+			height: 4vw;
+			color: #fff;
+			font-size: 1.6vw;
+			background: linear-gradient(to right, #4a90e2, #63b8ff);
+			cursor: pointer;
+			border-radius: 60px;
+			width: 60px;
+			margin-top: 2vw;
+			text-decoration: none;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: auto;
 
+
+		}
+
+		.boton_bus:active {
+			background-color: #5bc0f7;
+			scale: 1.5;
+			cursor: pointer;
+
+			transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+			/* Animaciones de 0.5 segundos */
+			box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+			/* Sombra inicial y sombra roja */
+			font-size: 25px;
+			color: white;
+			/* Cambiar el color del texto */
+			font-weight: bold;
+			/* Cambiar a negritas */
+			font-family: "Copperplate", Fantasy;
+		}
     /* Estilo para el botón offcanvas */
 .btn-offcanvas {
     /*float: left;*/
