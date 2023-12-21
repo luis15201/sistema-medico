@@ -1,125 +1,325 @@
 <html>
 
 <head>
-<title>Sis_Pediátrico</title>
+    <title>Sis_Pediátrico</title>
     <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .caja {
+            border: 3px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .cajalegend {
+            border: 0px solid rgba(102, 153, 144, 0.0);
+            font-weight: bolder;
+            font-size: 16px;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 2px;
+            margin-top: -20px;
+            text-shadow: 2px 1px 2px #000000;
+
+
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            /* Cambiado a una relación de 60/40 */
+            grid-template-rows: repeat(3, 1fr);
+            grid-gap: 6px 10px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #444;
+            margin: 8px;
+            font-weight: bold;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+
+            font-size: 12px;
+            line-height: 14px;
+            margin: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+
+            width: 150px;
+            height: 40px;
+            color: #444;
+            margin-bottom: 6%;
+            border: none;
+            border-bottom: 0.1vw solid #444;
+            outline: none;
+            border-radius: 10px;
+
+        }
+
+        button {
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 1.6vw;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 2vw;
+
+            margin: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+            min-height: 40px;
+        }
+
+
+        .boton_bus {
+            border: none;
+            outline: none;
+            height: 4vw;
+            color: #fff;
+            font-size: 1.6vw;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+            cursor: pointer;
+            border-radius: 60px;
+            width: 60px;
+            margin-top: 2vw;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: auto;
+
+
+        }
+
+        .boton_bus:active {
+            background-color: #5bc0f7;
+            scale: 1.5;
+            cursor: pointer;
+
+            transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, font-weight 0.8s ease;
+            /* Animaciones de 0.5 segundos */
+            box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+            /* Sombra inicial y sombra roja */
+            font-size: 25px;
+            color: white;
+            /* Cambiar el color del texto */
+            font-weight: bold;
+            /* Cambiar a negritas */
+            font-family: "Copperplate", Fantasy;
+        }
+
+        /* Estilos específicos para el modal personalizado */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .custom-modal-content {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+            background: linear-gradient(to right, #e4e5dc, #45bac9db);
+            padding: 20px;
+            border-radius: 20px;
+
+            /* Agregado para permitir desplazamiento si el contenido es demasiado grande */
+            box-sizing: border-box;
+            /* Asegura que el padding no afecte el tamaño total */
+            font-size: 12px;
+            /* Tamaño de fuente relativo al tamaño del contenedor */
+            max-width: 100%;
+            /* Evitar que el texto se salga del contenedor */
+        }
+
+        .custom-modal-content p,
+        table,
+        th,
+        td,
+        tr {
+            font-size: 1em;
+            /* Tamaño de fuente relativo al tamaño del contenedor */
+            max-width: 100%;
+            /* Evitar que el texto se salga del contenedor */
+        }
+
+        .custom-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .custom-close:hover,
+        .custom-close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos adicionales específicos para el iframe dentro del modal */
+        .custom-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        body{
+	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
+}
+
+fieldset {	
+	background: linear-gradient(to right,#e4e5dc ,#62c4f9 );	
+}
+    </style>
     <?php
 
-include("menu_lateral_header.php");
+    include("menu_lateral_header.php");
 
-?>
+    ?>
+
 </head>
 <?php
 
-  include("menu_lateral.php");
+include("menu_lateral.php");
 
-  ?>
+?>
 
 <body>
 
     <form>
         <div class="container">
-            <fieldset>
+            <fieldset style=" height:800px">
                 <legend>Padecimientos del Paciente</legend>
-                <div>
-                    <label for="id_paciente">ID PACIENTE:</label>
-                    <input type="text" id="id_paciente" name="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()" required>
-                    <button id="buscarpaciente" class="busquedaboton" title="Buscar pacientes registrados">
+                <fieldset class="caja">
+                    <legend class="cajalegend">══ Datos del Paciente ══</legend>
+                    <div>
+                        <label for="id_paciente">ID PACIENTE:</label>
+                        <input type="text" id="id_paciente" name="id_paciente" style="width: 45px;" onblur="cargarHistorialVacunas()" required>
+                        <button id="buscarpaciente" class="boton_bus" title="Buscar pacientes registrados">
+                            <i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+                        </button>
+                    </div>
+
+
+                    <!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
+                    <script>
+                        $("#id_paciente").on("input", function() {
+                            var idPaciente = $(this).val();
+                            // Realizar la solicitud AJAX para obtener los datos del paciente
+                            $.ajax({
+                                url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
+                                type: 'POST',
+                                data: {
+                                    id_paciente: idPaciente
+                                },
+                                dataType: 'json',
+                                success: function(data) {
+                                    $("#nombre_paciente").text(data.nombre || '');
+                                    $("#apellido_paciente").text(data.apellido || '');
+                                },
+                                error: function() {
+                                    alert('Hubo un error al obtener los datos del paciente.');
+                                }
+                            });
+                        });
+                    </script>
+                    <div>
+                        <label for="Nombre_paciente">Nombre del paciente:</label>
+                        <label id="nombre_paciente" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+                    </div>
+                    <div>
+                        <label for="Apellido_paciente">Apellido del paciente:</label>
+                        <label id="apellido_paciente" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+                    </div>
+
+                    <div id="Modalpaciente" class="custom-modal">
+                        <div class="custom-modal-content">
+                            <span class="close">&times;</span>
+                            <iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;font-size:12px;"></iframe>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
+                <!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
+                <fieldset class="caja" style=" border-radius:25px;">
+                    <legend class="cajalegend">══ Datos |PADECIMIENTO | ENFERMEDAD | CONDICIÓN MEDICA ══</legend>
+                    <!-- <hr style="margin-top:35px;padding:5px; background-Color:rgba(29,167,226,0.39)"> -->
+                    <label for="id_padecimiento">ID Padecimiento:</label>
+                    <input type="text" id="id_padecimiento" style="width:110px" required>
+                    <button id="busquedaHC" class="boton_bus" title="Buscar Padecimientos/enfermedades registrados/as">
                         <i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
                     </button>
-                </div>
-
-
-                <!-- Agregar un event listener para el evento input      //oninput="cargarDatosPaciente()"-->
-                <script>
-                    $("#id_paciente").on("input", function() {
-                        var idPaciente = $(this).val();
-                        // Realizar la solicitud AJAX para obtener los datos del paciente
-                        $.ajax({
-                            url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
-                            type: 'POST',
-                            data: {
-                                id_paciente: idPaciente
-                            },
-                            dataType: 'json',
-                            success: function(data) {
-                                $("#nombre_paciente").text(data.nombre || '');
-                                $("#apellido_paciente").text(data.apellido || '');
-                            },
-                            error: function() {
-                                alert('Hubo un error al obtener los datos del paciente.');
-                            }
-                        });
-                    });
-                </script>
-                <div>
-                    <label for="Nombre_paciente">Nombre del paciente:</label>
-                    <label id="nombre_paciente"></label>
-                </div>
-                <div>
-                    <label for="Apellido_paciente">Apellido del paciente:</label>
-                    <label id="apellido_paciente"></label>
-                </div>
-                <div id="Modalpaciente" class="modal" style="box-shadow: 10px 5px 5px black;margin:20px;">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; "></iframe>
+                    <div>
+                        <label for="Nombre_padecimiento">Nombre del padecimiento:</label>
+                        <label id="nombre_padecimiento" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
                     </div>
-                </div>
-
-
-                <!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
-                <!--▓▓▓▓▓▓  (┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)(┬┬﹏┬┬)  ▓▓▓▓▓▓ -->
-
-                <hr style="margin-top:35px;padding:5px; background-Color:rgba(29,167,226,0.39)">
-                <label for="id_padecimiento">ID Padecimiento:</label>
-                <input type="text" id="id_padecimiento" style="width:110px" required>
-                <button id="busquedaHC" class="busquedaboton" title="Buscar Padecimientos/enfermedades registrados/as">
-                    <i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-                </button>
-                <div>
-                    <label for="Nombre_padecimiento">Nombre del padecimiento:</label>
-                    <label id="nombre_padecimiento"></label>
-                </div>
-                <div id="ModalHistoriaClinica" class="modal" style="width: 100%; ">
-                    <div class="modal-content" style="width: 100%; ">
-                        <span class="close">&times;</span>
-                        <iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; "></iframe>
+                    <div id="ModalHistoriaClinica" class="custom-modal">
+                        <div class="custom-modal-content">
+                            <span class="close">&times;</span>
+                            <iframe id="modal-iframe" src="consulta_padecimientos.php" frameborder="0" style="width: 100%; "></iframe>
+                        </div>
                     </div>
-                </div>
 
 
 
 
-                <label for="notas">Notas:</label>
-                <input type="text" id="notas">
-                <br>
-                <label for="desde_cuando">Desde cuándo:</label>
-                <input type="date" id="desde_cuando" onchange="calculateYears()"><br>
-                <span id="yearsSince"></span>
-                <button id="btnAgregarPadecimiento" class="boton">
-                    <i class="material-icons" style="font-size:32px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
-                </button>
-                <!-- Botones adicionales para Modificar y Cancelar -->
-                <button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
-                <button id="btnCancelarEdicion" style="display: none;">Cancelar</button>
-                <table id="padecimientosTabla" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th>ID Padecimiento</th>
-                            <th>Nombre del Padecimiento</th>
-                            <th>Notas</th>
-                            <th>Desde cuándo</th>
-                            <th>Modificar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
+                    <label for="notas">Notas:</label>
+                    <input type="text" id="notas">
+                    <br>
+                    <label for="desde_cuando">Desde cuándo:</label>
+                    <input type="date" id="desde_cuando" onchange="calculateYears()"><br>
+                    <span id="yearsSince" style=" padding:8px; border-radius:10px;"></span>
+                    <button id="btnAgregarPadecimiento" class="btn btn-primary" style=" width:115px">
+                        <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
+                    </button>
+                    <!-- Botones adicionales para Modificar y Cancelar -->
+                    <button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
+                    <button id="btnCancelarEdicion" style="display: none;">Cancelar</button>
+                    <table id="padecimientosTabla" style=" font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <th>ID Padecimiento</th>
+                                <th>Nombre del Padecimiento</th>
+                                <th>Notas</th>
+                                <th>Desde cuándo</th>
+                                <th>Modificar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </fieldset>
                 <script>
                     function buscarNombrePadecimiento() {
                         var idPadecimiento = $("#id_padecimiento").val();
@@ -165,7 +365,7 @@ include("menu_lateral_header.php");
 
             <fieldset>
                 <legend>Historico-Padecimientos</legend>
-                <div id="historial_padecimientos"></div>
+                <div id="historial_padecimientos" style="font-size:14px;"></div>
             </fieldset>
 
             <!--▓▓▓▓╰(*°▽°*)╯╰(*°▽°*)╯(^///^)╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯▓▓▓▓▓▓▓▓ -->

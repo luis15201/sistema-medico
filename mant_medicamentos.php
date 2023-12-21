@@ -310,6 +310,13 @@ $result = $conn->query($query);
             clear: both;
             height: 0;
         }
+        body{
+	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
+}
+
+fieldset {	
+	background: linear-gradient(to right,#e4e5dc ,#62c4f9 );	
+}
     </style>
     <script>
         /*$(document).ready(function() {

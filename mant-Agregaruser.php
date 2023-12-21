@@ -292,6 +292,13 @@ $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_usuarios'];
             margin-bottom: 2vw;
             height: 500px;
         }
+        body{
+	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
+}
+
+fieldset {	
+	background: linear-gradient(to right,#e4e5dc ,#62c4f9 );	
+}
     </style>
     <?php
 

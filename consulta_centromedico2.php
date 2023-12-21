@@ -261,9 +261,10 @@ function in_iframe() {
           color:#f0f0f0;
           text-shadow:2px 2px 4px #000000;
           font-weight: bold;
-            border: none;
+            border: 1px solid #e4e5dc;
             outline: none;
-            background: linear-gradient(to right, #05c20e, #84e788);
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+           
             border-radius: 7px;
             width: auto;
             text-decoration: none;

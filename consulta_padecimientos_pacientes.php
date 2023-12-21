@@ -76,12 +76,13 @@ $result = $conn->query($query);
 </head>
 
 <body>
-    <h3 style="padding: 0; margin: 0;">Consulta de Padecimientos del Paciente</h3>
-
+    <h5 style="padding: 0; margin: 0; text-align:center;">Consulta de Padecimientos del Paciente</h5>
+<br>
+<br>
     <?php
     if ($result->num_rows > 0) {
     ?>
-        <table id="tabla_padecimientos" class="display" style="width: 100%">
+        <table id="tabla_padecimientos" class="display" style="width: 100%;font-size:12px;">
             <thead>
                 <tr>
                     <th>ID Padecimiento</th>

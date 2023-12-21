@@ -69,21 +69,7 @@ function in_iframe() {
       cursor: pointer;
     }
 
-    #tabla_medicamento tbody tr:active {
-     /* background-color: #5bc0f7;
-      cursor: pointer;
-      border: 4px solid red;
-      transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease;
-      /* Animaciones de 0.5 segundos */
-      /*box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
-      /* Sombra inicial y sombra roja */
-      /*font-size: 25px;
-      color: white;
-      /* Cambiar el color del texto */
-     /* font-weight: bold;
-      /* Cambiar a negritas */
-      /*font-family: "Copperplate", Fantasy;*/
-    }
+   
   </style>
   <style>
         .caja {
@@ -257,9 +243,10 @@ function in_iframe() {
           color:#f0f0f0;
           text-shadow:2px 2px 4px #000000;
           font-weight: bold;
-            border: none;
+            border: 1px solid #e4e5dc;
             outline: none;
-            background: linear-gradient(to right, #05c20e, #84e788);
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+           
             border-radius: 7px;
             width: auto;
             text-decoration: none;

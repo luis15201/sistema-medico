@@ -27,7 +27,7 @@
         text-shadow: 2px 1px 2px #000000;
     }
     .offcanvas {
-        background: linear-gradient(to right, #e4e5dc, #45bac9db);
+        background: linear-gradient(to right, #E8A9F7,#e4e5dc );
         border-radius: 2%;
         
     }
@@ -36,7 +36,9 @@
     .list-group-mine .list-group-item {
         color: white;
         text-shadow: 2px 1px 2px #000000;
-        background: linear-gradient(to right,  #45bac9db, #e4e5dc);
+        background: linear-gradient(to right,#e4e5dc ,#62c4f9 ); 
+       /* background: linear-gradient(to right,  #45bac9db, #e4e5dc);*/
+       border:1px solid gray;
     }
 
     .list-group-item.active {

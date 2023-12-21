@@ -49,7 +49,7 @@ mysqli_close($conn);
 <head>
 	<meta charset="UTF-8">
 	<title>Sis_Pediátrico</title>
-    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
+	<link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
@@ -128,7 +128,7 @@ mysqli_close($conn);
 		select,
 		textarea {
 			margin: 0;
-			
+
 			font-size: 12px;
 			line-height: 14px;
 			margin: 5%;
@@ -139,9 +139,9 @@ mysqli_close($conn);
 		input[type="text"],
 		input[type="date"],
 		select {
-			
-			
-			
+
+
+
 			color: #444;
 			margin-bottom: 6%;
 			border: none;
@@ -160,7 +160,7 @@ mysqli_close($conn);
 			cursor: pointer;
 			padding: 10px;
 			border-radius: 2vw;
-			
+
 			margin: 10px;
 			white-space: nowrap;
 			overflow: hidden;
@@ -337,6 +337,7 @@ mysqli_close($conn);
 			width: 100%;
 			height: 100%;
 			overflow: auto;
+			overflow: auto;
 			background-color: rgba(0, 0, 0, 0.7);
 		}
 
@@ -346,7 +347,26 @@ mysqli_close($conn);
 			margin: auto;
 			background: linear-gradient(to right, #e4e5dc, #45bac9db);
 			padding: 20px;
-			border-radius: 20PX;
+			border-radius: 20px;
+
+			/* Agregado para permitir desplazamiento si el contenido es demasiado grande */
+			box-sizing: border-box;
+			/* Asegura que el padding no afecte el tamaño total */
+			font-size: 12px;
+			/* Tamaño de fuente relativo al tamaño del contenedor */
+			max-width: 100%;
+			/* Evitar que el texto se salga del contenedor */
+		}
+
+		.custom-modal-content p,
+		table,
+		th,
+		td,
+		tr {
+			font-size: 1em;
+			/* Tamaño de fuente relativo al tamaño del contenedor */
+			max-width: 100%;
+			/* Evitar que el texto se salga del contenedor */
 		}
 
 		.custom-close {
@@ -393,13 +413,16 @@ mysqli_close($conn);
 			/* Hace que la tabla ocupe el 100% del contenedor */
 			border-collapse: collapse;
 		}
-		table{
+
+		table {
 			margin-top: 10px;
 			width: 100%;
 			/* Hace que la tabla ocupe el 100% del contenedor */
 			border-collapse: collapse;
 		}
-		th, td {
+
+		th,
+		td {
 			border: 1px solid #ddd;
 			/* Añade bordes a las celdas */
 			padding: 8px;
@@ -416,6 +439,14 @@ mysqli_close($conn);
 			/* Espaciado interno */
 			text-align: left;
 			/* Alineación del texto */
+		}
+
+		body {
+			background: linear-gradient(to right, #E8A9F7, #e4e5dc);
+		}
+
+		fieldset {
+			background: linear-gradient(to right, #e4e5dc, #62c4f9);
 		}
 	</style>
 	<script>
@@ -773,9 +804,9 @@ mysqli_close($conn);
 				<label for="desde_cuando">Desde cuándo:</label>
 				<input type="date" id="desde_cuando" onchange="calculateYears()"><br>
 				<span id="yearsSince"></span>
-				
+
 				<button id="btnAgregarPadecimiento" type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
-					<i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar 
+					<i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
 				</button>
 				<!-- Botones adicionales para Modificar y Cancelar -->
 				<button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
@@ -914,7 +945,7 @@ mysqli_close($conn);
 					</select>
 					<input type="date" id="fecha_aplicacion_input" style="display: none;">
 				</div>
-				<button id="agregarVacuna"  onclick="agregarVacuna(); return false;"  type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+				<button id="agregarVacuna" onclick="agregarVacuna(); return false;" type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
 					<i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
 					Agregar
 				</button>

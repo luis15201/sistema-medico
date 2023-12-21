@@ -133,26 +133,46 @@
 		}
 
 		/* Estilos específicos para el modal personalizado */
-		.custom-modal {
-			display: none;
-			position: fixed;
-			z-index: 9999;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			overflow: auto;
-			background-color: rgba(0, 0, 0, 0.7);
-		}
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
 
-		.custom-modal-content {
-			width: 80%;
-			height: 80%;
-			margin: auto;
-			background: linear-gradient(to right, #e4e5dc, #45bac9db);
-			padding: 20px;
-			border-radius: 20PX;
-		}
+        .custom-modal-content {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+            background: linear-gradient(to right, #e4e5dc, #45bac9db);
+            padding: 20px;
+            border-radius: 20px;
+
+            /* Agregado para permitir desplazamiento si el contenido es demasiado grande */
+            box-sizing: border-box;
+            /* Asegura que el padding no afecte el tamaño total */
+            font-size: 12px;
+            /* Tamaño de fuente relativo al tamaño del contenedor */
+            max-width: 100%;
+            /* Evitar que el texto se salga del contenedor */
+        }
+
+        .custom-modal-content p,
+        table,
+        th,
+        td,
+        tr {
+            font-size: 1em;
+            /* Tamaño de fuente relativo al tamaño del contenedor */
+            max-width: 100%;
+            /* Evitar que el texto se salga del contenedor */
+        }
 
 		.custom-close {
 			color: #aaa;
@@ -174,6 +194,14 @@
 			height: 100%;
 			border: none;
 		}
+
+		body{
+	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
+}
+
+fieldset {	
+	background: linear-gradient(to right,#e4e5dc ,#62c4f9 );	
+}
 	</style>
 	<?php
 
@@ -228,11 +256,11 @@ include("menu_lateral.php");
 					</script>
 					<div>
 						<label for="Nombre_paciente">Nombre del paciente:</label>
-						<label id="nombre_paciente"></label>
+						<label id="nombre_paciente" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 					</div>
 					<div>
 						<label for="Apellido_paciente">Apellido del paciente:</label>
-						<label id="apellido_paciente"></label>
+						<label id="apellido_paciente" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 					</div>
 					<!-- <div id="Modalpaciente" class="custom-modal">
 					<div class="custom-modal-content" >
@@ -265,7 +293,7 @@ include("menu_lateral.php");
 					</div>
 					<div>
 						<label for="Nombre_vacuna">Nombre de la Vacuna:</label>
-						<label id="nombre_vacuna"></label>
+						<label id="nombre_vacuna" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 					</div>
 
 

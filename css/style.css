@@ -4,9 +4,12 @@
 	box-sizing: border-box;
 }
 
+html{background: linear-gradient(to right, #E8A9F7,#e4e5dc );}
+
 body {
 	font-family: sans-serif;
-	background: linear-gradient(to right, #e6e6e6, #f2f2f2);
+	/*background: linear-gradient(to right, #e6e6e6, #f2f2f2);*/
+	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
 }
 
 .login-box {

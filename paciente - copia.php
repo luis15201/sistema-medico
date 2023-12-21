@@ -86,7 +86,7 @@ mysqli_close($conn);
 		fieldset {
 			border: 1px solid #ddd;
 			border-radius: 2vw;
-			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			background: linear-gradient(to right,#e4e5dc ,#62c4f9 );
 			padding: 1vw;
 			box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
 			margin-bottom: 2vw;
@@ -273,6 +273,13 @@ mysqli_close($conn);
 			padding-right: 10px;
 			/* Agrega un espacio entre los mensajes (opcional) */
 		}
+		body{
+	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
+}
+
+fieldset {	
+	background: linear-gradient(to right,#e4e5dc ,#62c4f9 );	
+}
 	</style>
 	<script>
 		document.getElementById('btnguardar').addEventListener('click', function() {
