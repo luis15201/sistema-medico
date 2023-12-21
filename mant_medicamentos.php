@@ -310,7 +310,7 @@ $result = $conn->query($query);
             clear: both;
             height: 0;
         }
-        body{
+         body{
 	background: linear-gradient(to right, #E8A9F7,#e4e5dc );
 }
 
