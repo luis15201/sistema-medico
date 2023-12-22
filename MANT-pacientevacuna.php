@@ -993,7 +993,7 @@ include("menu_lateral.php");
 				var tabla = document.getElementById("vacunasTabla");
 				var filas = tabla.getElementsByTagName("tr");
 
-				// Eliminar todas las filas (comenzando desde la última)
+				// Eliminar todas las filas (comenzando desde la última).
 				for (var i = filas.length - 1; i > 0; i--) {
 					tabla.deleteRow(i);
 				}

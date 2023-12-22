@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $database = "pediatra_sis";
 
-// Función para obtener el próximo ID de paciente
+// Función para obtener el próximo ID de paciente.
 function obtenerProximoIdPaciente($conn)
 {
     // Realizar la consulta SQL para obtener el próximo ID de paciente
