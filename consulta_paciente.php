@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 error_reporting(E_ERROR | E_PARSE);
 $servername = "localhost";
@@ -53,25 +49,13 @@ function obtenerDatosPaciente($idPaciente, $conn)
 
 
   <style>
-  .dataTables_wrapper .dataTables_filter input {
-    border: 1px solid #aaa;
-    border-radius: 10px;
-    padding: 5px;
-    background-color: white;
-    color: inherit;
-    margin-left: 3px;
-}
-</style>
-
-
-<style>
     .dataTables_wrapper .dataTables_filter input {
       border: 1px solid #aaa;
       border-radius: 3px;
       padding: 5px;
       background-color: white;
       color: inherit;
-      margin: 3px;
+      margin-left: 3px;
     }
 
     tr:hover {
@@ -84,7 +68,6 @@ function obtenerDatosPaciente($idPaciente, $conn)
     #tabla_pacientes tbody tr:hover {
        background-color: #A8A4DE;
        cursor: pointer;
-      
    }
    #tabla_pacientes tbody tr:active {
     background-color: #5bc0f7;
@@ -97,13 +80,36 @@ function obtenerDatosPaciente($idPaciente, $conn)
     font-weight: bold; /* Cambiar a negritas */
     font-family: "Copperplate",  Fantasy;
    }
+   .clasebotonVER {
+          color:#f0f0f0;
+          text-shadow:2px 2px 4px #000000;
+          font-weight: bold;
+            border: 1px solid #e4e5dc;
+            outline: none;
+            background: linear-gradient(to right, #4a90e2, #63b8ff);
+           
+            border-radius: 7px;
+            width: auto;
+            text-decoration: none;
+            height: 40px;
+          
+            font-size: 16px;
+            padding: 7px;
+            margin: 5px;
+
+        }
+
+        .clasebotonVER:hover {
+            background: linear-gradient(to right, #84e788, #05c20e);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        }
   </style>
 </head>
 
-<body >
+<body>
   <h3 style="padding:0; margin:0;">Consulta de Pacientes</h3>
 
-  <table id="tabla_pacientes" class="display"  >
+  <table id="tabla_pacientes" class="display">
     <thead>
       <tr>
         <th>ID Paciente</th>
@@ -161,18 +167,25 @@ function obtenerDatosPaciente($idPaciente, $conn)
           window.parent.document.getElementById('Modalpaciente').style.display = 'none';
         }, 600);
         // Asignar los valores al campo de texto y al label en el otro documento
-        
+
         window.parent.document.getElementById("id_paciente").value = idPaciente;
         window.parent.document.getElementById("nombre_paciente").textContent = nombrePaciente;
         window.parent.document.getElementById("apellido_paciente").textContent = apellidoPaciente;
         window.parent.document.getElementById("id_paciente").focus();
-        window.parent.cargarHistorialVacunas();
-
-        // Activar el evento "change" de forma forzosa
-  //$(window.parent.document.getElementById("id_paciente")).change();
+      
+        var currentPath = window.parent.location.pathname;
+        var currentPage = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+        // Verificar la página actual y ejecutar la función correspondiente en el window.parent
+        if (currentPage === "MANT-pacientevacuna.php") {
+          window.parent.cargarHistorialVacunas();
+        } else if (currentPage === "mant_paciente_historiaClinica.php") {
+          window.parent.cargarHistorialPadecimientos();
+        } else {
+          console.log("Página no reconocida.");
+        }
       });
 
-      // Resto del script similar al código anterior
+
     });
   </script>
 

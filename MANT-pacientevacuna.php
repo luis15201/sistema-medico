@@ -272,8 +272,7 @@ include("menu_lateral.php");
 					<div id="Modalpaciente" class="custom-modal">
 						<div class="custom-modal-content">
 							<span class="close">&times;</span>
-							<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 200%;"></iframe>
-
+							<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 						</div>
 					</div>
 
