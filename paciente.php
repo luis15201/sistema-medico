@@ -1300,7 +1300,7 @@ mysqli_close($conn);
 
 		function ajustarTamanoFuente() {
 			const tablaContainer = document.getElementById('tablaContainer');
-			const fuenteBase = 16; // Tamaño de fuente base
+			const fuenteBase = 12; // Tamaño de fuente base
 			const espacioDisponible = tablaContainer.clientHeight; // Altura disponible del contenedor
 
 			// Ajustar la fuente según el espacio disponible

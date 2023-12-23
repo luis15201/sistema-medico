@@ -216,7 +216,7 @@ include("menu_lateral.php");
 
 <body>
 
-    <form>
+    <form id="formpadecimientos">
         <div class="container">
             <fieldset style=" height:800px">
                 <legend>Padecimientos del Paciente</legend>
@@ -277,7 +277,7 @@ include("menu_lateral.php");
                     <legend class="cajalegend">══ Datos |PADECIMIENTO | ENFERMEDAD | CONDICIÓN MEDICA ══</legend>
                     <!-- <hr style="margin-top:35px;padding:5px; background-Color:rgba(29,167,226,0.39)"> -->
                     <label for="id_padecimiento">ID Padecimiento:</label>
-                    <input type="text" id="id_padecimiento" style="width:110px" required>
+                    <input type="text" id="id_padecimiento" style="width:110px">
                     <button id="busquedaHC" class="boton_bus" title="Buscar Padecimientos/enfermedades registrados/as">
                         <i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
                     </button>
@@ -301,9 +301,14 @@ include("menu_lateral.php");
                     <label for="desde_cuando">Desde cuándo:</label>
                     <input type="date" id="desde_cuando" onchange="calculateYears()"><br>
                     <span id="yearsSince" style=" padding:8px; border-radius:10px;"></span>
-                    <button id="btnAgregarPadecimiento" class="btn btn-primary" style=" width:115px">
-                        <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> Agregar
+
+                    <button id="btnAgregarPadecimiento" onclick="agregarPadecimiento(); return false;" type="button" class="btn btn-primary" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                        <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+                        Agregar
                     </button>
+                    <!-- <button id="btnAgregarPadecimiento" class="btn btn-primary" style=" width:115px">
+                        <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i> *Agregar P
+                    </button> -->
                     <!-- Botones adicionales para Modificar y Cancelar -->
                     <button id="btnModificarPadecimiento" style="display: none;">Modificar</button>
                     <button id="btnCancelarEdicion" style="display: none;">Cancelar</button>
@@ -356,8 +361,10 @@ include("menu_lateral.php");
                     <a href="menu-pacientes.php" class="claseboton" id="btnatras">
                         <i class="material-icons" style="font-size:32px;color:#f0f0f0;text-shadow:2px 2px 4px #000;">arrow_back</i> Atrás
                     </a>
+
+                    <div id="error-message" style="color: red;"></div>
                 </div>
-                <div id="error-message" style="color: red;"></div>
+
 
                 <div id="mensajePadecimientoCapturado"></div>
 
@@ -526,26 +533,39 @@ include("menu_lateral.php");
     }
 
     function verificarPadecimientoExistente(nombrePadecimiento) {
-        // Obtener la tabla y las filas del historial de padecimientos
-        var tabla = document.getElementById("historial_padecimientos").getElementsByTagName("table")[0];
-        var filas = tabla.getElementsByTagName("tr");
+        // Obtener las celdas de la columna de nombres de padecimientos
+        var nombresPadecimientos = Array.from(document.querySelectorAll("#historial_padecimientos table tr td:nth-child(2)"));
 
-        // Iterar sobre las filas (comenzando desde 1 para omitir la fila de encabezado)
-        for (var i = 1; i < filas.length; i++) {
-            var celdas = filas[i].getElementsByTagName("td");
-
-            // Obtener el valor del nombre de padecimiento de la fila actual
-            var nombreActual = celdas[1].innerText.trim(); // Asegurarse de quitar espacios en blanco alrededor
-
-            // Verificar si el padecimiento ya existe
-            if (nombrePadecimiento === nombreActual) {
-
-                return true; // El padecimiento ya existe
-            }
-        }
-
-        return false; // El padecimiento no existe
+        // Verificar si el padecimiento ya existe
+        return nombresPadecimientos.some(function(celda) {
+            return celda.innerText.trim() === nombrePadecimiento;
+        });
     }
+
+
+
+
+    // function verificarPadecimientoExistente(nombrePadecimiento) {
+    //     // Obtener la tabla y las filas del historial de padecimientos
+    //     var tabla = document.getElementById("historial_padecimientos").getElementsByTagName("table")[0];
+    //     var filas = tabla.getElementsByTagName("tr");
+
+    //     // Iterar sobre las filas (comenzando desde 1 para omitir la fila de encabezado)
+    //     for (var i = 1; i < filas.length; i++) {
+    //         var celdas = filas[i].getElementsByTagName("td");
+
+    //         // Obtener el valor del nombre de padecimiento de la fila actual
+    //         var nombreActual = celdas[1].innerText.trim(); // Asegurarse de quitar espacios en blanco alrededor
+
+    //         // Verificar si el padecimiento ya existe
+    //         if (nombrePadecimiento === nombreActual) {
+
+    //             return true; // El padecimiento ya existe
+    //         }
+    //     }
+
+    //     return false; // El padecimiento no existe
+    // }
 
 
 
@@ -561,14 +581,9 @@ include("menu_lateral.php");
         // Función para agregar un nuevo padecimiento a la tabla
         function agregarPadecimiento() {
 
-            if (!verificarIdPacienteCompleto()) {
-                return; // Salir de la función si no está completo
-            }
-
-
             const idPadecimiento = $("#id_padecimiento").val();
-            /* const nombrePadecimiento = $("#nombre_padecimiento").text(); /**/
-            var nombrePadecimiento = $("#nombre_padecimiento").text();
+            const nombrePadecimiento = $("#nombre_padecimiento").text();
+            /*var nombrePadecimiento = $("#nombre_padecimiento").text(); /**/
             const notas = $("#notas").val();
             const desdeCuando = $("#desde_cuando").val();
 
@@ -577,11 +592,24 @@ include("menu_lateral.php");
                 alert('Este padecimiento ya existía, registrado para ese paciente, observe el historial');
                 return;
             }
+            // // Verificar si el campo "id_paciente" está completo
+            if (!verificarIdPacienteCompleto()) {
+                return; // Salir de la función si no está completo
+            }
 
-            if (idPadecimiento && notas && desdeCuando) {
+
+            if (!notas.trim()) {
+                notas = "ninguna nota/descripción";
+            }
+
+            if (idPadecimiento && desdeCuando) {
                 const table = $("#padecimientosTabla");
                 const tbody = table.find("tbody");
                 const row = $("<tr>");
+                // if (idPadecimiento && notas && desdeCuando) {
+                //     const table = $("#padecimientosTabla");
+                //     const tbody = table.find("tbody");
+                //     const row = $("<tr>");
 
                 row.html(`
             <td>${idPadecimiento}</td>
@@ -589,7 +617,7 @@ include("menu_lateral.php");
             <td>${notas}</td>
             <td>${desdeCuando}</td>
             <td><button class="modificarPadecimiento">Modificar</button></td>
-            <td><button class="eliminarPadecimiento" onclick="confirm('¿Realmente desea eliminar este padecimiento?')">Eliminar</button></td>
+            <td><button class="eliminarPadecimiento" onclick="confirm('¿Desea eliminar este padecimiento?')">Eliminar</button></td>
           `);
 
                 tbody.append(row);
@@ -602,31 +630,70 @@ include("menu_lateral.php");
             $("#desde_cuando").val("");
             $("#yearsSince").text("");
 
-            // Actualizar el valor del campo oculto tieneDatosPadecimientos
-            const tieneDatosPadecimientos = document.getElementById("padecimientosTabla").getElementsByTagName("tbody")[0].hasChildNodes();
+            // // Actualizar el valor del campo oculto tieneDatosPadecimientos
+            // const tieneDatosPadecimientos = document.getElementById("padecimientosTabla").getElementsByTagName("tbody")[0].hasChildNodes();
+            // document.getElementById("tieneDatosPadecimientos").value = tieneDatosPadecimientos;
+            const tieneDatosPadecimientos = $("#padecimientosTabla tbody tr").length > 0;
             document.getElementById("tieneDatosPadecimientos").value = tieneDatosPadecimientos;
+
+            // Limpiar los campos después de agregar el padecimiento
+            $("#id_padecimiento").val("");
+            $("#nombre_padecimiento").text("");
+            $("#notas").val("");
+            $("#desde_cuando").val("");
+            $("#yearsSince").text("");
 
             // Actualiza las variables globales
             idPacienteActual = $("#id_paciente").val();
             cantidadFilasPadecimientos = $("#padecimientosTabla tbody tr").length;
         }
-
-        // Asignar el evento click al botón de agregar padecimiento
         $("#btnAgregarPadecimiento").click(function() {
+            const idPadecimiento = $("#id_padecimiento").val();
+            const desdeCuando = $("#desde_cuando").val();
+
+            // Validar que idPadecimiento no esté vacío y desdeCuando sea una fecha válida
+            if (!idPadecimiento) {
+                alert("Por favor, seleccione un padecimiento.");
+                return false;
+            }
+
+            if (!isValidDate(desdeCuando)) {
+                alert("Por favor, ingrese una fecha válida.");
+                return false;
+            }
+
             agregarPadecimiento();
             return false; // Evita el envío del formulario
         });
 
+        // Función para validar si una cadena es una fecha válida
+        function isValidDate(dateString) {
+            const regexDate = /^\d{4}-\d{2}-\d{2}$/;
+            return regexDate.test(dateString);
+        }
+        // //old Asignar el evento click al botón de agregar padecimiento
+        // $("#btnAgregarPadecimiento").click(function() {
+        //     agregarPadecimiento();
+        //     return false; // Evita el envío del formulario
+        // });
+
         // Evento delegado para los botones "Eliminar" dentro de la tabla
+        // Evento delegado para los botones "Eliminar" dentro de la tabla
+        $("#padecimientosTabla").on("click", ".eliminarPadecimiento", function(event) {
+            // Confirmar con el usuario antes de eliminar la fila
+            const confirmacion = confirm('¿Realmente desea eliminar este padecimiento?');
+
+            if (confirmacion) {
+                // Obtener la fila correspondiente al botón clicado y eliminarla
+                $(this).closest("tr").remove();
+            }
+        });
+
         // Código de evento delegado para los botones "Eliminar", sin cambios
 
         // Evento delegado para los botones "Modificar" dentro de la tabla
         $("#padecimientosTabla").on("click", ".modificarPadecimiento", function(event) {
             event.preventDefault();
-            // Lógica para modificar el padecimiento
-            // Aquí puedes implementar la lógica para editar los datos del padecimiento
-            // Por ejemplo, mostrar un modal con un formulario de edición
-
             // Aplicar estilos al fieldset y mostrar botones "Modificar" y "Cancelar"
             changeFieldsetStyle();
             $("#btnModificarPadecimiento, #btnCancelarEdicion").show();
@@ -776,94 +843,142 @@ include("menu_lateral.php");
 
         // Restablecer otros elementos del paciente (agrega más según sea necesario)
         document.getElementById('nombre_paciente').innerText = '';
-       
+
         // Agrega más líneas según sea necesario para otros elementos del paciente
 
         // Limpiar historial de padecimientos
         document.getElementById('historial_padecimientos').innerHTML = '';
     }
+    // function limpiarFormulario() {
+    //     // Limpiar campos de paciente
+    //     idPacienteInput.value = "";
+    //     nombrePacienteLabel.textContent = "";
+    //     apellidoPacienteLabel.textContent = "";
 
+    //     // Limpiar campos de padecimiento
+    //     idPadecimientoInput.value = "";
+    //     nombrePadecimientoLabel.textContent = "";
+    //     notasInput.value = "";
+    //     desdeCuandoInput.value = "";
+
+    //     // Limpiar el historial de padecimientos
+    //     padecimientosTabla.innerHTML = "";
+
+    //     // Ocultar mensajes
+    //     errorMessageDiv.style.display = "none";
+    //     mensajePadecimientoCapturadoDiv.style.display = "none";
+    // }
 
     function verificarCamposCompletos() {
-				var idPaciente = document.getElementById('id_paciente').value;
-				var tablapadecimientos = document.getElementById("padecimientosTabla");
+        var idPaciente = document.getElementById('id_paciente').value;
+        var tablapadecimientos = document.getElementById("padecimientosTabla");
 
-				// Verificar el ID del paciente
-				if (idPaciente.trim() === '') {
-					alert('Campo ID del paciente está vacío. Por favor, complétalo.');
-					document.getElementById('id_paciente').style.backgroundColor = 'red';
-					return false;
-				}
+        // Verificar el ID del paciente
+        if (idPaciente.trim() === '') {
+            alert('Campo ID del paciente está vacío. Por favor, complétalo.');
+            document.getElementById('id_paciente').style.backgroundColor = 'red';
+            return false;
+        }
 
-				// Verificar si la tabla de padecimientos tiene datos
-				if (tablapadecimientos.rows.length <= 1) {
-					alert('La tabla padecimientos está vacía. Por favor, agregue al menos un padecimiento.');
-					tablapadecimientos.style.backgroundColor = 'red';
-					return false;
-				}
+        // Verificar si la tabla de padecimientos tiene datos
+        if (tablapadecimientos.rows.length <= 1) {
+            alert('La tabla padecimientos está vacía. Por favor, agregue al menos un padecimiento.');
+            tablapadecimientos.style.backgroundColor = 'red';
+            return false;
+        }
 
-				// Restablecer estilos si todo está completo
-				document.getElementById('id_paciente').style.backgroundColor = '';
-				tablapadecimientos.style.backgroundColor = '';
+        // Restablecer estilos si todo está completo
+        document.getElementById('id_paciente').style.backgroundColor = '';
+        tablapadecimientos.style.backgroundColor = '';
 
-				return true;
-			}
-
-
-
-            function guardar() {
-				// Obtener el valor del ID del paciente
-				const id_paciente = document.getElementById("id_paciente").value;
-
-				// Recopilar datos de la tabla de pacientes_Padecimientos
-				const datosPadecimientos = [];
-				const tablaPadecimientos = document.getElementById("padecimientosTabla");
-				const filasPadecimientos = tablaPadecimientos.getElementsByTagName("tr");
-				for (let i = 1; i < filasPadecimientos.length; i++) {
-					const filaPadecimientos = filasPadecimientos[i];
-					const celdasPadecimientos = filaPadecimientos.getElementsByTagName("td");
-					const id_Padecimientos = celdasPadecimientos[0].innerText;
-					const nombre = celdasPadecimientos[2].innerText;
-					const notas = celdasPadecimientos[3].innerText;
-					const desde_cuando = celdasPadecimientos[4].innerText;
-					datosPadecimientos.push({
-						id_paciente,
-						id_Padecimientos,
-						nombre,
-						notas,
-						desde_cuando,
-					});
+        return true;
+    }
 
 
-				}
 
-				// Hacer una petición AJAX a PHP para guardar los datos en la base de datos
-				const xhr = new XMLHttpRequest();
-				xhr.open("POST", "guardar_historia_clinica.php", true);
-				xhr.setRequestHeader("Content-Type", "application/json");
-				xhr.onreadystatechange = function() {
-					// Si hay un error al guardar los datos, mostrar el mensaje de error en el elemento "error-message"
-					if (xhr.readyState === 4 && xhr.status === 200) {
-						// Mostrar el mensaje de error en el elemento "error-message"
-						const errorMessageDiv = document.getElementById("error-message");
-						errorMessageDiv.textContent = "Notificación: " + xhr.responseText;
-						errorMessageDiv.style.display = "block"; // Mostrar el elemento de error
-						errorMessageDiv.style.color = "blue";
-					} else if (xhr.readyState === 4 && xhr.status !== 200) {
-						// Mostrar el mensaje de alerta
-						alert("Error al guardar los datos. Por favor, intente nuevamente.");
-					}
-				};
+    function guardar() {
+        // Obtener el valor del ID del paciente
+        const id_paciente = document.getElementById("id_paciente").value;
 
-				// Convertir el array de datos a formato JSON
-				const datosJSON = JSON.stringify({
-					pacientesPadecimientos: datosPadecimientos,
-				});
+        // Recopilar datos de la tabla de pacientes_Padecimientos
+        const datosPadecimientos = [];
+        const tablaPadecimientos = document.getElementById("padecimientosTabla");
+        const filasPadecimientos = tablaPadecimientos.getElementsByTagName("tr");
+        for (let i = 1; i < filasPadecimientos.length; i++) {
+            const filaPadecimientos = filasPadecimientos[i];
+            const celdasPadecimientos = filaPadecimientos.getElementsByTagName("td");
+            const id_Padecimientos = celdasPadecimientos[0].innerText;
+            const nombre = celdasPadecimientos[1].innerText;
+            const notas = celdasPadecimientos[2].innerText;
+            const desde_cuando = celdasPadecimientos[3].innerText;
 
-				// Enviar la petición AJAX para guardar los datos
-				xhr.send(datosJSON);
-				limpiarFormulario();
-			}
+
+            datosPadecimientos.push({
+                id_paciente,
+                id_Padecimientos,
+                nombre,
+                notas,
+                desde_cuando,
+            });
+
+
+        }
+
+        // Hacer una petición AJAX a PHP para guardar los datos en la base de datos
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "guardar_historia_clinica2.php", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            // Si hay un error al guardar los datos, mostrar el mensaje de error en el elemento "error-message"
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Mostrar el mensaje de error en el elemento "error-message"
+                const errorMessageDiv = document.getElementById("error-message");
+                errorMessageDiv.textContent = "Notificación: " + xhr.responseText;
+                errorMessageDiv.style.display = "block"; // Mostrar el elemento de error
+                errorMessageDiv.style.color = "blue";
+                var formulario = document.getElementById("formpadecimientos");
+                formulario.reset();
+                limpiarTablaPadecimientos();
+                // Limpiar la tabla
+                var tabla = document.getElementById("padecimientosTabla");
+                var filas = tabla.getElementsByTagName("tr");
+
+                // Eliminar todas las filas (comenzando desde la última).
+                for (var i = filas.length - 1; i > 0; i--) {
+                    tabla.deleteRow(i);
+                }
+                
+
+            } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                // Mostrar el mensaje de alerta
+                alert("Error al guardar los datos. Por favor, intente nuevamente.");
+            }
+        };
+
+        // Convertir el array de datos a formato JSON
+        const datosJSON = JSON.stringify({
+            id_paciente,
+            pacientesPadecimientos: datosPadecimientos,
+        });
+
+        // Enviar la petición AJAX para guardar los datos
+        xhr.send(datosJSON);
+
+    }
+
+
+
+    // Asignar evento de clic al botón guardar
+    document.getElementById("btnguardar").addEventListener("click", function(event) {
+        event.preventDefault(); // Evitar que el formulario se envíe directamente
+
+        // Verificar si los campos están completos
+        if (verificarCamposCompletos()) {
+            // Llamar a la función guardar solo si los campos están completos
+            guardar();
+        }
+        //location.reload();
+    });
 </script>
 
 </html>
