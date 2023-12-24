@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "tipo_vacunas"
-$query = "SELECT id_vacuna, nombre FROM tipo_vacunas";
+$query = "SELECT * FROM tipo_vacunas";
 $result = $conn->query($query);
 
 function in_iframe() {
@@ -86,17 +86,17 @@ function in_iframe() {
        background-color: #A8A4DE;
        cursor: pointer;
    }
-   #tabla_tipos_vacunas tbody tr:active {
+   /* #tabla_tipos_vacunas tbody tr:active {
     background-color: #5bc0f7;
     cursor: pointer;
    border:4px solid red ;
     transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease; /* Animaciones de 0.5 segundos */
-    box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red; /* Sombra inicial y sombra roja */
+   /* box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red; 
     font-size: 25px;
-    color: white; /* Cambiar el color del texto */
-    font-weight: bold; /* Cambiar a negritas */
+    color: white; 
+    font-weight: bold; 
     font-family: "Copperplate",  Fantasy;
-   }
+  /* } */
    .clasebotonVER {
           color:#f0f0f0;
           text-shadow:2px 2px 4px #000000;
@@ -156,21 +156,21 @@ function in_iframe() {
         cursor: pointer;
     }
 
-    #tabla_tipos_vacunas tbody tr:active {
+    /* #tabla_tipos_vacunas tbody tr:active {
         background-color: #5bc0f7;
         cursor: pointer;
         border: 4px solid red;
         transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease;
         /* Animaciones de 0.5 segundos */
-        box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
+        /*box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
         /* Sombra inicial y sombra roja */
-        font-size: 25px;
+       /* font-size: 25px;
         color: white;
         /* Cambiar el color del texto */
-        font-weight: bold;
+       /* font-weight: bold;
         /* Cambiar a negritas */
-        font-family: "Copperplate", Fantasy;
-    }
+       /* font-family: "Copperplate", Fantasy;
+   /* } */
     </style>
 
 
@@ -396,11 +396,13 @@ function in_iframe() {
 <body>
   
 
-  <table id="tabla_tipos_vacunas" class="display" style="width:100%">
+<table id="tabla_tipos_vacunas" class="display" style="width:90%">
     <thead>
       <tr>
-        <th>Id Vacuna</th>
-        <th>Nombre</th>
+        <th>Id</th>
+        <th>Nombre</th>`
+        <th style="width: 200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">Descrip.</th>
+        <th>Dosis</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -412,6 +414,8 @@ function in_iframe() {
           echo "<tr onclick=\"seleccionarVacuna('" . $row["id_vacuna"] . "', '" . $row["nombre"] . "')\">";
           echo "<td>" . $row["id_vacuna"] . "</td>";
           echo "<td>" . $row["nombre"] . "</td>";
+          echo "<td>" . $row["descripcion"] . "</td>";
+          echo "<td>" . $row["total_dosis"] . "</td>";
           echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/vacuna/editar.php?id_vacuna=$row[id_vacuna]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
 
           echo "</tr>";

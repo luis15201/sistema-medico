@@ -128,9 +128,12 @@
   ?>
 
 
+<div style="width:100%; padding: 6px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <h2 style="padding: 1%;text-align: center;text-transform: uppercase;font-family: bitter; color:black; padding: 15px; width: 100%; display: flex; flex-direction: column; align-items: center;">Menú Principal Sistema de Pediatría</h2>
+    <img src="IMAGENES\Browser.256.png" class="" alt="crud" width="82px" heigth="82px">
+  </div>
 
-
-  <h2 style="padding: 5%;text-align: center;text-transform: uppercase;">Menú Principal Sistema de Pediatría</h2>
+  <!-- <h2 style="padding: 5%;text-align: center;text-transform: uppercase;">Menú Principal Sistema de Pediatría</h2> -->
 
 
   <div style='width: 100%;float: left;'>

@@ -313,6 +313,21 @@ if (isset($_POST['btnregistrar'])) {
 
 		fieldset {
 			background: linear-gradient(to right, #e4e5dc, #62c4f9);
+			border: 1px solid #ddd;
+			border-radius: 2vw;
+			
+			padding: 1vw;
+			box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+			margin-bottom: 2vw;
+		}
+		legend {
+			font-weight: bold;
+			font-size: 16px;
+			font-weight: bold;
+			margin-bottom: 1vw;
+			background: linear-gradient(to right, #e4e5dc, #45bac9db);
+			border: solid 1px #45bac9db;
+			border-radius: 10px;
 		}
 	</style>
 	<script type="text/javascript">
@@ -373,8 +388,9 @@ include("../../menu_lateral.php");
 
 <body>
     <div class="container">
+	<fieldset style=" height:900px;">
         <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-            <fieldset>
+            
                 <legend>Registrar nueva vacuna</legend>
                 <fieldset class="caja">
                     <legend class="cajalegend">══ Nueva Vacuna ══</legend>
@@ -388,7 +404,9 @@ include("../../menu_lateral.php");
                     </p>
                     <p>
                         <label for="txtdescripcion">Descripción</label>
-                        <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php echo $descripcion; ?>" required>
+						<textarea name="txtdescripcion" id="txtdescripcion" required><?php echo $vacunades; ?></textarea>
+                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
+                                                                                                    ?>" required> -->
                     </p>
                     <p>
                         <label for="txttotaldosis">Total de Dosis</label>
@@ -404,7 +422,7 @@ include("../../menu_lateral.php");
                         <i class="material-icons" style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i> Cancelar
                     </a>
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                <iframe id="modal-iframe" src="../../consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;max-height:500px;"></iframe>
             </fieldset>
         </form>
     </div>

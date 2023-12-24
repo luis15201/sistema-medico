@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "tipo_vacunas"
-$query = "SELECT id_vacuna, nombre FROM tipo_vacunas";
+$query = "SELECT * FROM tipo_vacunas";
 $result = $conn->query($query);
 ?>
 
@@ -69,6 +69,9 @@ $result = $conn->query($query);
 
 
 <style>
+  table,th, td, tr{
+    border: 0.5px solid white;
+  }
     .dataTables_wrapper .dataTables_filter input {
       border: 1px solid #aaa;
       border-radius: 3px;
@@ -129,11 +132,13 @@ $result = $conn->query($query);
 <body>
   <h3 style="padding:0; margin:0;">Consulta de Tipos de Vacunas</h3>
 
-  <table id="tabla_tipos_vacunas" class="display" style="width:100%">
+  <table id="tabla_tipos_vacunas" class="display" style="width:90%;">
     <thead>
       <tr>
-        <th>Id Vacuna</th>
-        <th>Nombre</th>
+        <th>Id</th>
+        <th>Nombre</th>`
+        <th style="width: 300px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">Descrip.</th>
+        <th>Dosis</th>
       </tr>
     </thead>
     <tbody>
@@ -144,6 +149,8 @@ $result = $conn->query($query);
           echo "<tr onclick=\"seleccionarVacuna('" . $row["id_vacuna"] . "', '" . $row["nombre"] . "')\">";
           echo "<td>" . $row["id_vacuna"] . "</td>";
           echo "<td>" . $row["nombre"] . "</td>";
+          echo "<td>" . $row["descripcion"] . "</td>";
+          echo "<td>" . $row["total_dosis"] . "</td>";
           echo "</tr>";
         }
       } else {

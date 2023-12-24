@@ -267,7 +267,7 @@ include("menu_lateral.php");
 
     <div class="container" style="padding:0%;  ">
         <form method="POST">
-            <fieldset style="height:700px;">
+            <fieldset style="height: 600px;">
                 <legend>Registrar Vacuna</legend>
                 <a href="modulo/vacuna/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                     <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>Agregar
@@ -277,11 +277,14 @@ include("menu_lateral.php");
 
         <div>
             <!-- Cambiar la URL según tu estructura de archivos -->
-            <iframe id="modal-iframe" src="consulta_vacunas2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+            <iframe id="modal-iframe" src="consulta_vacunas2.php" frameborder="0" style="width: 100%; height: 100%; max-height: 400px;"></iframe>
         </div>
 
+   
 
-        <div style="margin-top:-10%;padding:0; height:0cm;">
+        
+         </fieldset>
+         <div style="margin-top:-10%;padding:0; height:0cm;">
             <a href="menu.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                 <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">menu</i> Menú Principal
             </a>

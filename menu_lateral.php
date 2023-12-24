@@ -22,6 +22,7 @@
                     <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu_Mantenimientos" data-bs-parent="#submenu-container" style="text-decoration:none" class="list-group-item list-group-item-action">
                         <i class="material-icons">tabs</i>Mantenimientos</a>
                     <div class="collapse" id="submenu_Mantenimientos" data-bs-parent="#submenu-container">
+                    <a href="mant-Agregaruser.php" class="list-group-item list-group-item-action"> <i class="material-icons">account_circle</i> Usuarios</a>
                         <a href="menu-mant.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Mant</a>
                         <!-- Elementos  acordeón 1.2 -->
                         <div class="list-group-item list-group-item-action">
@@ -30,16 +31,17 @@
                                 <a href="menu-pacientes.php" class="list-group-item list-group-item-action" style="text-align: right;"><i class="material-icons">menu</i> Menu Pacientes</a>
 
                                 <a href="paciente.php" class="list-group-item list-group-item-action"><i class="material-icons">group</i> Pacientes</a>
-                                <a href="MANT-pacientevacuna.php" class="list-group-item list-group-item-action"><i class="material-icons">vaccines</i> Vacunas</a>
-                                <a href="mant_paciente_historiaClinica.php" class="list-group-item list-group-item-action"><i class="material-icons">healing</i> Padecimientos</a>
+                                <a href="MANT-pacientevacuna.php" class="list-group-item list-group-item-action"><i class="material-icons">vaccines</i> Vacunas-Pacientes</a>
+                                <a href="mant_paciente_historiaClinica.php" class="list-group-item list-group-item-action"><i class="material-icons">healing</i> Padecimientos-Pacientes</a>
 
                             </div>
 
                         </div>
                         <a href="mant_seguro.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_information</i> Seguros</a>
-                        <a href="mant-Agregaruser.php" class="list-group-item list-group-item-action"> <i class="material-icons">account_circle</i> Usuarios</a>
+                        
                         <a href="mant-centromedico.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_services</i> Centro Médico</a>
                         <a href="mant_medicamentos.php" class="list-group-item list-group-item-action"> <i class="material-icons">local_pharmacy</i> Medicamentos</a>
+                        <a href="mant_vacunas.php" class="list-group-item list-group-item-action"> <span class="material-symbols-outlined">syringe</span> Vacunas</a>
                     </div>
 
                 </div>
