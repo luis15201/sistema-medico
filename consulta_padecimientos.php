@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "padecimientos_comunes"
-$query = "SELECT id_padecimiento, nombre_padecimiento FROM padecimientos_comunes";
+$query = "SELECT *FROM padecimientos_comunes";
 $result = $conn->query($query);
 ?>
 
@@ -123,6 +123,7 @@ $result = $conn->query($query);
       <tr>
         <th>ID Padecimiento</th>
         <th>Nombre Padecimiento</th>
+        <th>Descripción</th>
       </tr>
     </thead>
     <tbody>
@@ -133,6 +134,7 @@ $result = $conn->query($query);
           echo "<tr onclick=\"seleccionarPadecimiento('" . $row["id_padecimiento"] . "', '" . $row["nombre_padecimiento"] . "')\">";
           echo "<td>" . $row["id_padecimiento"] . "</td>";
           echo "<td>" . $row["nombre_padecimiento"] . "</td>";
+          echo "<td>" . $row["descripcion"] . "</td>";
           echo "</tr>";
         }
       } else {
