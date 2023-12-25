@@ -39,9 +39,10 @@
                         </div>
                         <a href="mant_seguro.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_information</i> Seguros</a>
                         
-                        <a href="mant-centromedico.php" class="list-group-item list-group-item-action"><i class="material-icons">medical_services</i> Centro Médico</a>
+                        <a href="mant-centromedico.php" class="list-group-item list-group-item-action"><span class="material-symbols-outlined">home_health</span> Centro Médico</a>
                         <a href="mant_medicamentos.php" class="list-group-item list-group-item-action"> <i class="material-icons">local_pharmacy</i> Medicamentos</a>
                         <a href="mant_vacunas.php" class="list-group-item list-group-item-action"> <span class="material-symbols-outlined">syringe</span> Vacunas</a>
+                        <a href="mant_padecimientos_comunes.php" class="list-group-item list-group-item-action"> <span class="material-symbols-outlined">sick</span> Padecimientos</a>
                     </div>
 
                 </div>

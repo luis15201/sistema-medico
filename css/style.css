@@ -128,7 +128,7 @@ body {
 }
 
 .card:hover {
-    transform: scale(1.1);
+  transform: scale(1.0);
 }
 
 .card-title {
@@ -141,7 +141,7 @@ body {
 }
 
 .card:hover .card-description {
-    display: block;
+  display: block;
 }
 
 .card-container {
@@ -217,4 +217,23 @@ input[type="text"]:read-only {
 	color: #000;
 	font-weight: bold;
 	width: 65px;
+}
+
+.boton {
+	border: none;
+	outline: none;
+	height: 4vw;
+	color: #fff;
+	font-size: 14px;
+	background: linear-gradient(to right, #4a90e2, #63b8ff);
+	cursor: pointer;
+	border-radius: 2vw;
+	width: 110px;
+	margin-top: 2vw;
+	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: auto;
+	min-height: 40px;
 }
