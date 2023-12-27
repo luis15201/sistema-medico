@@ -1,15 +1,11 @@
 <?php
 session_start();
-
 error_reporting(E_ALL & ~E_WARNING);
 require_once "../../include/conec.php";
-
 $pagina = $_GET['pag'];
-
-// Consultar el último ID de la tabla tipo_vacunas
-$query = "SELECT MAX(id_vacuna) AS max_id FROM tipo_vacunas";
+// Consultar el último ID de la tabla laboratorio
+$query = "SELECT MAX(id_laboratorio) AS max_id FROM laboratorio";
 $result = $conn->query($query);
-
 if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	$lastId = $row["max_id"];
@@ -18,10 +14,8 @@ if ($result->num_rows > 0) {
 	// Si no hay registros en la tabla, asignar el ID inicial
 	$newId = 1;
 }
-
 // Guardar el nuevo ID en una variable PHP
-$segid = $newId;
-
+$idLaboratorio = $newId;
 // Función de validación de campos
 function validarCampos($campos)
 {
@@ -32,31 +26,29 @@ function validarCampos($campos)
     }
     return true;
 }
-
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
-    $camposRequeridos = ['txtid', 'txtnombre', 'txtdescripcion', 'txttotaldosis'];
-
+    $camposRequeridos = ['txtid', 'txtnombre', 'txtdireccion', 'txttelefono', 'txtemail'];
     if (validarCampos($camposRequeridos)) {
-        $idVacuna = $_POST['txtid'];
+        $idLaboratorio = $_POST['txtid'];
         $nombre = $_POST['txtnombre'];
-        $descripcion = $_POST['txtdescripcion'];
-        $totalDosis = $_POST['txttotaldosis'];
-
-        // Insertar datos en la tabla tipo_vacunas
-        $queryAdd = mysqli_query($conn, "INSERT INTO tipo_vacunas(id_vacuna, nombre, descripcion, total_dosis) VALUES('$idVacuna', '$nombre', '$descripcion', '$totalDosis')");
+        $direccion = $_POST['txtdireccion'];
+        $telefono = $_POST['txttelefono'];
+        $email = $_POST['txtemail'];
+        // Insertar datos en la tabla laboratorio
+        $queryAdd = mysqli_query($conn, "INSERT INTO laboratorio(id_laboratorio, nombre_laboratorio, Direccion, Telefono, email) VALUES('$idLaboratorio', '$nombre', '$direccion', '$telefono', '$email')");
 
         if (!$queryAdd) {
             echo "Error con el registro: " . mysqli_error($conn);
         } else {
-            echo "<script>window.location= '../../mant_vacunas.php?pag=1' </script>";
+            echo "<script>window.location= '../../mant_laboratorio.php?pag=1' </script>";
         }
     } else {
         echo "<script>alert('Por favor, complete todos los campos');</script>";
     }
 }
-
 ?>
+
 <html>
 
 <head>
@@ -68,15 +60,16 @@ if (isset($_POST['btnregistrar'])) {
     <style>
         /* Estilos personalizados aquí */
     </style>
-    <script>
+ <script>
         // Función para validar campos antes de enviar el formulario
         function validarFormulario() {
-            var idVacuna = document.getElementById("txtid").value;
+            var idLaboratorio = document.getElementById("txtid").value;
             var nombre = document.getElementById("txtnombre").value;
-            var descripcion = document.getElementById("txtdescripcion").value;
-            var totalDosis = document.getElementById("txttotaldosis").value;
+            var direccion = document.getElementById("txtdireccion").value;
+            var telefono = document.getElementById("txttelefono").value;
+            var email = document.getElementById("txtemail").value;
 
-            if (idVacuna.trim() === '' || nombre.trim() === '' || descripcion.trim() === '' || totalDosis.trim() === '') {
+            if (idLaboratorio.trim() === '' || nombre.trim() === '' || direccion.trim() === '' || telefono.trim() === '' || email.trim() === '') {
                 alert("Por favor, complete todos los campos");
                 return false;
             }
@@ -333,17 +326,11 @@ if (isset($_POST['btnregistrar'])) {
 	<script type="text/javascript">
 		// Obtener el campo de entrada y el nuevo ID
 		var txtId = document.getElementById("txtid");
-		var newId = <?php echo $segid; ?>;
-
+		var newId = <?php echo $idLaboratorio; ?>;
 		// Asignar el nuevo ID al campo de entrada
 		txtId.value = newId;
-
 		// Cambiar el fondo a gris claro
 		txtId.style.backgroundColor = "#f0f0f0";
-
-
-
-
 		function placeCursorAtEnd() {
 			if (this.setSelectionRange) {
 				// Double the length because Opera is inconsistent about 
@@ -354,13 +341,11 @@ if (isset($_POST['btnregistrar'])) {
 				// This might work for browsers without setSelectionRange support.
 				this.value = this.value;
 			}
-
 			if (this.nodeName === "TEXTAREA") {
 				// This will scroll a textarea to the bottom if needed
 				this.scrollTop = 999999;
 			}
 		};
-
 		window.onload = function() {
 			var input = document.getElementById("txtseg");
 
@@ -371,46 +356,41 @@ if (isset($_POST['btnregistrar'])) {
 			}
 
 			input.focus();
-		}
-		
+		}	
 	</script>
-	<?php
-
-	include("../../menu_lateral_header.php");
-
-	?>
+<?php
+include("../../menu_lateral_header.php");
+?>
 </head>
 <?php
-
 include("../../menu_lateral.php");
-
 ?>
-
 <body>
     <div class="container">
-	<fieldset style=" height:900px;">
+	<fieldset style=" height:1000px;">
         <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-            
-                <legend>Registrar nueva vacuna</legend>
+                <legend>Registrar nuevo laboratorio</legend>
                 <fieldset class="caja">
-                    <legend class="cajalegend">══ Nueva Vacuna ══</legend>
+                    <legend class="cajalegend">══ Nuevo Laboratorio ══</legend>
                     <p style="margin:0;">
-                        <label for="txtid">ID Vacuna</label>
-                        <input type="text" name="txtid" id="txtid" value="<?php echo $segid; ?>" required readonly>
+                        <label for="txtid">ID Laboratorio</label>
+                        <input type="text" name="txtid" id="txtid" value="<?php echo $idLaboratorio; ?>" required readonly>
                     </p>
                     <p>
-                        <label for="txtnombre">Nombre de la Vacuna</label>
+                        <label for="txtnombre">Nombre del Laboratorio</label>
                         <input type="text" autofocus name="txtnombre" id="txtnombre" value="<?php echo $nombre; ?>" required>
                     </p>
                     <p>
-                        <label for="txtdescripcion">Descripción</label>
-						<textarea name="txtdescripcion" id="txtdescripcion" required><?php echo $vacunades; ?></textarea>
-                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
-                                                                                                    ?>" required> -->
+                        <label for="txtdireccion">Dirección</label>
+                        <textarea name="txtdireccion" id="txtdireccion" required><?php echo $direccion; ?></textarea>
                     </p>
                     <p>
-                        <label for="txttotaldosis">Total de Dosis</label>
-                        <input type="number" name="txttotaldosis" id="txttotaldosis" value="<?php echo $totalDosis; ?>" required>
+                        <label for="txttelefono">Teléfono</label>
+                        <input type="text" name="txttelefono" id="txttelefono" value="<?php echo $telefono; ?>" required>
+                    </p>
+                    <p>
+                        <label for="txtemail">Email</label>
+                        <input type="email" name="txtemail" id="txtemail" value="<?php echo $email; ?>" required>
                     </p>
                 </fieldset>
                 <div class="botones-container">
@@ -418,11 +398,11 @@ include("../../menu_lateral.php");
                         <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
                         Registrar
                     </button>
-                    <a class="boton" href="../../mant_vacunas.php?pag=<?php echo $pagina; ?>">
+                    <a class="boton" href="../../mant_laboratorio.php?pag=<?php echo $pagina; ?>">
                         <i class="material-icons" style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i> Cancelar
                     </a>
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_vacunas.php" frameborder="0" style="width: 100%; height: 100%;max-height:500px;"></iframe>
+                <iframe id="modal-iframe" src="../../consulta_laboratorio.php" frameborder="0" style="width: 100%; height: 100%;max-height:700px;"></iframe>
             </fieldset>
         </form>
     </div>
