@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "medicos"
-$query = "SELECT id_medico, cédula, exequátur, nombre, apellido, id_especialidad FROM medicos";
+$query = "SELECT id_medico, cedula, exequatur, nombre, apellido, id_especialidad FROM medicos";
 $result = $conn->query($query);
 
 // Función para obtener los datos del médico por ID
@@ -126,8 +126,8 @@ function obtenerDatosMedico($idMedico, $conn)
         while ($row = $result->fetch_assoc()) {
           echo "<tr>";
           echo "<td>" . $row["id_medico"] . "</td>";
-          echo "<td>" . $row["cédula"] . "</td>";
-          echo "<td>" . $row["exequátur"] . "</td>";
+          echo "<td>" . $row["cedula"] . "</td>";
+          echo "<td>" . $row["exequatur"] . "</td>";
           echo "<td>" . $row["nombre"] . "</td>";
           echo "<td>" . $row["apellido"] . "</td>";
           echo "<td>" . $row["id_especialidad"] . "</td>";
