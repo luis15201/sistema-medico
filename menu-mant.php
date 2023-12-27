@@ -168,11 +168,11 @@ include("menu_lateral.php");
   <div class="card-container">
     <a href="menu-pacientes.php">
       <div class="card-wrapper">
-        <div class="card" style="background: linear-gradient(to right, #e4e5dc, #62c4f9); ">
-          <div class="card-title" style="font-family: Arial Black; color:black;">Pacientes</div>
-          <img src="IMAGENES\rs.png" class="card-icon" alt="Mantenimientos">
+        <div class="card" style="background: linear-gradient(to right, hsl(182, 43%, 76%), #62c4f9); ">
+          <div class="card-title" style="font-family: Arial Black; color:white;text-shadow:2px 2px 5px hsl(344, 100%, 54%);">PACIENTES</div>
+          <img src="IMAGENES\rs2.png" class="card-icon" alt="Mantenimientos">
           <div class="card-description">
-            <p> En este apartado tenemos lo referente a Pacientes y subtareas.</p>
+          <p><b>Menú</b> sobre todo lo referente a <b>Pacientes</b> y subtareas.</p>
           </div>
         </div>
       </div>
@@ -235,6 +235,24 @@ include("menu_lateral.php");
           <div class="card-title" style="font-family: Arial Black; color:black;">Padecimientos</div>
           <img src="IMAGENES/paciente-64.png" class="card-icon" alt="Procesos">
           <div class="card-description">Registrar y editar listado padecimientos comunes/ condición médica previa.</div>
+        </div>
+      </div>
+    </a>
+    <a href="menu-medico.php">
+      <div class="card-wrapper">
+        <div class="card" style="background: linear-gradient(to right, hsl(182, 43%, 76%), #62c4f9); ">
+          <div class="card-title" style="font-family: Arial Black; color:white;text-shadow:2px 2px 5px hsl(344, 100%, 54%);">MÉDICOS</div>
+          <img src="IMAGENES/doctor2.png" class="card-icon" alt="Procesos">
+          <div class="card-description"> <p><b>Menú</b> sobre todo lo referente a <b>Médicos</b> y subtareas.</p> </div>
+        </div>
+      </div>
+    </a>
+    <a href="">
+      <div class="card-wrapper">
+        <div class="card" style="background: linear-gradient(to right, #e4e5dc, #62c4f9); ">
+          <div class="card-title" style="font-family: Arial Black; color:black;">Laboratorio</div>
+          <img src="IMAGENES/laboratorio.png" class="card-icon" alt="Procesos">
+          <div class="card-description">Registrar y editar listado Laboratorios</div>
         </div>
       </div>
     </a>
