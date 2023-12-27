@@ -11,12 +11,12 @@ $query = "SELECT MAX(id_medico) AS max_id FROM medicos";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
-	$row = $result->fetch_assoc();
-	$lastId = $row["max_id"];
-	$newId = $lastId + 1;
+    $row = $result->fetch_assoc();
+    $lastId = $row["max_id"];
+    $newId = $lastId + 1;
 } else {
-	// Si no hay registros en la tabla, asignar el ID inicial
-	$newId = 1;
+    // Si no hay registros en la tabla, asignar el ID inicial
+    $newId = 1;
 }
 
 // Guardar el nuevo ID en una variable PHP
@@ -88,50 +88,50 @@ if (isset($_POST['btnregistrar'])) {
             return true;
         }
     </script>
-<script type="text/javascript">
-		// Obtener el campo de entrada y el nuevo ID
-		var txtId = document.getElementById("txtid");
-		var newId = <?php echo $idMedico; ?>;
+    <script type="text/javascript">
+        // Obtener el campo de entrada y el nuevo ID
+        var txtId = document.getElementById("txtid");
+        var newId = <?php echo $idMedico; ?>;
 
-		// Asignar el nuevo ID al campo de entrada
-		txtId.value = newId;
+        // Asignar el nuevo ID al campo de entrada
+        txtId.value = newId;
 
-		// Cambiar el fondo a gris claro
-		txtId.style.backgroundColor = "#f0f0f0";
-
-
+        // Cambiar el fondo a gris claro
+        txtId.style.backgroundColor = "#f0f0f0";
 
 
-		function placeCursorAtEnd() {
-			if (this.setSelectionRange) {
-				// Double the length because Opera is inconsistent about 
-				// whether a carriage return is one character or two.
-				var len = this.value.length * 2;
-				this.setSelectionRange(len, len);
-			} else {
-				// This might work for browsers without setSelectionRange support.
-				this.value = this.value;
-			}
 
-			if (this.nodeName === "TEXTAREA") {
-				// This will scroll a textarea to the bottom if needed
-				this.scrollTop = 999999;
-			}
-		};
 
-		window.onload = function() {
-			var input = document.getElementById("txtseg");
+        function placeCursorAtEnd() {
+            if (this.setSelectionRange) {
+                // Double the length because Opera is inconsistent about 
+                // whether a carriage return is one character or two.
+                var len = this.value.length * 2;
+                this.setSelectionRange(len, len);
+            } else {
+                // This might work for browsers without setSelectionRange support.
+                this.value = this.value;
+            }
 
-			if (obj.addEventListener) {
-				obj.addEventListener("focus", placeCursorAtEnd, false);
-			} else if (obj.attachEvent) {
-				obj.attachEvent('onfocus', placeCursorAtEnd);
-			}
+            if (this.nodeName === "TEXTAREA") {
+                // This will scroll a textarea to the bottom if needed
+                this.scrollTop = 999999;
+            }
+        };
 
-			input.focus();
-		}
-		
-	</script>
+        window.onload = function () {
+            var input = document.getElementById("txtseg");
+
+            if (obj.addEventListener) {
+                obj.addEventListener("focus", placeCursorAtEnd, false);
+            } else if (obj.attachEvent) {
+                obj.attachEvent('onfocus', placeCursorAtEnd);
+            }
+
+            input.focus();
+        }
+
+    </script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         .botones-container {
@@ -227,12 +227,14 @@ if (isset($_POST['btnregistrar'])) {
             font-weight: bold;
             width: 65px;
         }
+
         input[type="number"]:read-only {
             background-color: rgb(115, 140, 136);
             color: #000;
             font-weight: bold;
             width: 65px;
         }
+
         button,
         input,
         optgroup,
@@ -247,7 +249,8 @@ if (isset($_POST['btnregistrar'])) {
             padding-bottom: 5px;
         }
 
-        input[type="text"],input[type="number"],
+        input[type="text"],
+        input[type="number"],
         input[type="date"],
         select {
 
@@ -385,11 +388,11 @@ if (isset($_POST['btnregistrar'])) {
             border-radius: 10px;
         }
     </style>
-	<?php
+    <?php
 
-	include("../../menu_lateral_header.php");
+    include("../../menu_lateral_header.php");
 
-	?>
+    ?>
 </head>
 <?php
 
@@ -399,22 +402,40 @@ include("../../menu_lateral.php");
 
 <body>
     <div class="container">
-	<fieldset style=" height:1200px;">
-        <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-                <legend>Registrar nuevo médico</legend>
+        <fieldset style=" height:1200px;">
+            <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
+                <legend>Registrar nuevo médico 👩‍⚕️🧑‍⚕️</legend>
                 <fieldset class="caja">
-                    <legend class="cajalegend">══ Nuevo Médico ══</legend>
+                    <legend class="cajalegend">══ Nuevo Médico 🩺 ══</legend>
                     <p style="margin:0;">
                         <label for="txtid">ID Médico</label>
                         <input type="text" name="txtid" id="txtid" value="<?php echo $idMedico; ?>" required readonly>
                     </p>
                     <p>
                         <label for="txtcedula">Cédula</label>
-                        <input type="text" autofocus name="txtcedula" id="txtcedula" value="<?php echo $cedula; ?>" required>
+                        <input type="text" autofocus name="txtcedula" placeholder="001-1234567-8" id="txtcedula"
+                            value="<?php echo $cedula; ?>" required>
                     </p>
+
+                    <script>
+                        // Obtener el elemento del campo de Cédula
+                        var txtCedula = document.getElementById('txtcedula');
+
+                        // Definir la máscara de entrada
+                        var cedulaMask = function (event) {
+                            var cedulaValue = event.target.value;
+                            var cedulaFormatted = cedulaValue.replace(/\D/g, '')
+                                .replace(/(\d{3})(\d{7})(\d{1})/, '$1-$2-$3');
+                            event.target.value = cedulaFormatted;
+                        };
+
+                        // Aplicar la máscara de entrada al escribir en el campo
+                        txtCedula.addEventListener('input', cedulaMask);
+                    </script>
                     <p>
                         <label for="txtexequatur">Exequatur</label>
-                        <input type="number" name="txtexequatur" id="txtexequatur" value="<?php echo $exequatur; ?>" required>
+                        <input type="number" name="txtexequatur" id="txtexequatur" value="<?php echo $exequatur; ?>"
+                            required>
                     </p>
                     <p>
                         <label for="txtnombre">Nombre</label>
@@ -422,11 +443,13 @@ include("../../menu_lateral.php");
                     </p>
                     <p>
                         <label for="txtapellido">Apellido</label>
-                        <input type="text" name="txtapellido" id="txtapellido" value="<?php echo $apellido; ?>" required>
+                        <input type="text" name="txtapellido" id="txtapellido" value="<?php echo $apellido; ?>"
+                            required>
                     </p>
                     <p>
-    <label for="txtespecialidad">ID Especialidad</label>
-    <input type="number" name="txtespecialidad" id="txtespecialidad" value="<?php echo $idEspecialidad; ?>" required style="width:65PX ;" readonly>
+                        <label for="txtespecialidad">ID Especialidad</label>
+                        <input type="number" name="txtespecialidad" id="txtespecialidad"
+                            value="<?php echo $idEspecialidad; ?>" required style="width:65PX ;" readonly>
                         <select name="selectespecialidad" id="selectespecialidad">
                             <option value="">Seleccionar especialidad</option>
                             <?php
@@ -452,7 +475,7 @@ include("../../menu_lateral.php");
                             ?>
                         </select>
                     </p>
-                    
+
                     <script>
                         // Obtener el valor seleccionado del select y asignarlo al input de ID Especialidad
                         document.getElementById('selectespecialidad').addEventListener('change', function () {
@@ -470,15 +493,19 @@ include("../../menu_lateral.php");
                 </fieldset>
                 <div class="botones-container">
                     <button type="submit" name="btnregistrar" value="Registrar">
-                        <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+                        <i class="material-icons"
+                            style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
                         Registrar
                     </button>
                     <a class="boton" href="../../mant_medico.php?pag=<?php echo $pagina; ?>">
-                        <i class="material-icons" style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i> Cancelar
+                        <i class="material-icons"
+                            style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i>
+                        Cancelar
                     </a>
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_medico.php" frameborder="0" style="width: 100%; height: 100%;max-height:700px;"></iframe>
-            </fieldset>
+                <iframe id="modal-iframe" src="../../consulta_medico.php" frameborder="0"
+                    style="width: 100%; height: 100%;max-height:700px;"></iframe>
+        </fieldset>
         </form>
     </div>
 </body>
