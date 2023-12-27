@@ -111,7 +111,7 @@ function in_iframe() {
 </head>
 
 <body>
-  <h3 style="padding:0; margin:0;">Consulta de Médicos</h3>
+  
 
   <table id="tabla_medicos" class="display">
     <thead>

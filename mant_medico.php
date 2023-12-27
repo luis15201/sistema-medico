@@ -373,7 +373,7 @@ include("menu_lateral.php");
             </form>
 
             <div height="600px">
-                <iframe id="modal-iframe" src="consulta_medico2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                <iframe id="modal-iframe" src="consulta_medico2.php" frameborder="0" style="width: 100%; height: 100%; max-height:700px ;"></iframe>
             </div>
             <div style='text-align:right'>
                 <br>
