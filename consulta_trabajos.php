@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "laboratorio"
-$query = "SELECT * FROM especialidad";
+$query = "SELECT * FROM trabajos_medicos";
 $result = $conn->query($query);
 
 
@@ -28,7 +28,7 @@ function in_iframe()
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consulta de Especialidades</title>
+  <title>Consulta de trabajos medicos</title>
   <!-- Enlaces a los archivos CSS externos -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
@@ -327,14 +327,14 @@ function in_iframe()
 
   <script>
     $(document).ready(function() {
-      $('#tabla_especialidad').DataTable({
+      $('#tabla_trabajos').DataTable({
         dom: 'frtip', // Mostrar solo búsqueda y paginación
         language: {
           url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' // Ruta al archivo de traducción
         }
       });
-      var table = $('#tabla_especialidad').DataTable();
-      $('#tabla_especialidad').on('click', 'tr', function() {
+      var table = $('#tabla_trabajos').DataTable();
+      $('#tabla_trabajos').on('click', 'tr', function() {
         var data = table.row(this).data();
         // below some operations with the data
         // How can I set the row color as red?
@@ -343,21 +343,22 @@ function in_iframe()
 
     });
 
-    function seleccionarespecialidad(idespecialidad, nombreespecialidad) {
+    function seleccionartrabajo(idtrabajo, fechadetrabajo) {
       var openerWindow = window.opener;
-      openerWindow.document.getElementById("id_especialidad").value = idespecialidad;
-      openerWindow.document.getElementById("nombre_especialidad").textContent = nombreespecialidad;
+      openerWindow.document.getElementById("id_trabajo_medico").value = idtrabajo;
+      openerWindow.document.getElementById("fecha_creacion").textContent = fechadetrabajo;
       window.close();
     }
   </script>
 </head>
 
 <body>
-  <table id="tabla_especialidad" class="display" style="width:100%">
+  <table id="tabla_trabajos" class="display" style="width:100%">
     <thead>
       <tr>
-        <th>Id Especialidad</th>
-        <th>Especialidad</th>
+        <th>Id Trabajo Medico</th>
+        <th>Fecha De Creacion</th>
+        <th>Descripcion</th>
         <th> </th>
       </tr>
     </thead>
@@ -366,11 +367,12 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarespecialidad('" . $row["id_especialidad"] . "', '" . $row["especialidad"] . "')\">";
-          echo "<td>" . $row["id_especialidad"] . "</td>";
-          echo "<td>" . $row["especialidad"] . "</td>";
+          echo "<tr onclick=\"seleccionartrabajo('" . $row["id_trabajo_medico"] . "', '" . $row["fecha_creacion"] . "', '" . $row["descripcion_trabajo_medico"] . "')\">";
+          echo "<td>" . $row["id_trabajo_medico"] . "</td>";
+          echo "<td>" . $row["fecha_creacion"] . "</td>";
+          echo "<td>" . $row["descripcion_trabajo_medico"] . "</td>";
           echo "</td>"; // Closing tag for the td element
-          echo "<td> <a class='clasebotonVER' href=\"modulo/especialidad/editar.php?id_especialidad=$row[id_especialidad]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td> <a class='clasebotonVER' href=\"modulo/trabajomedico/editar.php?id_trabajo_medico=$row[id_trabajo_medico]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
@@ -383,18 +385,18 @@ function in_iframe()
   <script>
     //evento click para el mantenimiento del paciente
     $(document).ready(function() {
-      var tablaespecialidad = $('#tabla_especialidad').DataTable();
+      var tablatrabajo = $('#tabla_trabajos').DataTable();
       // Asignar un evento de clic a las filas de la tabla
-      $('#tabla_especialidad tbody').on('click', 'tr', function() {
+      $('#tabla_trabajos tbody').on('click', 'tr', function() {
         // Obtener la fila clicada
         var fila = $(this);
         // Obtener los datos de las celdas
-        var idespecialidad = tablaespecialidad.row(fila).data()[0];
-        var nombreespecialidad = tablaespecialidad.row(fila).data()[1];
+        var idtrabajo = tablatrabajo.row(fila).data()[0];
+        var fechadetrabajo = tablatrabajo.row(fila).data()[1];
 
         // Asignar los valores al campo de texto y al label en paciente.php
-        window.parent.document.getElementById('id_especialidad').value = idespecialidad;
-        window.parent.document.getElementById('especialidad').textContent = nombreespecialidad;
+        window.parent.document.getElementById('id_trabajo_medico').value = idtrabajo;
+        window.parent.document.getElementById('fecha_creacion').textContent = fechadetrabajo;
         // Resaltar toda la fila con un delay de 2 segundos
         fila.addClass('resaltado');
         // Cerrar el modal después de 2 segundos

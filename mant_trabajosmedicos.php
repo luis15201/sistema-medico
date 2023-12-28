@@ -10,8 +10,8 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
-// Consulta para obtener los datos de la tabla "especialidades"
-$query = "SELECT * FROM especialidad";
+// Consulta para obtener los datos de la tabla "trabajos medicos"
+$query = "SELECT * FROM trabajos_medicos";
 $result = $conn->query($query);
 ?>
 <html>
@@ -274,13 +274,13 @@ include("menu_lateral.php");
         <div class="container">
             <form method="POST">
                 <fieldset style=" height:1000px;">
-                    <legend>Registrar Especialidad</legend>
-                    <a href="modulo/especialidad/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                    <legend>Registrar Trabajos Medicos </legend>
+                    <a href="modulo/trabajomedico/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                         <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>Agregar
                     </a>
                     <input type="hidden" value="Buscar" name="btnbuscar">
                     <div height="600px">
-                        <iframe id="modal-iframe" src="consulta_especialidad.php" frameborder="0" style="width: 100%; height: 100%; max-height:700px;"></iframe>
+                        <iframe id="modal-iframe" src="consulta_trabajos.php" frameborder="0" style="width: 100%; height: 100%; max-height:700px;"></iframe>
                     </div>
                     <div style='text-align:right'>
                         <br>

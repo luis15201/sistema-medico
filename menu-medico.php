@@ -144,7 +144,7 @@ include("menu_lateral_header.php");
   </div>
   </a>
 
-  <a href="">
+  <a href="mant_trabajosmedicos.php">
   <div class="card-wrapper">
     <div class="card" style="background: linear-gradient(to right,#e4e5dc ,#62c4f9 ); ">
       <div class="card-title" style="font-family: Anton; color:black;">Trabajos Medicos</div>
