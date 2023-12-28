@@ -75,17 +75,7 @@ function in_iframe() {
        cursor: pointer;
     }
 
-    #tabla_medicos tbody tr:active {
-      background-color: #5bc0f7;
-      cursor: pointer;
-      border: 4px solid red;
-      transition: background-color 0.8s ease, box-shadow 0.8s ease, color 0.5s ease, font-weight 0.8s ease;
-      box-shadow: 0 0 5px rgba(91, 192, 247, 0.8), 0 0 10px red;
-      font-size: 25px;
-      color: white;
-      font-weight: bold;
-      font-family: "Copperplate", Fantasy;
-    }
+    
 
     .clasebotonVER {
       color: #f0f0f0;
