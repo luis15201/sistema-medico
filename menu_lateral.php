@@ -46,6 +46,11 @@
                                 <a href="mant_paciente_historiaClinica.php"
                                     class="list-group-item list-group-item-action"><i class="material-icons">healing</i>
                                     Padecimientos-Pacientes</a>
+                                <a href="mant_padres_pacientes.php" class="list-group-item list-group-item-action"><span
+                                        class="material-symbols-outlined">
+                                        diversity_4
+                                    </span>
+                                    Padres-Pacientes</a>
 
                             </div>
 
