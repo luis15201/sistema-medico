@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 // Consulta para obtener los datos de la tabla "laboratorio"
-$query = "SELECT * FROM laboratorio";
+$query = "SELECT * FROM especialidad";
 $result = $conn->query($query);
 ?>
 <html>
@@ -275,7 +275,7 @@ include("menu_lateral.php");
             <form method="POST">
                 <fieldset style=" height:1000px;">
                     <legend>Registrar Especialidad</legend>
-                    <a href="modulo/laboratorio/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                    <a href="modulo/especialidad/agregar.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
                         <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>Agregar
                     </a>
                     <input type="hidden" value="Buscar" name="btnbuscar">

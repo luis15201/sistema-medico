@@ -356,7 +356,7 @@ function in_iframe()
   <table id="tabla_especialidad" class="display" style="width:100%">
     <thead>
       <tr>
-        <th>Id Laboratorio</th>
+        <th>Id Especialidad</th>
         <th>Especialidad</th>
         <th> </th>
       </tr>
@@ -370,7 +370,7 @@ function in_iframe()
           echo "<td>" . $row["id_especialidad"] . "</td>";
           echo "<td>" . $row["especialidad"] . "</td>";
           echo "</td>"; // Closing tag for the td element
-          echo "<td> <a class='clasebotonVER' href=\"modulo/laboratorio/editar.php?id_laboratorio=$row[id_laboratorio]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td> <a class='clasebotonVER' href=\"modulo/especialidad/editar.php?id_especialidad=$row[id_especialidad]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
