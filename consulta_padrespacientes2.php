@@ -348,7 +348,7 @@ function in_iframe()
 
     function seleccionarpadrespacientes(idpadrespacientes, nombrepadrespacientes, apellidopadrespacientes) {
       var openerWindow = window.opener;
-      openerWindow.document.getElementById("Numidentificador").value = idpadrespacientes;
+      openerWindow.document.getElementById("Numidentificador").textContent = idpadrespacientes;
       openerWindow.document.getElementById("Nombre").textContent = nombrepadrespacientes;
       openerWindow.document.getElementById("Apellido").textContent = apellidopadrespacientes;
       window.close();
@@ -386,7 +386,7 @@ function in_iframe()
           echo "<td>" . $row["Sexo"] . "</td>";
           echo "<td>" . $row["Direccion"] . "</td>";
           echo "</td>"; // Closing tag for the td element
-          echo "<td> <a class='clasebotonVER' href=\"modulo/padrespacientes/editar.php?idpadrespacientes=$row[Numidentificador]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:15px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td> <a class='clasebotonVER' href=\"modulo/padrespacientes/editar.php?Numidentificador=$row[Numidentificador]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:15px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
@@ -410,7 +410,7 @@ function in_iframe()
         var apellidopadrespacientes = tablapadrespacientes.row(fila).data()[3];
 
         // Asignar los valores al campo de texto y al label en padres pacientes en agregar.php
-        window.parent.document.getElementById('Numidentificador').value = idpadrespacientes;
+        window.parent.document.getElementById('Numidentificador').textContent= idpadrespacientes;
         window.parent.document.getElementById('Nombre').textContent = nombrepadrespacientes;
         window.parent.document.getElementById('apellido').textContent = apellidopadrespacientes;
         // Resaltar toda la fila con un delay de 2 segundos
