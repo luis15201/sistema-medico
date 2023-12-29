@@ -428,7 +428,7 @@ include("../../menu_lateral.php");
                                 .replace(/(\d{3})(\d{7})(\d{1})/, '$1-$2-$3');
                             event.target.value = cedulaFormatted;
                         };
-
+                         txtCedula.maxLength = 13;
                         // Aplicar la máscara de entrada al escribir en el campo
                         txtCedula.addEventListener('input', cedulaMask);
                     </script>

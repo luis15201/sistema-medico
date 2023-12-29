@@ -107,6 +107,9 @@ function in_iframe()
         color: inherit;
         margin-left: 3px;
     }
+    th{background-color: white;
+    text-transform: uppercase; }
+    tr,th, td{ border:1px solid #ddd ;}
 
     tr:hover {
         background-color: #A8A4DE;
@@ -354,7 +357,7 @@ function in_iframe()
 </head>
 
 <body>
-  <table id="tabla_padrespacientes" class="display" style="width:100%">
+  <table id="tabla_padrespacientes" class="display" style="width:100%; font-size:small;">
     <thead>
       <tr>
         <th>Id</th>
