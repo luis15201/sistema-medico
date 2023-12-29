@@ -10,17 +10,7 @@ $pagina = $_GET['pag'];
 $query = "SELECT MAX(Numidentificador) AS max_id FROM datos_padres_de_pacientes";
 $result = $conn->query($query);
 
-// if ($result->num_rows > 0) {
-// 	$row = $result->fetch_assoc();
-// 	$lastId = $row["max_id"];
-// 	$newId = $lastId + 1;
-// } else {
-// 	// Si no hay registros en la tabla, asignar el ID inicial
-// 	$newId = 1;
-// }
 
-// // Guardar el nuevo ID en una variable PHP
-// $numIdentificador = $newId;
 
 // Función de validación de campos
 function validarCampos($campos)
@@ -33,6 +23,20 @@ function validarCampos($campos)
     return true;
 }
 
+// Función para verificar si el identificador ya existe
+function existeIdentificador($conn, $numIdentificador)
+{
+    $query = "SELECT COUNT(*) as count FROM datos_padres_de_pacientes WHERE Numidentificador = '$numIdentificador'";
+    $result = $conn->query($query);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0;
+    }
+
+    return false;
+}
+
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
     $camposRequeridos = ['txtnumidentificador', 'txttipo_identificador', 'txtnombre', 'txtapellido', 'txtparentesco', 'txtnacionalidad', 'txtsexo', 'txtdireccion', 'txtocupacion'];
@@ -40,27 +44,32 @@ if (isset($_POST['btnregistrar'])) {
     if (validarCampos($camposRequeridos)) {
         $numIdentificador = $_POST['txtnumidentificador'];
         $tipoIdentificador = $_POST['txttipo_identificador'];
-        $nombre = $_POST['txtnombre'];
-        $apellido = $_POST['txtapellido'];
-        $parentesco = $_POST['txtparentesco'];
-        $nacionalidad = $_POST['txtnacionalidad'];
-        $sexo = $_POST['txtsexo'];
-        $direccion = $_POST['txtdireccion'];
-        $ocupacion = $_POST['txtocupacion'];
 
-        // Insertar datos en la tabla datos_padres_de_pacientes
-        $queryAdd = mysqli_query($conn, "INSERT INTO datos_padres_de_pacientes(Numidentificador, Tipo_Identificador, Nombre, Apellido, Parentesco, Nacionalidad, Sexo, Direccion, Ocupacion) VALUES('$numIdentificador', '$tipoIdentificador', '$nombre', '$apellido', '$parentesco', '$nacionalidad', '$sexo', '$direccion', '$ocupacion')");
-
-        if (!$queryAdd) {
-            echo "Error con el registro: " . mysqli_error($conn);
+        // Verificar si el identificador ya existe
+        if (existeIdentificador($conn, $numIdentificador)) {
+            echo "<script>alert('El número de identificación ya existe. Por favor, ingrese otro número.');</script>";
         } else {
-            echo "<script>window.location= '../../mant_padres_pacientes.php?pag=1' </script>";
+            $nombre = $_POST['txtnombre'];
+            $apellido = $_POST['txtapellido'];
+            $parentesco = $_POST['txtparentesco'];
+            $nacionalidad = $_POST['txtnacionalidad'];
+            $sexo = $_POST['txtsexo'];
+            $direccion = $_POST['txtdireccion'];
+            $ocupacion = $_POST['txtocupacion'];
+
+            // Insertar datos en la tabla datos_padres_de_pacientes
+            $queryAdd = mysqli_query($conn, "INSERT INTO datos_padres_de_pacientes(Numidentificador, Tipo_Identificador, Nombre, Apellido, Parentesco, Nacionalidad, Sexo, Direccion, Ocupacion) VALUES('$numIdentificador', '$tipoIdentificador', '$nombre', '$apellido', '$parentesco', '$nacionalidad', '$sexo', '$direccion', '$ocupacion')");
+
+            if (!$queryAdd) {
+                echo "Error con el registro: " . mysqli_error($conn);
+            } else {
+                echo "<script>window.location= '../../mant_padres_pacientes.php?pag=1' </script>";
+            }
         }
     } else {
         echo "<script>alert('Por favor, complete todos los campos');</script>";
     }
 }
-
 ?>
 <html>
 
