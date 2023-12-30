@@ -421,9 +421,9 @@ include("../../menu_lateral.php");
     <div class="container">
         <fieldset style=" height:1200px;">
             <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-                <legend>Registrar datos de padres de pacientes</legend>
+                <legend>Registrar datos de padres de pacientes 👨‍👩‍👧‍👦</legend>
                 <fieldset class="caja">
-                    <legend class="cajalegend">══ Datos de Padres de Pacientes ══</legend>
+                    <legend class="cajalegend">══ ➕ Agregar Padres de Pacientes 👪 ══</legend>
                     <p>
                         <label for="txttipo_identificador">Tipo Identificador</label>
                         <select id="txttipo_identificador" name="txttipo_identificador" style=" width: 110px; "

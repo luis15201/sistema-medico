@@ -340,7 +340,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
             cursor: pointer;
         }
 
-        /* Estilos adicionales específicos para el iframe dentro del modal */
+        /* Estilos adicionales específicos para el iframe dentro del modal. */
         .custom-iframe {
             width: 100%;
             height: 100%;
@@ -394,8 +394,8 @@ include("../../menu_lateral.php");
                         <label for="txttipo_identificador">Tipo Identificador</label>
                         <select id="txttipo_identificador" name="txttipo_identificador" style=" width: 110px; "
                             autocomplete="off" require>
-                            <option <?php echo ($tipoIdentificador =='cédula') ? 'selected' : ''; ?> value="cédula">cédula</option>
-                            <option  <?php echo ($tipoIdentificador =='pasaporte') ? 'selected' : ''; ?> value="pasaporte">pasaporte</option>
+                            <option <?php echo ($tipoIdentificador =='cédula' || $tipoIdentificador =='Cédula') ? 'selected' : ''; ?> value="Cédula">Cédula</option>
+                            <option  <?php echo ($tipoIdentificador =='pasaporte'|| $tipoIdentificador =='Pasaporte' ) ? 'selected' : ''; ?> value="Pasaporte">Pasaporte</option>
                         </select>
                         <!-- <input type="text" autofocus name="txttipo_identificador" id="txttipo_identificador" value="<?php //echo $tipoIdentificador; ?>" required> -->
                     </p>
