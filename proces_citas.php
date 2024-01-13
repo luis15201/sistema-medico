@@ -382,13 +382,103 @@ include("menu_lateral.php");
                     </p>
 					
                     <p>
-                        <label for="txtnombre">Id medico</label>
-                        <input type="text" autofocus name="txtmedico" id="txtmedico" value="<?php echo $fechacreacion; ?>" required>
+					<div>
+						<label for="id_medico">ID medico:</label>
+						<input type="text" id="id_medico" name="id_medico" style="width: 115px;"  required>
+						<button id="buscarmedico" class="boton_bus" title="Buscar medicos registrados">
+							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+						</button>
+					</div>
+					<div id="Modalmedico" class="custom-modal">
+						<div class="custom-modal-content">
+							<span class="close">&times;</span>
+							<iframe id="modal-iframe" src="consulta_medico2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+						</div>
+					</div>
+					<script>
+						$("#id_medico").on("input", function() {
+							var idmedico = $(this).val();
+							// Realizar la solicitud AJAX para obtener los datos del paciente
+							$.ajax({
+								url: 'consulta_apellido_nombre_medico.php', // Ruta al archivo PHP que creamos
+								type: 'POST',
+								data: {
+									id_medico: idmedico
+								},
+								dataType: 'json',
+								success: function(data) {
+									$("#nombre_medico").text(data.nombre || '');
+									$("#apellido_medico").text(data.apellido || '');
+								},
+								error: function() {
+									alert('Hubo un error al obtener los datos del medico.');
+								}
+							});
+						});
+					</script>
+                  <div>
+						<label for="Nombre_medico">Nombre del medico:</label>
+						<label id="nombre_medico" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+					</div>
+					<div>
+						<label for="Apellido_medico">Apellido del medico:</label>
+						<label id="apellido_medico" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+					</div>
+
+
+                        <!--<label for="txtnombre">Id medico</label>
+                        <input type="text" autofocus name="txtmedico" id="txtmedico" value="<?php //echo $fechacreacion; ?>" required>--> 
+
+
+
                     </p>
                     
 					<p>
-                        <label for="txtpaciente">Id paciente</label>
-						<input type="text" autofocus name="txtpaciente" id="txtpaciente" value="<?php echo $fechacreacion; ?>" required>
+					<div>
+						<label for="id_paciente">ID PACIENTE:</label>
+						<input type="text" id="id_paciente" name="id_paciente" style="width: 115px;"  required>
+						<button id="buscarpaciente" class="boton_bus" title="Buscar pacientes registrados">
+							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
+						</button>
+					</div>
+					<div id="Modalpaciente" class="custom-modal">
+						<div class="custom-modal-content">
+							<span class="close">&times;</span>
+							<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+						</div>
+					</div>
+					<script>
+						$("#id_paciente").on("input", function() {
+							var idPaciente = $(this).val();
+							// Realizar la solicitud AJAX para obtener los datos del paciente
+							$.ajax({
+								url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
+								type: 'POST',
+								data: {
+									id_paciente: idPaciente
+								},
+								dataType: 'json',
+								success: function(data) {
+									$("#nombre_paciente").text(data.nombre || '');
+									$("#apellido_paciente").text(data.apellido || '');
+								},
+								error: function() {
+									alert('Hubo un error al obtener los datos del paciente.');
+								}
+							});
+						});
+					</script>
+                  <div>
+						<label for="Nombre_paciente">Nombre del paciente:</label>
+						<label id="nombre_paciente" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+					</div>
+					<div>
+						<label for="Apellido_paciente">Apellido del paciente:</label>
+						<label id="apellido_paciente" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+					</div>
+
+                        <!-- <label for="txtpaciente">Id paciente</label>
+						<input type="text" autofocus name="txtpaciente" id="txtpaciente" value="<?php //echo $fechacreacion; ?>" required> -->
                         <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
                                                                                                     ?>" required> -->
                     </p>
@@ -458,5 +548,50 @@ include("menu_lateral.php");
 		
     </div>
 </body>
+<script>
 
+        var idPacienteActual = "";
+		// Obtener referencia al botón y al modal del paciente
+		const btnbusquedamedico = document.getElementById("buscarmedico");
+			const modalmedico = document.getElementById("Modalmedico");
+			// Función para mostrar el modal de vacuna
+			function mostrarModalm() {
+				modalmedico.style.display = "block";
+			}
+			// Función para ocultar el modal vacuna
+			function ocultarModalm() {
+				modalmedico.style.display = "none";
+			}
+			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+			btnbusquedamedico.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalmedico.style.display === "none") {
+					mostrarModalm();
+				} else {
+					ocultarModalm();
+				}
+			});
+        
+			var idmedicoActual = "";
+		// Obtener referencia al botón y al modal del paciente
+		const btnbusquedameido = document.getElementById("buscarpaciente");
+			const modalpaciente = document.getElementById("Modalpaciente");
+			// Función para mostrar el modal de vacuna
+			function mostrarModalp() {
+				modalpaciente.style.display = "block";
+			}
+			// Función para ocultar el modal vacuna
+			function ocultarModalp() {
+				modalpaciente.style.display = "none";
+			}
+			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+			btnbusquedapaciente.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalpaciente.style.display === "none") {
+					mostrarModalp();
+				} else {
+					ocultarModalp();
+				}
+			});
+</script>
 </html>
