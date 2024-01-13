@@ -116,7 +116,7 @@
                         data-bs-parent="#submenu-container" style="text-decoration:none"
                         class="list-group-item list-group-item-action">Procesos</a>
                     <div class="collapse" id="submenu_procesos" data-bs-parent="#submenu-container">
-                        <a href="#" class="list-group-item list-group-item-action">Subitem 1</a>
+                        <a href="proces_citas" class="list-group-item list-group-item-action">Citas</a>
                         <a href="#" class="list-group-item list-group-item-action">Subitem 2</a>
                     </div>
 

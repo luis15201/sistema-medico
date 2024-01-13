@@ -1,10 +1,10 @@
 <?php
 session_start();
 error_reporting(E_ALL & ~E_WARNING);
-require_once "../../include/conec.php";
+require_once "include/conec.php";
 $pagina = $_GET['pag'];
 // Consultar el último ID de la tabla especialidad
-$query = "SELECT MAX(id_trabajo_medico) AS max_id FROM trabajos_medicos";
+$query = "SELECT MAX(id_cita) AS max_id FROM citas";
 $result = $conn->query($query);
 if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
@@ -15,7 +15,7 @@ if ($result->num_rows > 0) {
 	$newId = 1;
 }
 // Guardar el nuevo ID en una variable PHP
-$idtrabajos = $newId;
+$idcita = $newId;
 // Función de validación de campos
 function validarCampos($campos)
 {
@@ -28,18 +28,22 @@ function validarCampos($campos)
 }
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
-    $camposRequeridos = ['txtid', 'txtfecha', 'txtdescripcion'];
+    $camposRequeridos = ['txtid', 'txtmedico', 'txtpaciente', 'txtfecha', 'txthora', 'estado'];
     if (validarCampos($camposRequeridos)) {
-        $idtrabajos = $_POST['txtid'];
-        $fechacreacion = $_POST['txtfecha'];
-        $descripcion = $_POST['txtdescripcion'];
+        $idcita = $_POST['txtid'];
+        $medico = $_POST['txtmedico'];
+        $paciente = $_POST['txtpaciente'];
+        $fecha = $_POST['txtfecha'];
+        $hora = $_POST['txthora'];
+        $observacion= $_POST['txtdescripcion'];
+        $estado = $_POST['estado'];
         // Insertar datos en la tabla laboratorio
-        $queryAdd = mysqli_query($conn, "INSERT INTO trabajos_medicos (id_trabajo_medico, fecha_creacion, descripcion_trabajo_medico) VALUES('$idtrabajos', '$fechacreacion', '$descripcion')");
+        $queryAdd = mysqli_query($conn, "INSERT INTO citas (id_cita, fecha, hora, id_paciente, id_medico, observaciones, Estado) VALUES('$idcita', '$fecha', '$hora', '$paciente', '$medico', '$observacion', '$estado')");
 
         if (!$queryAdd) {
             echo "Error con el registro: " . mysqli_error($conn);
         } else {
-            echo "<script>window.location= '../../mant_trabajosmedicos.php?pag=1' </script>";
+            echo "<script>window.location= 'proces_citas.php?pag=1' </script>";
         }
     } else {
         echo "<script>alert('Por favor, complete todos los campos');</script>";
@@ -51,7 +55,7 @@ if (isset($_POST['btnregistrar'])) {
 
 <head>
     <title>Sis_Pediátrico</title>
-    <link rel="icon" type="image/x-icon" href="../../IMAGENES/hospital2.ico">
+    <link rel="icon" type="image/x-icon" href="IMAGENES/hospital2.ico">
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/estilo-paciente.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -61,11 +65,15 @@ if (isset($_POST['btnregistrar'])) {
  <script>
         // Función para validar campos antes de enviar el formulario
         function validarFormulario() {
-            var idtrabajos = document.getElementById("txtid").value;
-            var fechacreacion = document.getElementById("txtfecha").value;
-            var descripcion = document.getElementById("txtdescripcion").value;
+            var idcita = document.getElementById("txtid").value;
+            var fecha = document.getElementById("txtfecha").value;
+            var hora  = document.getElementById("txtdescripcion").value;
+            var id_paciente = document.getElementById("txtfecha").value;
+            var id_medico = document.getElementById("txtfecha").value;
+            var observaciones = document.getElementById("txtfecha").value;
+            var estado = document.getElementById("estado").value;
 
-            if (idtrabajos.trim() === '' || fechacreacion.trim() === '' || descripcion.trim() === '') {
+            if (idcita.trim() === '' || fecha.trim() === '' || hora.trim() === '' || id_paciente.trim() === '' || id_medico.trim() === '' || observaciones.trim() === '' || estado.trim() === '') {
                 alert("Por favor, complete todos los campos");
                 return false;
             }
@@ -322,7 +330,7 @@ if (isset($_POST['btnregistrar'])) {
 	<script type="text/javascript">
 		// Obtener el campo de entrada y el nuevo ID
 		var txtId = document.getElementById("txtid");
-		var newId = <?php echo $idlaboratorio; ?>;
+		var newId = <?php echo $idcita; ?>;
 		// Asignar el nuevo ID al campo de entrada
 		txtId.value = newId;
 		// Cambiar el fondo a gris claro
@@ -343,7 +351,7 @@ if (isset($_POST['btnregistrar'])) {
 			}
 		};
 		window.onload = function() {
-			var input = document.getElementById("txtfecha");
+			var input = document.getElementById("txtmedico");
 
 			if (obj.addEventListener) {
 				obj.addEventListener("focus", placeCursorAtEnd, false);
@@ -355,35 +363,68 @@ if (isset($_POST['btnregistrar'])) {
 		}	
 	</script>
 <?php
-include("../../menu_lateral_header.php");
+include("menu_lateral_header.php");
 ?>
 </head>
 <?php
-include("../../menu_lateral.php");
+include("menu_lateral.php");
 ?>
 <body>
     <div class="container">
 	<fieldset style=" height:1000px;">
         <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-                <legend>Registrar nueva especialidad</legend>
+                <legend>==Citas==</legend>
                 <fieldset class="caja">
-                    <legend class="cajalegend">══ Nuevo trabajo medico ══</legend>
+                    <legend class="cajalegend">══ Nueva Cita 📖 ══</legend>
                     <p style="margin:0;">
-                        <label for="txtid">ID trabajo medico</label>
-                        <input type="text" name="txtid" id="txtid" value="<?php echo $idtrabajos; ?>" required readonly>
+                        <label for="txtid">ID cita</label>
+                        <input type="text" name="txtid" id="txtid" value="<?php echo $idcita; ?>" required readonly>
                     </p>
 					
                     <p>
-                        <label for="txtnombre">fecha de creacion</label>
-                        <input type="date" autofocus name="txtfecha" id="txtfecha" value="<?php echo $fechacreacion; ?>" required>
+                        <label for="txtnombre">Id medico</label>
+                        <input type="text" autofocus name="txtmedico" id="txtmedico" value="<?php echo $fechacreacion; ?>" required>
                     </p>
                     
 					<p>
+                        <label for="txtpaciente">Id paciente</label>
+						<input type="text" autofocus name="txtpaciente" id="txtpaciente" value="<?php echo $fechacreacion; ?>" required>
+                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
+                                                                                                    ?>" required> -->
+                    </p>
+                    
+                    <p>
+                        <label for="txtfecha">Fecha</label>
+						<input type="date" autofocus name="txtfecha" id="txtfecha" value="<?php echo $fechacreacion; ?>" required>
+                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
+                                                                                                    ?>" required> -->
+                    </p>
+    
+                    <p>
+                        <label for="txthora">Hora</label>
+						<input type="time" autofocus name="txthora" id="txthora" value="<?php echo $fechacreacion; ?>" required>
+                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
+                                                                                                    ?>" required> -->
+                    </p>
+
+                    <p>
+                        <label for="txtestado">Estado</label>
+                        <select name="estado" id="estado" value="<?php echo $estado; ?>" required>
+                        <option value="Vigente">Vigente</option>
+                        <option value="Cancelada">Cancelada</option>
+                        
+                        </select><?php echo $descripcion; ?>
+                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
+                                                                                                    ?>" required> -->
+                    </p>
+
+                    <p>
                         <label for="txtdescripcion">Descripción</label>
 						<textarea name="txtdescripcion" id="txtdescripcion" required><?php echo $descripcion; ?></textarea>
                         <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
                                                                                                     ?>" required> -->
                     </p>
+
 
                 </fieldset>
                 <div class="botones-container">
@@ -391,13 +432,30 @@ include("../../menu_lateral.php");
                         <i class="material-icons" style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
                         Registrar
                     </button>
-                    <a class="boton" href="../../mant_trabajosmedicos.php?pag=<?php echo $pagina; ?>">
+                    <!--<a class="boton" href="mant_trabajosmedicos.php?pag=<?php echo $pagina; ?>">
                         <i class="material-icons" style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i> Cancelar
-                    </a>
+                    </a>-->
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_trabajos.php" frameborder="0" style="width: 100%; height: 100%;max-height:700px;"></iframe>
-            </fieldset>
+                <div>
+
+				<iframe id="modal-iframe" src="consulta_cita.php" frameborder="0" style="width: 100%; height: 100%;max-height:440px;"></iframe>
+				
+			</div>
+			<div style=" margin-top:-20;padding:0; height:0cm;">
+                <a href="menu.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                    <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">menu</i> Menú Principal
+                </a>
+                <a href="index.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                    <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">login</i> Login
+                </a>
+                <a href="menu-proces.php" id="btnatras" class="btn btn-primary boton" style="width: 120px;vertical-align: baseline; font-weight:bold;">
+                    <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">arrow_back</i> Atrás
+                </a>
+            </div>
+			</fieldset>
+			
         </form>
+		
     </div>
 </body>
 

@@ -195,6 +195,7 @@
       </div>
     </a>
     <div class="card-wrapper">
+      <a href="menu-proces.php">
       <div class="card">
         <div class="card-title">Procesos</div>
         <img src="IMAGENES/procesos.png" class="card-icon" alt="Procesos">
@@ -203,7 +204,7 @@
         </div>
       </div>
     </div>
-
+    </a>
     <div class="card-wrapper">
       <div class="card">
         <div class="card-title">Consultas</div>

@@ -172,6 +172,16 @@ include("menu_lateral_header.php");
   </div>
   </div>
 </a>
+
+<a href="">
+  <div class="card-wrapper">
+  <div class="card" style="background: linear-gradient(to right,#e4e5dc ,#62c4f9 ); ">
+      <div class="card-title" style="font-family: Anton; color:black;">localizador Padres</div>
+    <img src="IMAGENES\\familia.png" class="card-icon" alt="Procesos">
+    <div class="card-description">Registrar los Padres de los paciente/s</div>
+  </div>
+  </div>
+</a>
   <!-- <div class="card">
     <div class="card-title">Subproceso #3</div>
     <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
