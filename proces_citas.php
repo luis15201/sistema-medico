@@ -550,7 +550,7 @@ include("menu_lateral.php");
 </body>
 <script>
 
-        var idPacienteActual = "";
+        var idmedicoActual = "";
 		// Obtener referencia al botón y al modal del paciente
 		const btnbusquedamedico = document.getElementById("buscarmedico");
 			const modalmedico = document.getElementById("Modalmedico");
@@ -572,9 +572,9 @@ include("menu_lateral.php");
 				}
 			});
         
-			var idmedicoActual = "";
+			var idpacienteActual = "";
 		// Obtener referencia al botón y al modal del paciente
-		const btnbusquedameido = document.getElementById("buscarpaciente");
+		const btnbusquedapaciente = document.getElementById("buscarpaciente");
 			const modalpaciente = document.getElementById("Modalpaciente");
 			// Función para mostrar el modal de vacuna
 			function mostrarModalp() {
