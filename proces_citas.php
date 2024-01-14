@@ -369,9 +369,12 @@ include("menu_lateral_header.php");
 <?php
 include("menu_lateral.php");
 ?>
+
+
 <body>
     <div class="container">
-	<fieldset style=" height:1000px;">
+     
+	<fieldset style=" height:1160px;">
         <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
                 <legend>==Citas==</legend>
                 <fieldset class="caja">
