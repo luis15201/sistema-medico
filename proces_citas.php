@@ -545,7 +545,7 @@ include("menu_lateral.php");
                     <i class="material-icons" style="font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;">arrow_back</i> Atrás
                 </a>
             </div>
-			</fieldset>
+		</fieldset>
 			
         </form>
 		
@@ -597,4 +597,5 @@ include("menu_lateral.php");
 				}
 			});
 </script>
+
 </html>
