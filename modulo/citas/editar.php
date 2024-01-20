@@ -397,7 +397,7 @@ include("../../menu_lateral.php");
 					<div id="Modalmedico" class="custom-modal">
 						<div class="custom-modal-content">
 							<span class="close">&times;</span>
-							<iframe id="modal-iframe" src="consulta_medico2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+							<iframe id="modal-iframe" src="../../consulta_medico2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 						</div>
 					</div>
 					<script>
@@ -405,7 +405,7 @@ include("../../menu_lateral.php");
 							var idmedico = $(this).val();
 							// Realizar la solicitud AJAX para obtener los datos del paciente
 							$.ajax({
-								url: 'consulta_apellido_nombre_medico.php', // Ruta al archivo PHP que creamos
+								url: '../../consulta_apellido_nombre_medico.php', // Ruta al archivo PHP que creamos
 								type: 'POST',
 								data: {
 									id_medico: idmedico
@@ -449,7 +449,7 @@ include("../../menu_lateral.php");
 					<div id="Modalpaciente" class="custom-modal">
 						<div class="custom-modal-content">
 							<span class="close">&times;</span>
-							<iframe id="modal-iframe" src="consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+							<iframe id="modal-iframe" src="../../consulta_paciente.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 						</div>
 					</div>
 					<script>
@@ -457,7 +457,7 @@ include("../../menu_lateral.php");
 							var idPaciente = $(this).val();
 							// Realizar la solicitud AJAX para obtener los datos del paciente
 							$.ajax({
-								url: 'consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
+								url: '../../consulta_apellido_nombre_paciente.php', // Ruta al archivo PHP que creamos
 								type: 'POST',
 								data: {
 									id_paciente: idPaciente
@@ -535,6 +535,53 @@ include("../../menu_lateral.php");
         </form>
     </div>
 </body>
+
+<script>
+
+        var idmedicoActual = "";
+		// Obtener referencia al botón y al modal del paciente
+		const btnbusquedamedico = document.getElementById("buscarmedico");
+			const modalmedico = document.getElementById("Modalmedico");
+			// Función para mostrar el modal de vacuna
+			function mostrarModalm() {
+				modalmedico.style.display = "block";
+			}
+			// Función para ocultar el modal vacuna
+			function ocultarModalm() {
+				modalmedico.style.display = "none";
+			}
+			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+			btnbusquedamedico.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalmedico.style.display === "none") {
+					mostrarModalm();
+				} else {
+					ocultarModalm();
+				}
+			});
+        
+			var idpacienteActual = "";
+		// Obtener referencia al botón y al modal del paciente
+		const btnbusquedapaciente = document.getElementById("buscarpaciente");
+			const modalpaciente = document.getElementById("Modalpaciente");
+			// Función para mostrar el modal de vacuna
+			function mostrarModalp() {
+				modalpaciente.style.display = "block";
+			}
+			// Función para ocultar el modal vacuna
+			function ocultarModalp() {
+				modalpaciente.style.display = "none";
+			}
+			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
+			btnbusquedapaciente.addEventListener("click", function(event) {
+				event.preventDefault(); // Evitar recargar la página
+				if (modalpaciente.style.display === "none") {
+					mostrarModalp();
+				} else {
+					ocultarModalp();
+				}
+			});
+</script>
 
 </html>
 
