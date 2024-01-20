@@ -28,11 +28,11 @@ function validarCampos($campos)
 }
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
-    $camposRequeridos = ['txtid', 'txtmedico', 'txtpaciente', 'txtfecha', 'txthora', 'estado'];
+    $camposRequeridos = ['txtid', 'id_medico', 'id_paciente', 'txtfecha', 'txthora', 'estado'];
     if (validarCampos($camposRequeridos)) {
         $idcita = $_POST['txtid'];
-        $medico = $_POST['txtmedico'];
-        $paciente = $_POST['txtpaciente'];
+        $medico = $_POST['id_medico'];
+        $paciente = $_POST['id_paciente'];
         $fecha = $_POST['txtfecha'];
         $hora = $_POST['txthora'];
         $observacion= $_POST['txtdescripcion'];
@@ -67,10 +67,10 @@ if (isset($_POST['btnregistrar'])) {
         function validarFormulario() {
             var idcita = document.getElementById("txtid").value;
             var fecha = document.getElementById("txtfecha").value;
-            var hora  = document.getElementById("txtdescripcion").value;
-            var id_paciente = document.getElementById("txtfecha").value;
-            var id_medico = document.getElementById("txtfecha").value;
-            var observaciones = document.getElementById("txtfecha").value;
+            var hora  = document.getElementById("txthora").value;
+            var id_paciente = document.getElementById("id_paciente").value;
+            var id_medico = document.getElementById("id_medico").value;
+            var observaciones = document.getElementById("txtdescripcion").value;
             var estado = document.getElementById("estado").value;
 
             if (idcita.trim() === '' || fecha.trim() === '' || hora.trim() === '' || id_paciente.trim() === '' || id_medico.trim() === '' || observaciones.trim() === '' || estado.trim() === '') {

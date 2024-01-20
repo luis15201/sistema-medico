@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "laboratorio"
-$query = "SELECT * FROM citas";
+$query = "SELECT citas.id_cita, citas.fecha, citas.hora, citas.observaciones, citas.Estado, CONCAT(paciente.nombre, ' ', paciente.apellido) AS Paciente, seguro.Nombre AS nombre_seguro FROM citas JOIN paciente ON citas.id_paciente = paciente.id_paciente JOIN seguro_paciente ON citas.id_paciente = seguro_paciente.id_paciente JOIN seguro ON seguro_paciente.Id_seguro_salud = seguro.Id_seguro_salud";
 $result = $conn->query($query);
 
 
@@ -343,15 +343,15 @@ function in_iframe()
 
     });
 
-    function seleccionarcita(idcita, fecha, hora, id_paciente, id_medico, observaciones, estado) {
+    function seleccionarcita(idcita, fecha, hora, observaciones, Estado, paciente, nombre_seguro) {
       var openerWindow = window.opener;
       openerWindow.document.getElementById("id_cita").value = idcita;
       openerWindow.document.getElementById("fecha").textContent = fecha;
       openerWindow.document.getElementById("hora").textContent = hora;
-      openerWindow.document.getElementById("id_paciente").textContent = id_paciente;
-      openerWindow.document.getElementById("id_medico").textContent = id_medico;
       openerWindow.document.getElementById("observaciones").textContent = observaciones;
-      openerWindow.document.getElementById("estado").textContent = estado;
+      openerWindow.document.getElementById("Estado").textContent = Estado;
+      openerWindow.document.getElementById("Paciente").textContent = Paciente;
+      openerWindow.document.getElementById("nombre_seguro").textContent = nombre_seguro;
       window.close();
     }
   </script>
@@ -364,11 +364,11 @@ function in_iframe()
         <th>Id cita</th>
         <th>fecha</th>
         <th>hora</th>
-        <th>id_paciente</th>
-        <th>id_medico</th>
         <th>observaciones</th>
-        <th>estado</th>
-        <th> Accion </th>
+        <th>Estado</th>
+        <th>Paciente</th>
+        <th>Seguro</th>
+        <th>Accion</th>
       </tr>
     </thead>
     <tbody>
@@ -376,14 +376,14 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarcita('" . $row["id_citas"] . "', '" . $row["fecha"] . "','" . $row["hora"] . "','" . $row["id_paciente"] . "','" . $row["id_medico"] . "','" . $row["observaciones"] . "','" . $row["Estado"] . "')\">";
+          echo "<tr onclick=\"seleccionarcita('" . $row["id_citas"] . "', '" . $row["fecha"] . "','" . $row["hora"] . "','" . $row["observaciones"] . "','" . $row["Estado"] . "','" . $row["Paciente"] . "','" . $row["nombre_seguro"] . "')\">";
           echo "<td>" . $row["id_cita"] . "</td>";
           echo "<td>" . $row["fecha"] . "</td>";
           echo "<td>" . $row["hora"] . "</td>";
-          echo "<td>" . $row["id_paciente"] . "</td>";
-          echo "<td>" . $row["id_medico"] . "</td>";
           echo "<td>" . $row["observaciones"] . "</td>";
           echo "<td>" . $row["Estado"] . "</td>";
+          echo "<td>" . $row["Paciente"] . "</td>";
+          echo "<td>" . $row["nombre_seguro"] . "</td>";
           echo "</td>"; // Closing tag for the td element
           echo "<td> <a class='clasebotonVER' href=\"modulo/citas/editar.php?id_cita=$row[id_cita]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
@@ -396,7 +396,7 @@ function in_iframe()
   </table>
 
   <script>
-    //evento click para el mantenimiento del paciente
+    //evento click para el mantenimiento del Paciente
     $(document).ready(function() {
       var tablacitas = $('#tabla_citas').DataTable();
       // Asignar un evento de clic a las filas de la tabla
@@ -407,20 +407,20 @@ function in_iframe()
         var idcitas = tablacitas.row(fila).data()[0];
         var fecha = tablacitas.row(fila).data()[1];
         var hora = tablacitas.row(fila).data()[2];
-        var id_paciente = tablacitas.row(fila).data()[3];
-        var id_medico = tablacitas.row(fila).data()[4];
-        var observaciones = tablacitas.row(fila).data()[5];
-        var estado = tablacitas.row(fila).data()[6];
+        var observaciones = tablacitas.row(fila).data()[3];
+        var Estado = tablacitas.row(fila).data()[4];
+        var Paciente = tablacitas.row(fila).data()[5];
+        var nombre_seguro = tablacitas.row(fila).data()[6];
      
 
-        // Asignar los valores al campo de texto y al label en paciente.php
+        // Asignar los valores al campo de texto y al label en Paciente.php
         window.parent.document.getElementById('id_citas').value = idcitas;
         window.parent.document.getElementById('fecha').textContent = fecha;
         window.parent.document.getElementById('hora').textContent = hora;
-        window.parent.document.getElementById('id_paciente').textContent = id_paciente;
-        window.parent.document.getElementById('id_medico').textContent = id_medico;
-        window.parent.document.getElementById('observaciones').textContent = observaciones;
-        window.parent.document.getElementById('estado').textContent = estado;
+        window.parent.document.getElementById('observaciones').textContent = id_Paciente;
+        window.parent.document.getElementById('Estado').textContent = Estado;
+        window.parent.document.getElementById('Paciente').textContent = Paciente;
+        window.parent.document.getElementById('nombre_seguro').textContent = nombre_seguro;
         // Resaltar toda la fila con un delay de 2 segundos
         fila.addClass('resaltado');
         // Cerrar el modal después de 2 segundos
