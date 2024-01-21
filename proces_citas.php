@@ -304,6 +304,7 @@ if (isset($_POST['btnregistrar'])) {
 			height: 100%;
 			border: none;
 		}
+		
 		body {
 			background: linear-gradient(to right, #E8A9F7, #e4e5dc);
 		}
