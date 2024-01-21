@@ -529,7 +529,7 @@ include("../../menu_lateral.php");
                     <?php echo "<a class='btn btn-primary boton' href=\"../../proces_citas.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
 
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_cita.php" frameborder="0"
+                <iframe id="modal-iframe" src="../../consulta_cita2.php" frameborder="0"
                     style="width: 100%; height: 100%;max-height:700px;"></iframe>
         </fieldset>
         </form>
