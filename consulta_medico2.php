@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "medicos"
-$query = "SELECT id_medico, cedula, exequatur, nombre, apellido, id_especialidad FROM medicos";
+$query = "SELECT m.id_medico, m.cedula, m.exequatur, m.nombre, m.apellido, e.especialidad FROM medicos m JOIN especialidad e ON m.id_especialidad = e.id_especialidad";
 $result = $conn->query($query);
 
 // Función para obtener los datos del médico por ID
@@ -111,7 +111,7 @@ function in_iframe() {
         <th>Exequátur</th>
         <th>Nombre</th>
         <th>Apellido</th>
-        <th>ID Especialidad</th>
+        <th>Especialidad</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -126,7 +126,7 @@ function in_iframe() {
           echo "<td>" . $row["exequatur"] . "</td>";
           echo "<td>" . $row["nombre"] . "</td>";
           echo "<td>" . $row["apellido"] . "</td>";
-          echo "<td>" . $row["id_especialidad"] . "</td>";
+          echo "<td>" . $row["especialidad"] . "</td>";
           echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/medicos/editar.php?id_medico=$row[id_medico]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
