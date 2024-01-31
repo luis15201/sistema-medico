@@ -172,7 +172,16 @@ include("menu_lateral_header.php");
   </div>
   </div>
 </a>
-
+  
+<a href="mant_localizadorm.php">
+  <div class="card-wrapper">
+    <div class="card" style="background: linear-gradient(to right,#e4e5dc ,#62c4f9 ); ">
+      <div class="card-title" style="font-family: Anton; color:black;">Localizador DE Medico</div>
+      <img src="IMAGENES\doctor-64.png" class="card-icon" alt="Mantenimientos">
+      <div class="card-description">Registrar datos generales médico.</div>
+    </div>
+  </div>
+  </a>
   <!-- <div class="card">
     <div class="card-title">Subproceso #3</div>
     <img src="IMAGENES/none.png" class="card-icon" alt="Procesos">
