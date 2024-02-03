@@ -380,7 +380,7 @@ include("../../menu_lateral.php");
                     <p>
 					<div>
 						<label for="id_medico">ID medico:</label>
-						<input type="text" id="id_medico" name="id_medico" style="width: 115px;" value="<?php echo $idmedico; ?>  required>
+						<input type="text" id="id_medico" name="id_medico" style="width: 115px;" value="<?php echo $idmedico; ?>"  required>
 						<button id="buscarmedico" class="boton_bus" title="Buscar medicos registrados">
 							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 						</button>
@@ -447,13 +447,13 @@ include("../../menu_lateral.php");
 
                 </fieldset>
                 <div class="botones-container">
-                    <button class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas Modificar el registro de la cita?');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> modificar</button>
+                    <button class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas Modificar el  registro?');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> modificar</button>
 
 
-                    <?php echo "<a class='btn btn-primary boton' href=\"../../proces_citas.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
+                    <?php echo "<a class='btn btn-primary boton' href=\"../../mant_localizadorm.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
 
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_cita2.php" frameborder="0"
+                <iframe id="modal-iframe" src="../../consulta_localizadorm.php" frameborder="0"
                     style="width: 100%; height: 100%;max-height:700px;"></iframe>
         </fieldset>
         </form>
@@ -496,7 +496,7 @@ if (isset($_POST['btnmodificar'])) {
     $idlocalizadorm = $_POST['txtid'];
     $idmedico = $_POST['id_medico'];
     $valor= $_POST['txtvalor'];
-    $etiqueta = $_POST['etiqueta'];
+    $etiqueta = $_POST['txtetiqueta'];
 
 
     $querymodificar = mysqli_query($conn, "UPDATE localizador_medico SET ID_Localizador_M='$idlocalizadorm',id_medico='$idmedico', Valor='$valor', Etiqueta='$etiqueta' WHERE ID_Localizador_M= $idlocalizadorm ");

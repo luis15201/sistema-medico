@@ -368,7 +368,7 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarlocalizadorm('" . $row["ID_Localizador_M"] . "', '" . $row["id_medico"] . "', '" . $row["Valor"] . "', '" . $row["etiqueta"] . "')\">";
+          echo "<tr onclick=\"seleccionarlocalizadorm('" . $row["ID_Localizador_M"] . "', '" . $row["id_medico"] . "', '" . $row["Valor"] . "', '" . $row["Etiqueta"] . "')\">";
           echo "<td>" . $row["ID_Localizador_M"] . "</td>";
           echo "<td>" . $row["id_medico"] . "</td>";
           echo "<td>" . $row["Valor"] . "</td>";
