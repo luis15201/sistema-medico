@@ -368,13 +368,13 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarlocalizadorm('" . $row["id_especialidad"] . "', '" . $row["especialidad"] . "')\">";
+          echo "<tr onclick=\"seleccionarlocalizadorm('" . $row["ID_Localizador_M"] . "', '" . $row["id_medico"] . "', '" . $row["Valor"] . "', '" . $row["etiqueta"] . "')\">";
           echo "<td>" . $row["ID_Localizador_M"] . "</td>";
           echo "<td>" . $row["id_medico"] . "</td>";
           echo "<td>" . $row["Valor"] . "</td>";
           echo "<td>" . $row["Etiqueta"] . "</td>";
           echo "</td>"; // Closing tag for the td element
-          echo "<td> <a class='clasebotonVER' href=\"modulo/localizadorm/editar.php?id_especialidad=$row[id_especialidad]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td> <a class='clasebotonVER' href=\"modulo/localizadorm/editar.php?ID_Localizador_M=$row[ID_Localizador_M]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
