@@ -392,7 +392,7 @@ include("../../menu_lateral.php");
 					</div>
 					<script>
 						$("#Identificador").on("input", function() {
-							var Identificador = $(this).val();
+							var idpadre = $(this).val();
 							// Realizar la solicitud AJAX para obtener los datos del paciente
 							$.ajax({
 								url: '../../consulta_apellido_nombre_padre.php', // Ruta al archivo PHP que creamos
@@ -402,8 +402,8 @@ include("../../menu_lateral.php");
 								},
 								dataType: 'json',
 								success: function(data) {
-									$("#nombre_padre").text(data.Nombre || '');
-									$("#apellido_padre").text(data.Apellido || '');
+									$("#nombre_padre").text(data.nombre || '');
+									$("#apellido_padre").text(data.apellido || '');
 								},
 								error: function() {
 									alert('Hubo un error al obtener los datos del padre.');
