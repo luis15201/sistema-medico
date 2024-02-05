@@ -387,7 +387,7 @@ include("../../menu_lateral.php");
 					<div id="modalpadre" class="custom-modal">
 						<div class="custom-modal-content">
 							<span class="close">&times;</span>
-							<iframe id="modal-iframe" src="../../consulta_padrespacientes2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+							<iframe id="modal-iframe" src="../../consulta_padrespacientes.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 						</div>
 					</div>
 					<script>
@@ -398,12 +398,12 @@ include("../../menu_lateral.php");
 								url: '../../consulta_apellido_nombre_padre.php', // Ruta al archivo PHP que creamos
 								type: 'POST',
 								data: {
-									Identificador: idpadre
+									idpadre: idpadre
 								},
 								dataType: 'json',
 								success: function(data) {
-									$("#nombre_padre").text(data.nombre || '');
-									$("#apellido_padre").text(data.apellido || '');
+									$("#nombre_padre").text(data.Nombre || '');
+									$("#apellido_padre").text(data.Apellido || '');
 								},
 								error: function() {
 									alert('Hubo un error al obtener los datos del padre.');

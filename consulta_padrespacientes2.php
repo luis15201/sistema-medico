@@ -16,6 +16,20 @@ if ($conn->connect_error) {
 $query = "SELECT * FROM datos_padres_de_pacientes";
 $result = $conn->query($query);
 
+// Función para obtener los datos del padre por ID
+function obtenerDatosMedico($idpadre, $conn)
+{
+  $query = "SELECT Nombre, Apellido FROM datos_padres_de_pacientes WHERE Numidentificador= '$idpadre'";
+  $result = $conn->query($query);
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $datosPadre = array('Nombre' => $row['Nombre'], 'Apellido' => $row['Apellido']);
+    return $datosPadre;
+  } else {
+    return false;
+  }
+}
 
 function in_iframe()
 {
@@ -406,13 +420,14 @@ function in_iframe()
         var fila = $(this);
         // Obtener los datos de las celdas
         var idpadrespacientes = tablapadrespacientes.row(fila).data()[0];
-        var nombrepadrespacientes = tablapadrespacientes.row(fila).data()[2];
-        var apellidopadrespacientes = tablapadrespacientes.row(fila).data()[3];
+        var nombrepadrespacientes = tablapadrespacientes.row(fila).data()[1];
+        var apellidopadrespacientes = tablapadrespacientes.row(fila).data()[2];
 
         // Asignar los valores al campo de texto y al label en padres pacientes en agregar.php
         window.parent.document.getElementById('Numidentificador').textContent= idpadrespacientes;
         window.parent.document.getElementById('Nombre').textContent = nombrepadrespacientes;
         window.parent.document.getElementById('apellido').textContent = apellidopadrespacientes;
+        window.parent.document.getElementById("Numidentificador").focus();
         // Resaltar toda la fila con un delay de 2 segundos
         fila.addClass('resaltado');
         // Cerrar el modal después de 2 segundos
