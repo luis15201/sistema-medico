@@ -157,8 +157,8 @@ function in_iframe() {
 
         // Obtener los datos de las celdas
         var idpadres = celdas.eq(0).text();
-        var nombrepadre = celdas.eq(3).text();
-        var apellidopadre = celdas.eq(4).text();
+        var nombrepadre = celdas.eq(2).text();
+        var apellidopadre = celdas.eq(3).text();
 
         setTimeout(function() {
           window.parent.document.getElementById('Modalpadres').style.display = 'none';

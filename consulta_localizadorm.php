@@ -13,7 +13,9 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "laboratorio"
-$query = "SELECT * FROM localizador_medico";
+$query = "SELECT lm.ID_Localizador_M, CONCAT(m.nombre, ' ', m.apellido) AS nombre_apellido_medico, lm.Valor, lm.Etiqueta
+FROM localizador_medico lm
+JOIN medicos m ON lm.id_medico = m.id_medico;";
 $result = $conn->query($query);
 
 
@@ -346,7 +348,7 @@ function in_iframe()
     function seleccionarlocalizadorm(ID_Localizador_M, nombreespecialidad) {
       var openerWindow = window.opener;
       openerWindow.document.getElementById("ID_Localizador_M").value = ID_Localizador_M;
-      openerWindow.document.getElementById("id_medico").textContent = id_medico;
+      openerWindow.document.getElementById("nombre_apellido_medico").textContent = id_medico;
       window.close();
     }
   </script>
@@ -368,9 +370,9 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarlocalizadorm('" . $row["ID_Localizador_M"] . "', '" . $row["id_medico"] . "', '" . $row["Valor"] . "', '" . $row["Etiqueta"] . "')\">";
+          echo "<tr onclick=\"seleccionarlocalizadorm('" . $row["ID_Localizador_M"] . "', '" . $row["nombre_apellido_medico"] . "', '" . $row["Valor"] . "', '" . $row["Etiqueta"] . "')\">";
           echo "<td>" . $row["ID_Localizador_M"] . "</td>";
-          echo "<td>" . $row["id_medico"] . "</td>";
+          echo "<td>" . $row["nombre_apellido_medico"] . "</td>";
           echo "<td>" . $row["Valor"] . "</td>";
           echo "<td>" . $row["Etiqueta"] . "</td>";
           echo "</td>"; // Closing tag for the td element
