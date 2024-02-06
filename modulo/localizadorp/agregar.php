@@ -15,7 +15,7 @@ if ($result->num_rows > 0) {
 	$newId = 1;
 }
 // Guardar el nuevo ID en una variable PHP
-$idlocalizadorp= $newId;
+$idlocalizadorm = $newId;
 // Función de validación de campos
 function validarCampos($campos)
 {
@@ -28,15 +28,15 @@ function validarCampos($campos)
 }
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
-    $camposRequeridos = ['txtid', 'Identificador', 'txtvalor', 'txtetiqueta'];
+    $camposRequeridos = ['txtid', 'id_padres', 'txtvalor', 'txtetiqueta'];
     if (validarCampos($camposRequeridos)) {
-        $idlocalizadorp = $_POST['txtid'];
-        $Identificador = $_POST['Identificador'];
+        $idlocalizador = $_POST['txtid'];
+        $identificador = $_POST['id_padres'];
 		$valor = $_POST['txtvalor'];
 		$etiqueta = $_POST['txtetiqueta'];
       
         // Insertar datos en la tabla laboratorio
-        $queryAdd = mysqli_query($conn, "INSERT INTO localizador_padres_de_pacientes (ID_Localizador, Identificador, Valor, Etiqueta) VALUES('$idlocalizadorp', '$Identificador','$valor','$etiqueta')");
+        $queryAdd = mysqli_query($conn, "INSERT INTO localizador_padres_de_pacientes (ID_Localizador, Identificador, Valor, Etiqueta) VALUES('$idlocalizadorm', '$identificador','$valor','$etiqueta')");
 
         if (!$queryAdd) {
             echo "Error con el registro: " . mysqli_error($conn);
@@ -44,7 +44,7 @@ if (isset($_POST['btnregistrar'])) {
             echo "<script>window.location= '../../mant_localizadorp.php?pag=1' </script>";
         }
     } else {
-        echo "<script>alert('Por favor, complete todos los campos');</script>";
+        echo "<script>alert('Por favor, complete tolos campos');</script>";
     }
 }
 ?>
@@ -63,13 +63,13 @@ if (isset($_POST['btnregistrar'])) {
  <script>
         // Función para validar campos antes de enviar el formulario
         function validarFormulario() {
-            var Numidentificador = document.getElementById("txtid").value;
-            var Identificador = document.getElementById("Identificador").value;
+            var idlocalizadorm = document.getElementById("txtid").value;
+            var idenficador = document.getElementById("id_padres").value;
 			var valor = document.getElementById("txtvalor").value;
 			var etiqueta = document.getElementById("txtetiqueta").value;
 
-            if (Numidentificador.trim() === '' || Identificador.trim() === '' || valor.trim() === '' || etiqueta.trim() === '') {
-                alert("Por favor, complete todos los campos");
+            if (idlocalizadorm.trim() === '' || identificador.trim() === '' || valor.trim() === '' || etiqueta.trim() === '') {
+                alert("Por favor, complete toos los campos");
                 return false;
             }
 
@@ -373,51 +373,51 @@ include("../../menu_lateral.php");
                     <legend class="cajalegend">══ Nuevo localizador ══</legend>
                     <p style="margin:0;">
                         <label for="txtid">ID localizador</label>
-                        <input type="text" name="txtid" id="txtid" value="<?php echo $idlocalizadorp; ?>" required readonly>
+                        <input type="text" name="txtid" id="txtid" value="<?php echo $idlocalizadorm; ?>" required readonly>
                     </p>
 
                     <p>
 					<div>
-						<label for="Identificador">ID padre:</label>
-						<input type="text" id="Identificador" name="Identificador" style="width: 115px;"  required>
-						<button id="buscarpadre" class="boton_bus" title="Buscar medicos registrados">
+						<label for="id_padres">ID padre:</label>
+						<input type="text" id="id_padres" name="id_padres" style="width: 115px;"  required>
+						<button id="buscarpadres" class="boton_bus" title="Buscar medicos registrados">
 							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 						</button>
 					</div>
-					<div id="modalpadre" class="custom-modal">
+					<div id="Modalpadres" class="custom-modal">
 						<div class="custom-modal-content">
 							<span class="close">&times;</span>
 							<iframe id="modal-iframe" src="../../consulta_padrespacientes.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 						</div>
 					</div>
 					<script>
-						$("#Identificador").on("input", function() {
-							var idpadre = $(this).val();
+						$("#id_padres").on("input", function() {
+							var idpadres = $(this).val();
 							// Realizar la solicitud AJAX para obtener los datos del paciente
 							$.ajax({
-								url: '../../consulta_apellido_nombre_padre.php', // Ruta al archivo PHP que creamos
+								url: 'consulta_apellido_nombre_padre.php', // Ruta al archivo PHP que creamos
 								type: 'POST',
 								data: {
-									idpadre: idpadre
+									id_padres: idpadres
 								},
 								dataType: 'json',
 								success: function(data) {
-									$("#nombre_padre").text(data.Nombre || '');
-									$("#apellido_padre").text(data.Apellido || '');
+									$("#nombre_padres").text(data.nombre || '');
+									$("#apellido_padres").text(data.apellido || '');
 								},
 								error: function() {
-									alert('Hubo un error al obtener los datos del padre.');
+									alert('Hubo un error al obtener los datos del medico.');
 								}
 							});
 						});
 					</script>
                   <div>
-						<label for="Nombre_padre">Nombre del padre:</label>
-						<label id="nombre_padre" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+						<label for="Nombre_padres">Nombre del padre:</label>
+						<label id="nombre_padres" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 					</div>
 					<div>
-						<label for="Apellido_padre">Apellido del padre:</label>
-						<label id="apellido_padre" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
+						<label for="Apellido_padres">Apellido del padre:</label>
+						<label id="apellido_padres" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
 					</div>
 
 
@@ -461,22 +461,22 @@ include("../../menu_lateral.php");
   
 <script>
 
-var idpadreActual = "";
+var idpadresActual = "";
 // Obtener referencia al botón y al modal del paciente
-const btnbusquedapadre = document.getElementById("buscarpadre");
-	const modalpadre = document.getElementById("modalpadre");
+const btnbusquedapadres = document.getElementById("buscarpadres");
+	const modalpadres = document.getElementById("Modalpadres");
 	// Función para mostrar el modal de vacuna
 	function mostrarModalp() {
-		modalpadre.style.display = "block";
+		modalpadres.style.display = "block";
 	}
 	// Función para ocultar el modal vacuna
 	function ocultarModalp() {
-		modalpadre.style.display = "none";
+		modalpadres.style.display = "none";
 	}
 	// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
-	btnbusquedapadre.addEventListener("click", function(event) {
+	btnbusquedapadres.addEventListener("click", function(event) {
 		event.preventDefault(); // Evitar recargar la página
-		if (modalpadre.style.display === "none") {
+		if (modalpadres.style.display === "none") {
 			mostrarModalp();
 		} else {
 			ocultarModalp();

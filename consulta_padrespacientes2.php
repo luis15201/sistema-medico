@@ -362,7 +362,7 @@ function in_iframe()
 
     function seleccionarpadrespacientes(idpadrespacientes, nombrepadrespacientes, apellidopadrespacientes) {
       var openerWindow = window.opener;
-      openerWindow.document.getElementById("Numidentificador").textContent = idpadrespacientes;
+      openerWindow.document.getElementById("Identificador").textContent = idpadrespacientes;
       openerWindow.document.getElementById("Nombre").textContent = nombrepadrespacientes;
       openerWindow.document.getElementById("Apellido").textContent = apellidopadrespacientes;
       window.close();
@@ -390,7 +390,7 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarpadrepaciente('" . $row["Numidentificador"] . "', '" . $row["Nombre"] . "')\">";
+          echo "<tr onclick=\"seleccionarpadrepaciente('" . $row["Numidentificador"] . "', '" . $row["Nombre"] . "', '" . $row["Apellido"] . "')\">";
           echo "<td>" . $row["Numidentificador"] . "</td>";
           echo "<td>" . $row["Tipo_Identificador"] . "</td>";
           echo "<td>" . $row["Nombre"] . "</td>";
@@ -420,14 +420,14 @@ function in_iframe()
         var fila = $(this);
         // Obtener los datos de las celdas
         var idpadrespacientes = tablapadrespacientes.row(fila).data()[0];
-        var nombrepadrespacientes = tablapadrespacientes.row(fila).data()[1];
-        var apellidopadrespacientes = tablapadrespacientes.row(fila).data()[2];
+        var nombrepadrespacientes = tablapadrespacientes.row(fila).data()[3];
+        var apellidopadrespacientes = tablapadrespacientes.row(fila).data()[4];
 
         // Asignar los valores al campo de texto y al label en padres pacientes en agregar.php
-        window.parent.document.getElementById('Numidentificador').textContent= idpadrespacientes;
-        window.parent.document.getElementById('Nombre').textContent = nombrepadrespacientes;
-        window.parent.document.getElementById('apellido').textContent = apellidopadrespacientes;
-        window.parent.document.getElementById("Numidentificador").focus();
+        window.parent.document.getElementById('Identificador').textContent= idpadrespacientes;
+        window.parent.document.getElementById('nombre_padre').textContent = nombrepadrespacientes;
+        window.parent.document.getElementById('apellido_padre').textContent = apellidopadrespacientes;
+        window.parent.document.getElementById("Identificador").focus();
         // Resaltar toda la fila con un delay de 2 segundos
         fila.addClass('resaltado');
         // Cerrar el modal después de 2 segundos

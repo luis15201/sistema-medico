@@ -26,15 +26,15 @@ if ($result->num_rows > 0) {
 
     // Devolver el nombre y el apellido del paciente como JSON
     $response = array(
-        'Nombre' => $nombrepadre,
-        'Apellido' => $apellidopadre
+        'nombre' => $nombrepadre,
+        'apellido' => $apellidopadre
     );
     echo json_encode($response);
 } else {
     // No se encontró ningún paciente con ese ID
     $response = array(
-        'Nombre' => '',
-        'Apellido' => ''
+        'nombre' => '',
+        'apellido' => ''
     );
     echo json_encode($response);
 }

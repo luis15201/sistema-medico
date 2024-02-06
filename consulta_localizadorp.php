@@ -360,7 +360,8 @@ function in_iframe()
         <th>Padre</th>
         <th>Valor</th>
         <th>Etiqueta</th>
-        <th> </th>
+        <th> Acciones </th>
+        
       </tr>
     </thead>
     <tbody>

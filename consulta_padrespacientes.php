@@ -13,14 +13,14 @@ if ($conn->connect_error) {
   die("Error de conexión: " . $conn->connect_error);
 }
 
-// Consulta para obtener los datos de la tabla "datos padres"
-$query = "SELECT Nombre, Apellido FROM datos_padres_de_pacientes WHERE Numidentificador= '$idpadre'";
+// Consulta para obtener los datos de la tabla "medicos"
+$query = "SELECT * FROM datos_padres_de_pacientes";
 $result = $conn->query($query);
 
 // Función para obtener los datos del médico por ID
-function obtenerDatospadre($idpadre, $conn)
+function obtenerDatosMedico($idMedico, $conn)
 {
-  $query = "SELECT Nombre, Apellido FROM datos_padres_de_pacientes WHERE Numidentificador = '$idpadre'";
+  $query = "SELECT Nombre, Apellido FROM datos_padres_de_pacientes WHERE Numidentificador  = '$idpadres'";
   $result = $conn->query($query);
 
   if ($result->num_rows > 0) {
@@ -103,17 +103,17 @@ function in_iframe() {
 <body>
   
 
-  <table id="tabla_padre" class="display">
+  <table id="tabla_padres" class="display">
     <thead>
       <tr>
-        <th>ID padre</th>
-        <th>Tipo de identificacion</th>
-        <th>nombre</th>
-        <th>apellido</th>
-        <th>parentesco</th>
-        <th>nacionalidad</th>
-        <th>sexo</th>
-        <th>direccion</th>
+        <th>ID </th>
+        <th>tipo de dato</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Parentesco</th>
+        <th>Nacionalidad</th>
+        <th>Sexo</th>
+        <th>Direccion</th>
         <th>Accion</th>
       </tr>
     </thead>
@@ -131,8 +131,7 @@ function in_iframe() {
           echo "<td>" . $row["Nacionalidad"] . "</td>";
           echo "<td>" . $row["Sexo"] . "</td>";
           echo "<td>" . $row["Direccion"] . "</td>";
-         
-          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/localizadorp/editar.php?id_medico=$row[id_medico]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td style='width:24%'> <a class='clasebotonVER' href=\"modulo/medicos/editar.php?id_medico=$row[id_medico]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
@@ -144,7 +143,7 @@ function in_iframe() {
 
   <script>
     $(document).ready(function() {
-      $('#tabla_padre').DataTable({
+      $('#tabla_padres').DataTable({
         dom: 'frtip', // Mostrar solo búsqueda y paginación
         language: {
           url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' // Ruta al archivo de traducción
@@ -152,24 +151,24 @@ function in_iframe() {
       });
 
       // Asignar un evento de clic a las filas de la tabla
-      $("#tabla_padre tbody").on("click", "tr", function() {
+      $("#tabla_padres tbody").on("click", "tr", function() {
         // Obtener las celdas de la fila clicada
         var celdas = $(this).find("td");
 
         // Obtener los datos de las celdas
-        var idpadre = celdas.eq(0).text();
-        var nombrepadres = celdas.eq(3).text();
-        var apellidopadres = celdas.eq(4).text();
+        var idpadres = celdas.eq(0).text();
+        var nombrepadre = celdas.eq(3).text();
+        var apellidopadre = celdas.eq(4).text();
 
         setTimeout(function() {
           window.parent.document.getElementById('Modalpadres').style.display = 'none';
         }, 600);
 
         // Asignar los valores al campo de texto y al label en el otro documento
-        window.parent.document.getElementById("Numidentificador").value = idpadre;
-        window.parent.document.getElementById("nombre_padre").textContent = nombrepadres;
-        window.parent.document.getElementById("apellido_padre").textContent = apellidopadres;
-        window.parent.document.getElementById("Numidentificador").focus();
+        window.parent.document.getElementById("id_padres").value = idpadres;
+        window.parent.document.getElementById("nombre_padres").textContent = nombrepadre;
+        window.parent.document.getElementById("apellido_padres").textContent = apellidopadre;
+        window.parent.document.getElementById("id_padres").focus();
 
         var currentPath = window.parent.location.pathname;
         var currentPage = currentPath.substring(currentPath.lastIndexOf("/") + 1);
@@ -190,7 +189,3 @@ function in_iframe() {
 
 </html>
 
-<?php
-// Cerrar la conexión
-$conn->close();
-?>
