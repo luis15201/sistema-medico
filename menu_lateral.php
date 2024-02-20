@@ -82,7 +82,7 @@
                                     </span>
                                     Especialidad</a>
 
-                                <a href="" class="list-group-item list-group-item-action"><span
+                                <a href="mant_horario.php" class="list-group-item list-group-item-action"><span
                                         class="material-symbols-outlined">
                                         calendar_month
                                     </span>
