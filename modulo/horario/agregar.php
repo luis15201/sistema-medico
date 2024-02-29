@@ -28,18 +28,19 @@ function validarCampos($campos)
 }
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
-    $camposRequeridos = ['txtid', 'id_medico', 'txtdias', 'txtetiqueta', 'txthorai', 'txthoraf', 'txtestado',];
+    $camposRequeridos = ['txtid', 'id_medico', 'dia', 'txtetiqueta', 'hora_inicio', 'hora_fin', 'txtestado'];
     if (validarCampos($camposRequeridos)) {
         $idhorario = $_POST['txtid'];
         $idmedico = $_POST['id_medico'];
 		$diasSeleccionados = $_POST['dia'];
+		//$dias = $_POST['dias'];
 		$etiqueta = $_POST['txtetiqueta'];
-		$horai = $_POST['txthorai'];
-		$horaf = $_POST['txthoraf'];
-		$etiqueta = $_POST['txtestado'];
+		$horainicial = $_POST['hora_inicio'];
+		$horafinal = $_POST['hora_fin'];
+		$estado = $_POST['txtestado'];
 		$dias = implode(", ", $diasSeleccionados);
         // Insertar datos en la tabla laboratorio
-        $queryAdd = mysqli_query($conn, "INSERT INTO horario (id_horario, id_medico, dias, etiqueta, hora_inicio, hora_fin, Estado) VALUES('$horario', '$idmedico','$dias','$etiqueta','$horai','$horaf','$estado')");
+        $queryAdd = mysqli_query($conn, "INSERT INTO horario (id_horario, id_medico, dias, etiqueta, hora_inicio, hora_fin, Estado) VALUES('$idhorario', '$idmedico','$dias','$etiqueta','$horainicial','$horafinal','$estado')");
 
         if (!$queryAdd) {
             echo "Error con el registro: " . mysqli_error($conn);
@@ -66,12 +67,15 @@ if (isset($_POST['btnregistrar'])) {
  <script>
         // Función para validar campos antes de enviar el formulario
         function validarFormulario() {
-            var idlocalizadorm = document.getElementById("txtid").value;
+            var idhorario = document.getElementById("txtid").value;
             var idmedico = document.getElementById("id_medico").value;
-			var valor = document.getElementById("txtvalor").value;
+			var dia = document.getElementById("checklist").value;
 			var etiqueta = document.getElementById("txtetiqueta").value;
+			var horainicio = document.getElementById("hora_inicio").value;
+			var horafin = document.getElementById("hora_fin").value;
+			var estado = document.getElementById("txtestado").value;
 
-            if (idlocalizadorm.trim() === '' || idmedico.trim() === '' || valor.trim() === '' || etiqueta.trim() === '') {
+            if (idhorario.trim() === '' || idmedico.trim() === '' || dia.trim() === '' || etiqueta.trim() === '' || horainicio.trim() === '' || horafin.trim() === '' || estado.trim() === '' ) {
                 alert("Por favor, complete toos los campos");
                 return false;
             }
@@ -369,7 +373,7 @@ include("../../menu_lateral.php");
 ?>
 <body>
     <div class="container">
-	<fieldset style=" height:1000px;">
+	<fieldset style=" height:1500px;">
         <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
                 <legend>Registrar nuevo horario</legend>
                 <fieldset class="caja">
@@ -441,6 +445,15 @@ include("../../menu_lateral.php");
                     <label><input type="checkbox" name="dia[]" value="Domingo"> Domingo</label><br><br>
                     </div>
                     
+                    <!--<div><label>Dias</label>
+                        <select id="txtdias" name="txtdias" style=" width: 110px; " autocomplete="off" value="<?php echo $dias; ?>"require>
+                            <option selected value="Dias">dias</option>
+                            <option value="Lunes">Lunes</option>
+							<option value="Martes">Martes</option>
+                        </select>-->
+                        <!-- <input type="text" name="txtest" autocomplete="off" require> 
+                    </div><br>-->
+
 					<div><label>Etiqueta</label>
                         <select id="txtetiqueta" name="txtetiqueta" style=" width: 110px; " autocomplete="off" value="<?php echo $etiqueta; ?>"require>
                             <option selected value="Telefono">Telefono</option>
@@ -461,10 +474,10 @@ include("../../menu_lateral.php");
                     </div><br>
 
 					<div><label>Estado</label>
-                        <select id="txtetiqueta" name="txtetiqueta" style=" width: 110px; " autocomplete="off" value="<?php echo $etiqueta; ?>"require>
-                            <option selected value="Telefono">Estado</option>
-                            <option value="Email">Disponible</option>
-							<option value="Movil">No Disponible</option>
+                        <select id="txtestado" name="txtestado" style=" width: 110px; " autocomplete="off" value="<?php echo $estado; ?>"require>
+                            <option selected value="Estado">Estado</option>
+                            <option value="Disponible">Disponible</option>
+							<option value="No disponible">No Disponible</option>
                         </select>
                         <!-- <input type="text" name="txtest" autocomplete="off" require> -->
                     </div>
