@@ -5,16 +5,19 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 require_once "../../include/conec.php";
 $pagina = $_GET['pag'];
-$coddni = $_GET['ID_Localizador_M'];
+$coddni = $_GET['id_horario'];
 //INSERT INTO `medicos`(`id_medico`, `cedula`, `exequatur`, `nombre`, `apellido`, `id_especialidad`)
 
-$querybuscar = mysqli_query($conn, "SELECT * FROM localizador_medico WHERE ID_Localizador_M =$coddni");
+$querybuscar = mysqli_query($conn, "SELECT * FROM horario WHERE id_horario =$coddni");
 
 while ($mostrar = mysqli_fetch_array($querybuscar)) {
-    $idlocalizadorm = $mostrar['ID_Localizador_M'];
+    $idhorario = $mostrar['id_horario'];
     $idmedico = $mostrar['id_medico'];
-    $valor = $mostrar['Valor'];
-    $etiqueta = $mostrar['Etiqueta'];
+    $dias = $mostrar['dias'];
+    $etiqueta = $mostrar['etiqueta'];
+    $hora_inicio = $mostrar['hora_inicio'];
+    $hora_fin = $mostrar['hora_fin'];
+    $estado = $mostrar['Estado'];
 }
 ?>
 
@@ -40,12 +43,15 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
     <script>
         // Función para validar campos antes de enviar el formulario
         function validarFormulario() {
-            var idlocalizadorm = document.getElementById("txtid").value;
+            var idhorario = document.getElementById("txtid").value;
             var idmedico = document.getElementById("id_medico").value;
-			var valor = document.getElementById("txtvalor").value;
+			var dia = document.getElementById("checklist").value;
 			var etiqueta = document.getElementById("txtetiqueta").value;
+			var horainicio = document.getElementById("hora_inicio").value;
+			var horafin = document.getElementById("hora_fin").value;
+			var estado = document.getElementById("txtestado").value;
 
-            if (idlocalizadorm.trim() === '' || idmedico.trim() === '' || valor.trim() === '' || etiqueta.trim() === '') {
+            if (idhorario.trim() === '' || idmedico.trim() === '' || dia.trim() === '' || etiqueta.trim() === '' || horainicio.trim() === '' || horafin.trim() === '' || estado.trim() === '' ) {
                 alert("Por favor, complete toos los campos");
                 return false;
             }
@@ -369,18 +375,18 @@ include("../../menu_lateral.php");
     <div class="container">
         <fieldset style=" height:1200px;">
             <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-                <legend>Editando cita 👩‍⚕️🧑‍⚕️</legend>
+            <legend>Registrar nuevo horario</legend>
                 <fieldset class="caja">
-                    <legend class="cajalegend">══ Editar cita 📖 ══</legend>
+                    <legend class="cajalegend">══ Nuevo horario ══</legend>
                     <p style="margin:0;">
-                        <label for="txtid">ID localizador</label>
-                        <input type="text" name="txtid" id="txtid" value="<?php echo $idlocalizadorm; ?>" required readonly>
+                        <label for="txtid">ID horario</label>
+                        <input type="text" name="txtid" id="txtid" value="<?php echo $idhorario; ?>" required readonly>
                     </p>
 
                     <p>
 					<div>
 						<label for="id_medico">ID medico:</label>
-						<input type="text" id="id_medico" name="id_medico" style="width: 115px;" value="<?php echo $idmedico; ?>"  required>
+						<input type="text" id="id_medico" name="id_medico" style="width: 115px; " value="<?php echo $idmedico; ?>" required>
 						<button id="buscarmedico" class="boton_bus" title="Buscar medicos registrados">
 							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
 						</button>
@@ -429,12 +435,25 @@ include("../../menu_lateral.php");
 
                     </p>
 
-
-                    <p>
-                        <label for="txtvalor">Valor</label>
-                        <input type="text"  name="txtvalor" id="txtvalor" value="<?php echo $valor; ?>" required>
-                    </p>
+					<div id="checklist" value="<?php echo $diasSeleccionados; ?>"require> <label>Dias</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Lunes"> Lunes</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Martes"> Martes</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Miércoles"> Miércoles</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Jueves"> Jueves</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Viernes"> Viernes</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Sábado"> Sábado</label><br>
+                    <label><input type="checkbox" name="dia[]" value="Domingo"> Domingo</label><br><br>
+                    </div>
                     
+                    <!--<div><label>Dias</label>
+                        <select id="txtdias" name="txtdias" style=" width: 110px; " autocomplete="off" value="<?php echo $dias; ?>"require>
+                            <option selected value="Dias">dias</option>
+                            <option value="Lunes">Lunes</option>
+							<option value="Martes">Martes</option>
+                        </select>-->
+                        <!-- <input type="text" name="txtest" autocomplete="off" require> 
+                    </div><br>-->
+
 					<div><label>Etiqueta</label>
                         <select id="txtetiqueta" name="txtetiqueta" style=" width: 110px; " autocomplete="off" value="<?php echo $etiqueta; ?>"require>
                             <option selected value="Telefono">Telefono</option>
@@ -442,20 +461,35 @@ include("../../menu_lateral.php");
 							<option value="Movil">Movil</option>
                         </select>
                         <!-- <input type="text" name="txtest" autocomplete="off" require> -->
+                    </div><br>
+
+					<div>
+                       <label for="hora_inicio">Hora de inicio:</label>
+                       <input type="time" id="hora_inicio" name="hora_inicio" value="<?php echo $hora_inicio; ?>">
+                    </div><br>
+
+                    <div>
+                       <label for="hora_fin">Hora de fin:</label>
+                        <input type="time" id="hora_fin" name="hora_fin" value="<?php echo $hora_inicio; ?>">
+                    </div><br>
+
+					<div><label>Estado</label>
+                        <select id="txtestado" name="txtestado" style=" width: 110px; " autocomplete="off" value="<?php echo $estado; ?>"require>
+                            <option selected value="Estado">Estado</option>
+                            <option value="Disponible">Disponible</option>
+							<option value="No disponible">No Disponible</option>
+                        </select>
+                        <!-- <input type="text" name="txtest" autocomplete="off" require> -->
                     </div>
-
-
                 </fieldset>
                 <div class="botones-container">
-                    <button class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas Modificar el  registro?');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> modificar</button>
-
-
-                    <?php echo "<a class='btn btn-primary boton' href=\"../../mant_localizadorm.php?pag=$pagina\"><i class='material-icons' style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'  >close</i> Cancelar</a>"; ?>
-
+                <button class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas Modificar el  registro?');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> modificar</button>
+                    <a class="boton" href="../../mant_horario.php?pag=<?php echo $pagina; ?>">
+                        <i class="material-icons" style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i> Cancelar
+                    </a>
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_localizadorm.php" frameborder="0"
-                    style="width: 100%; height: 100%;max-height:700px;"></iframe>
-        </fieldset>
+                <iframe id="modal-iframe" src="../../consulta_horario.php" frameborder="0" style="width: 100%; height: 100%;max-height:700px;"></iframe>
+            </fieldset>
         </form>
     </div>
 </body>
@@ -493,13 +527,18 @@ include("../../menu_lateral.php");
 
 if (isset($_POST['btnmodificar'])) {
 
-    $idlocalizadorm = $_POST['txtid'];
+    $idhorario = $_POST['txtid'];
     $idmedico = $_POST['id_medico'];
-    $valor= $_POST['txtvalor'];
+    $diasSeleccionados = $_POST['dia'];
+    //$dias = $_POST['dias'];
     $etiqueta = $_POST['txtetiqueta'];
+    $horainicial = $_POST['hora_inicio'];
+    $horafinal = $_POST['hora_fin'];
+    $estado = $_POST['txtestado'];
+    $dias = implode(", ", $diasSeleccionados);
 
 
-    $querymodificar = mysqli_query($conn, "UPDATE localizador_medico SET ID_Localizador_M='$idlocalizadorm',id_medico='$idmedico', Valor='$valor', Etiqueta='$etiqueta' WHERE ID_Localizador_M= $idlocalizadorm ");
-    echo "<script>window.location= '../../mant_localizadorm.php?pag=$pagina' </script>";
+    $querymodificar = mysqli_query($conn, "UPDATE horario SET id_horario='$idhorario',id_medico='$idmedico', dias='$dias', etiqueta='$etiqueta', hora_inicio='$horainicial', hora_fin='$horafinal', Estado='$estado' WHERE id_horario= $idhorario ");
+    echo "<script>window.location= '../../mant_horario.php?pag=$pagina' </script>";
 }
 ?>
