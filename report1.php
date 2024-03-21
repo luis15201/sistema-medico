@@ -22,7 +22,7 @@ class PDF extends FPDF {
         $this->Cell(0,10,'Firma: Nombre del Doctor',0,1,'C');
     }
 
-    function Body($doctor, $exequatur, $paciente) {
+    function Body($doctor, $exequatur, $paciente, $descripcion) {
         $this->Cell(0,10,'Certificado Medico',0,1,'C');
         // Cuerpo del certificado
         $this->SetFont('Arial','',12);
@@ -30,7 +30,7 @@ class PDF extends FPDF {
         $this->Ln(-80); // Reducir el valor de 10 a 5, o cualquier otro valor que desees
         
         // Obtener la altura del texto
-        $texto = utf8_decode('Yo, '.$doctor.', con excequatur '.$exequatur.', certifico que el joven '.$paciente.' luego de hacerle los exámenes médicos de lugar, no padece de ninguna enfermedad y esta en muy buena condición física.');
+        $texto = utf8_decode('Yo, '.$doctor.', con excequatur '.$exequatur.', certifico que el joven '.$paciente.', '.$descripcion.' ');
         $ancho = 180; // Ancho máximo de la celda, en este caso, el ancho de la página
         $alto = 8; // Altura de la celda
         $alturaTexto = ceil($this->GetStringWidth($texto) / $ancho) * $alto;
@@ -44,12 +44,17 @@ class PDF extends FPDF {
     }
 }
 
+$doctor = $_POST['txtid'];
+$exequatur = $_POST['txtexequatur'];
+$paciente = $_POST['txtpaciente'];
+$descripcion = $_POST['txtdescripcion'];
+
 // Crear instancia de PDF
 $pdf = new PDF();
 $pdf->AddPage();
 
 // Llamar al método Body para agregar el contenido
-$pdf->Body("Nombre del Doctor", "Numero de exequatur", "Nombre del Paciente");
+$pdf->Body($doctor, $exequatur, $paciente, $descripcion);
 
 // Generar el PDF
 $pdf->Output();

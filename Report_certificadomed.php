@@ -35,13 +35,13 @@ function validarCampos($campos)
 
 // Validar campos antes de procesar el formulario
 if (isset($_POST['btnregistrar'])) {
-    $camposRequeridos = ['txtid', 'txtcedula', 'txtexequatur', 'txtnombre', 'txtapellido', 'txtespecialidad'];
+    $camposRequeridos = ['txtid', 'txtcedula', 'txtexequatur', 'txtpaciente', 'txtapellido', 'txtespecialidad'];
 
     if (validarCampos($camposRequeridos)) {
         $idMedico = $_POST['txtid'];
         $cedula = $_POST['txtcedula'];
         $exequatur = $_POST['txtexequatur'];
-        $nombre = $_POST['txtnombre'];
+        $nombre = $_POST['txtpaciente'];
         $apellido = $_POST['txtapellido'];
         $idEspecialidad = $_POST['txtespecialidad'];
 
@@ -76,7 +76,7 @@ if (isset($_POST['btnregistrar'])) {
             var idMedico = document.getElementById("txtid").value;
             var cedula = document.getElementById("txtcedula").value;
             var exequatur = document.getElementById("txtexequatur").value;
-            var nombre = document.getElementById("txtnombre").value;
+            var nombre = document.getElementById("txtpaciente").value;
             var apellido = document.getElementById("txtapellido").value;
             var idEspecialidad = document.getElementById("txtespecialidad").value;
 
@@ -403,7 +403,7 @@ include("../../menu_lateral.php");
 <body>
     <div class="container">
         <fieldset style=" height:1200px;">
-            <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
+            <form class="contenedor_popup" method="POST" action="report1.php" onsubmit="return validarFormulario();">
                 <legend>Registrar nuevo médico 👩‍⚕️🧑‍⚕️</legend>
                 <fieldset class="caja">
                     <legend class="cajalegend">══ Nuevo Médico 🩺 ══</legend>
@@ -418,8 +418,8 @@ include("../../menu_lateral.php");
                             required>
                     </p>
                     <p>
-                        <label for="txtnombre">Nombre Paciente</label>
-                        <input type="text" name="txtnombre" id="txtnombre" value="<?php echo $nombre; ?>" required>
+                        <label for="txtpaciente">Nombre Paciente</label>
+                        <input type="text" name="txtpaciente" id="txtpaciente" value="<?php echo $nombre; ?>" required>
                     </p>
                     <p>
                         <label for="txtdescripcion">Descripción</label>
