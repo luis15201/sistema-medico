@@ -1,32 +1,62 @@
 <?php
 session_start();
 
-
 error_reporting(E_ALL & ~E_WARNING);
-require_once "../../include/conec.php";
+require_once "include/conec.php";
+
 $pagina = $_GET['pag'];
-$coddni = $_GET['id_horario'];
-//INSERT INTO `medicos`(`id_medico`, `cedula`, `exequatur`, `nombre`, `apellido`, `id_especialidad`)
 
-$querybuscar = mysqli_query($conn, "SELECT * FROM horario WHERE id_horario =$coddni");
+// Consultar el último ID de la tabla medicos
+$query = "SELECT MAX(id_medico) AS max_id FROM medicos";
+$result = $conn->query($query);
 
-while ($mostrar = mysqli_fetch_array($querybuscar)) {
-    $idhorario = $mostrar['id_horario'];
-    $idmedico = $mostrar['id_medico'];
-    $dias = $mostrar['dias'];
-    $etiqueta = $mostrar['etiqueta'];
-    $hora_inicio = $mostrar['hora_inicio'];
-    $hora_fin = $mostrar['hora_fin'];
-    $estado = $mostrar['Estado'];
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $lastId = $row["max_id"];
+    $newId = $lastId + 1;
+} else {
+    // Si no hay registros en la tabla, asignar el ID inicial
+    $newId = 1;
 }
-?>
 
+// Guardar el nuevo ID en una variable PHP
+$idMedico = $newId;
 
+// Función de validación de campos
+function validarCampos($campos)
+{
+    foreach ($campos as $campo) {
+        if (empty($_POST[$campo])) {
+            return false;
+        }
+    }
+    return true;
+}
 
+// Validar campos antes de procesar el formulario
+if (isset($_POST['btnregistrar'])) {
+    $camposRequeridos = ['txtid', 'txtcedula', 'txtexequatur', 'txtpaciente', 'txtapellido', 'txtespecialidad'];
 
+    if (validarCampos($camposRequeridos)) {
+        $idMedico = $_POST['txtid'];
+        $cedula = $_POST['txtcedula'];
+        $exequatur = $_POST['txtexequatur'];
+        $nombre = $_POST['txtpaciente'];
+        $apellido = $_POST['txtapellido'];
+        $idEspecialidad = $_POST['txtespecialidad'];
 
+        // Insertar datos en la tabla medicos
+        $queryAdd = mysqli_query($conn, "INSERT INTO medicos(id_medico, cedula, exequatur, nombre, apellido, id_especialidad) VALUES('$idMedico', '$cedula', '$exequatur', '$nombre', '$apellido', '$idEspecialidad')");
 
-<?php
+        if (!$queryAdd) {
+            echo "Error con el registro: " . mysqli_error($conn);
+        } else {
+            echo "<script>window.location= '../../mant_medico.php?pag=1' </script>";
+        }
+    } else {
+        echo "<script>alert('Por favor, complete todos los campos');</script>";
+    }
+}
 
 ?>
 <html>
@@ -43,16 +73,15 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
     <script>
         // Función para validar campos antes de enviar el formulario
         function validarFormulario() {
-            var idhorario = document.getElementById("txtid").value;
-            var idmedico = document.getElementById("id_medico").value;
-			var dia = document.getElementById("checklist").value;
-			var etiqueta = document.getElementById("txtetiqueta").value;
-			var horainicio = document.getElementById("hora_inicio").value;
-			var horafin = document.getElementById("hora_fin").value;
-			var estado = document.getElementById("txtestado").value;
+            var idMedico = document.getElementById("txtid").value;
+            var cedula = document.getElementById("txtcedula").value;
+            var exequatur = document.getElementById("txtexequatur").value;
+            var nombre = document.getElementById("txtpaciente").value;
+            var apellido = document.getElementById("txtapellido").value;
+            var idEspecialidad = document.getElementById("txtespecialidad").value;
 
-            if (idhorario.trim() === '' || idmedico.trim() === '' || dia.trim() === '' || etiqueta.trim() === '' || horainicio.trim() === '' || horafin.trim() === '' || estado.trim() === '' ) {
-                alert("Por favor, complete toos los campos");
+            if (idMedico.trim() === '' || cedula.trim() === '' || exequatur.trim() === '' || nombre.trim() === '' || apellido.trim() === '' || idEspecialidad.trim() === '') {
+                alert("Por favor, complete todos los campos");
                 return false;
             }
 
@@ -62,7 +91,7 @@ while ($mostrar = mysqli_fetch_array($querybuscar)) {
     <script type="text/javascript">
         // Obtener el campo de entrada y el nuevo ID
         var txtId = document.getElementById("txtid");
-        var newId = <?php echo $id; ?>;
+        var newId = <?php echo $idMedico; ?>;
 
         // Asignar el nuevo ID al campo de entrada
         txtId.value = newId;
@@ -374,171 +403,64 @@ include("../../menu_lateral.php");
 <body>
     <div class="container">
         <fieldset style=" height:1200px;">
-            <form class="contenedor_popup" method="POST" onsubmit="return validarFormulario();">
-            <legend>Registrar nuevo horario</legend>
+            <form class="contenedor_popup" method="POST" action="report1.php" onsubmit="return validarFormulario();">
+                <legend>Registrar nuevo médico 👩‍⚕️🧑‍⚕️</legend>
                 <fieldset class="caja">
-                    <legend class="cajalegend">══ Nuevo horario ══</legend>
+                    <legend class="cajalegend">══ Nuevo Médico 🩺 ══</legend>
                     <p style="margin:0;">
-                        <label for="txtid">ID horario</label>
-                        <input type="text" name="txtid" id="txtid" value="<?php echo $idhorario; ?>" required readonly>
+                        <label for="txtid">Nombre del Medico</label>
+                        <input type="text" name="txtid" id="txtid" value="<?php echo $idMedico; ?>" required readonly>
                     </p>
-
-                    <p>
-					<div>
-						<label for="id_medico">ID medico:</label>
-						<input type="text" id="id_medico" name="id_medico" style="width: 115px; " value="<?php echo $idmedico; ?>" required>
-						<button id="buscarmedico" class="boton_bus" title="Buscar medicos registrados">
-							<i class="material-icons" style="font-size:32px;color:#a4e5dfe8;text-shadow:2px 2px 4px #000000;">search</i>
-						</button>
-					</div>
-					<div id="Modalmedico" class="custom-modal">
-						<div class="custom-modal-content">
-							<span class="close">&times;</span>
-							<iframe id="modal-iframe" src="../../consulta_medico2.php" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-						</div>
-					</div>
-					<script>
-						$("#id_medico").on("input", function() {
-							var idmedico = $(this).val();
-							// Realizar la solicitud AJAX para obtener los datos del paciente
-							$.ajax({
-								url: 'consulta_apellido_nombre_medico.php', // Ruta al archivo PHP que creamos
-								type: 'POST',
-								data: {
-									id_medico: idmedico
-								},
-								dataType: 'json',
-								success: function(data) {
-									$("#nombre_medico").text(data.nombre || '');
-									$("#apellido_medico").text(data.apellido || '');
-								},
-								error: function() {
-									alert('Hubo un error al obtener los datos del medico.');
-								}
-							});
-						});
-					</script>
-                  <div>
-						<label for="Nombre_medico">Nombre del medico:</label>
-						<label id="nombre_medico" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
-					</div>
-					<div>
-						<label for="Apellido_medico">Apellido del medico:</label>
-						<label id="apellido_medico" style=" background-Color:#fffff1;padding:8px; border-radius:10px;box-shadow:2px 2px 4px #000000;"></label>
-					</div>
-
-
-                        <!--<label for="txtnombre">Id medico</label>
-                        <input type="text" autofocus name="txtmedico" id="txtmedico" value="<?php //echo $fechacreacion; ?>" required>--> 
-
-
-
-                    </p>
-
-					<div id="checklist" value="<?php echo $diasSeleccionados; ?>"require> <label>Dias</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Lunes"> Lunes</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Martes"> Martes</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Miércoles"> Miércoles</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Jueves"> Jueves</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Viernes"> Viernes</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Sábado"> Sábado</label><br>
-                    <label><input type="checkbox" name="dia[]" value="Domingo"> Domingo</label><br><br>
-                    </div>
                     
-                    <!--<div><label>Dias</label>
-                        <select id="txtdias" name="txtdias" style=" width: 110px; " autocomplete="off" value="<?php echo $dias; ?>"require>
-                            <option selected value="Dias">dias</option>
-                            <option value="Lunes">Lunes</option>
-							<option value="Martes">Martes</option>
-                        </select>-->
-                        <!-- <input type="text" name="txtest" autocomplete="off" require> 
-                    </div><br>-->
+                    <p>
+                        <label for="txtexequatur">Exequatur</label>
+                        <input type="text" name="txtexequatur" id="txtexequatur" value="<?php echo $exequatur; ?>"
+                            required>
+                    </p>
+                    <p>
+                        <label for="txtpaciente">Nombre Paciente</label>
+                        <input type="text" name="txtpaciente" id="txtpaciente" value="<?php echo $nombre; ?>" required>
+                    </p>
+                    <p>
+                        <label for="txtdescripcion">Descripción</label>
+						<textarea name="txtdescripcion" id="txtdescripcion" rows="8" cols="50" required><?php echo $descripcion; ?></textarea>
+                        <!-- <input type="text" name="txtdescripcion" id="txtdescripcion" value="<?php //echo $vacunades; 
+                                                                                                    ?>" required> -->
+                    </p>
+                    
 
-					<div><label>Etiqueta</label>
-                        <select id="txtetiqueta" name="txtetiqueta" style=" width: 110px; " autocomplete="off" value="<?php echo $etiqueta; ?>"require>
-                            <option selected value="Telefono">Telefono</option>
-                            <option value="Email">Email</option>
-							<option value="Movil">Movil</option>
+                    <script>
+                        // Obtener el valor seleccionado del select y asignarlo al input de ID Especialidad
+                        document.getElementById('selectespecialidad').addEventListener('change', function () {
+                            var selectedOption = this.options[this.selectedIndex];
+                            document.getElementById('txtespecialidad').value = selectedOption.value;
+                        });
+                    </script>
+                    <!-- <p>
+                        <label for="txtespecialidad">ID Especialidad</label>
+                        <input type="number" name="txtespecialidad" id="txtespecialidad" value="<?php //echo $idEspecialidad; ?>" required>
+                        <select name="" id="">
+                            <option value=""></option>
                         </select>
-                        <!-- <input type="text" name="txtest" autocomplete="off" require> -->
-                    </div><br>
-
-					<div>
-                       <label for="hora_inicio">Hora de inicio:</label>
-                       <input type="time" id="hora_inicio" name="hora_inicio" value="<?php echo $hora_inicio; ?>">
-                    </div><br>
-
-                    <div>
-                       <label for="hora_fin">Hora de fin:</label>
-                        <input type="time" id="hora_fin" name="hora_fin" value="<?php echo $hora_inicio; ?>">
-                    </div><br>
-
-					<div><label>Estado</label>
-                        <select id="txtestado" name="txtestado" style=" width: 110px; " autocomplete="off" value="<?php echo $estado; ?>"require>
-                            <option selected value="Estado">Estado</option>
-                            <option value="Disponible">Disponible</option>
-							<option value="No disponible">No Disponible</option>
-                        </select>
-                        <!-- <input type="text" name="txtest" autocomplete="off" require> -->
-                    </div>
+                    </p> -->
                 </fieldset>
                 <div class="botones-container">
-                <button class="btn btn-primary boton" type="submit" name="btnmodificar" value="Modificar" onClick="javascript: return confirm('¿Deseas Modificar el  registro?');"> <i class="material-icons" style="font-size:21px;color:white;text-shadow:2px 2px 4px #000000;">edit</i> modificar</button>
-                    <a class="boton" href="../../mant_horario.php?pag=<?php echo $pagina; ?>">
-                        <i class="material-icons" style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i> Cancelar
+                    <button type="submit" name="btnregistrar" value="Registrar">
+                        <i class="material-icons"
+                            style="font-size:21px;color:#12f333;text-shadow:2px 2px 4px #000000;">add</i>
+                        Registrar
+                    </button>
+                    <a class="boton" href="../../mant_medico.php?pag=<?php echo $pagina; ?>">
+                        <i class="material-icons"
+                            style='font-size:21px;text-shadow:2px 2px 4px #000000;vertical-align: text-bottom;'>close</i>
+                        Cancelar
                     </a>
                 </div>
-                <iframe id="modal-iframe" src="../../consulta_horario.php" frameborder="0" style="width: 100%; height: 100%;max-height:700px;"></iframe>
-            </fieldset>
+                <iframe id="modal-iframe" src="consulta_medico.php" frameborder="0"
+                    style="width: 100%; height: 100%;max-height:700px;"></iframe>
+        </fieldset>
         </form>
     </div>
 </body>
 
-<script>
-
-        var idmedicoActual = "";
-		// Obtener referencia al botón y al modal del paciente
-		const btnbusquedamedico = document.getElementById("buscarmedico");
-			const modalmedico = document.getElementById("Modalmedico");
-			// Función para mostrar el modal de vacuna
-			function mostrarModalm() {
-				modalmedico.style.display = "block";
-			}
-			// Función para ocultar el modal vacuna
-			function ocultarModalm() {
-				modalmedico.style.display = "none";
-			}
-			// Asignar evento de clic al botón para mostrar u ocultar el modal DE VACUNA y evitar recargar la página
-			btnbusquedamedico.addEventListener("click", function(event) {
-				event.preventDefault(); // Evitar recargar la página
-				if (modalmedico.style.display === "none") {
-					mostrarModalm();
-				} else {
-					ocultarModalm();
-				}
-			});
-        
-			
-</script>
-
 </html>
-
-<?php
-
-if (isset($_POST['btnmodificar'])) {
-
-    $idhorario = $_POST['txtid'];
-    $idmedico = $_POST['id_medico'];
-    $diasSeleccionados = $_POST['dia'];
-    //$dias = $_POST['dias'];
-    $etiqueta = $_POST['txtetiqueta'];
-    $horainicial = $_POST['hora_inicio'];
-    $horafinal = $_POST['hora_fin'];
-    $estado = $_POST['txtestado'];
-    $dias = implode(", ", $diasSeleccionados);
-
-
-    $querymodificar = mysqli_query($conn, "UPDATE horario SET id_horario='$idhorario',id_medico='$idmedico', dias='$dias', etiqueta='$etiqueta', hora_inicio='$horainicial', hora_fin='$horafinal', Estado='$estado' WHERE id_horario= $idhorario ");
-    echo "<script>window.location= '../../mant_horario.php?pag=$pagina' </script>";
-}
-?>

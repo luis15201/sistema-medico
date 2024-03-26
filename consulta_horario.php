@@ -13,7 +13,9 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener los datos de la tabla "laboratorio"
-$query = "SELECT * FROM horario";
+$query = "SELECT h.id_horario, CONCAT(m.nombre, ' ', m.apellido) AS nombre_apellido_medico, h.dias, h.etiqueta, h.hora_inicio, h.hora_fin, h.Estado
+FROM horario h
+JOIN medicos m ON h.id_medico = m.id_medico;";
 $result = $conn->query($query);
 
 
@@ -346,7 +348,7 @@ function in_iframe()
     function seleccionarhorario(idhorario, idmedico) {
       var openerWindow = window.opener;
       openerWindow.document.getElementById("id_horario").value = idhorario;
-      openerWindow.document.getElementById("id_medico").textContent = idmedico;
+      openerWindow.document.getElementById("nombre_apellido_medico").textContent = idmedico;
       window.close();
     }
   </script>
@@ -371,16 +373,16 @@ function in_iframe()
       // Iterar a través de los resultados de la consulta y generar filas en la tabla
       if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-          echo "<tr onclick=\"seleccionarhorario('" . $row["id_horario"] . "', '" . $row["id_medico"] . "')\">";
+          echo "<tr onclick=\"seleccionarhorario('" . $row["id_horario"] . "', '" . $row["nombre_apellido_medico"] . "')\">";
           echo "<td>" . $row["id_horario"] . "</td>";
-          echo "<td>" . $row["id_medico"] . "</td>";
+          echo "<td>" . $row["nombre_apellido_medico"] . "</td>";
           echo "<td>" . $row["dias"] . "</td>";
           echo "<td>" . $row["etiqueta"] . "</td>";
           echo "<td>" . $row["hora_inicio"] . "</td>";
           echo "<td>" . $row["hora_fin"] . "</td>";
           echo "<td>" . $row["Estado"] . "</td>";
           echo "</td>"; // Closing tag for the td element
-          echo "<td> <a class='clasebotonVER' href=\"modulo/laboratorio/editar.php?id_laboratorio=$row[id_laboratorio]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
+          echo "<td> <a class='clasebotonVER' href=\"modulo/horario/editar.php?id_horario=$row[id_horario]&pag=$pagina\" " . (in_iframe() ? 'target="_parent"' : '') . "><i class='material-icons' style='font-size:21px;color:#f0f0f0;text-shadow:2px 2px 4px #000000;'>edit</i>Editar</a> </td>";
           echo "</tr>";
         }
       } else {
@@ -404,7 +406,7 @@ function in_iframe()
 
         // Asignar los valores al campo de texto y al label en paciente.php
         window.parent.document.getElementById('id_horario').value = idhorario;
-        window.parent.document.getElementById('id_medico').textContent = idmedico;
+        window.parent.document.getElementById('nombre_apellido_medico').textContent = idmedico;
         // Resaltar toda la fila con un delay de 2 segundos
         fila.addClass('resaltado');
         // Cerrar el modal después de 2 segundos
